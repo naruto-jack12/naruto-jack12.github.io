@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="applicable-device" content="pc,mobile">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>Document</title>
+
+    <style>
+        /* #app {
+            font-size: 24px;
+        } */
+        #js_html {
+            font-weight: 700;
+        }
+
+        /* #inputDate {} */
+
+        .btn {
+            cursor: pointer;
+        }
+    </style>
+    
+</head>
+
+<body>
+
+    <div id="app">
+        <div class=""><span id="js_html"></span></div>
+        <div class="">
+            <input type="date" name="" id="inputDate">
+            <input type="button" value="btn" class="btn">
+        </div>
+    </div>
+
+    <script>
+        let $obj = {
+            date: new Date(),
+            daysInMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+            year: 0,
+            month: 0,
+            day: 0,
+            // workList: ["白", "夜", "下夜", "白", "夜", "下夜", "休", "休"],
+            fistWorkDay: ['2023','4','07'],
+            workList: [1, 2, 3, 21, 22, 23, 0, 0],
+            count: 0,
+            works: document.querySelector("#js_html"),
+            alert: "今天是：",
+            timeErr: "",
+            init() {
+                this.year = this.date.getFullYear();
+                this.month = this.date.getMonth() + 1;
+                this.day = this.date.getDate();
+
+                this.timeErr = "请查询设定日期(" + this.fistWorkDay[0] + "年" + this.fistWorkDay[1] + "月" + this.fistWorkDay[2] + "日" + ")之后的日期"
+                
+                this.secondMonth(this.year);
+                
+                this.query();
+
+                this.workTime(this.fistWorkDay[0], this.fistWorkDay[1], this.fistWorkDay[2]);
+                
+            },
+            secondMonth(y) {
+                if (((y % 4) === 0) && ((y % 100) !== 0) || ((y % 400) === 0)) {
+                    this.daysInMonth[1] = 29;
+                }
+            },
+            query() {
+                document.querySelector(".btn").addEventListener("click",()=>{
+                    let queryDate = document.querySelector("#inputDate").value;
+                    let queryDateArr = queryDate.split('-');
+                    this.year = queryDateArr[0];
+                    this.month = Number(queryDateArr[1]);
+                    this.day = queryDateArr[2];
+                    this.count = 0;
+
+                    if(queryDate != '') {
+                        this.alert= this.year + "年" + this.month + "月" + this.day + "日 是：";
+
+                        if ((this.year >= this.fistWorkDay[0]) && (this.month >= this.fistWorkDay[1]) && (this.day >= this.fistWorkDay[2])) {
+                            this.workTime(this.fistWorkDay[0], this.fistWorkDay[1], this.fistWorkDay[2]);
+                        }else{
+                            alert(this.timeErr);
+                        }
+                    }
+
+                    document.querySelector("#inputDate").value = "";
+                    this.year = this.date.getFullYear();
+                    this.month = this.date.getMonth() + 1;
+                    this.day = this.date.getDate();
+                    
+                    
+                });
+            },
+            workTime(workYear, workMonth, workDay) {
+                if (this.year > workYear) {
+                    let uyear = [];
+                    for (workYear; workYear < this.year; workYear++) {
+                        uyear.push(Number(workYear));
+                    }
+                    // console.log(uyear);
+
+                    uyear.forEach(element => {
+                        if (((element % 4) === 0) && ((element % 100) !== 0) || ((element % 400) ===
+                                0)) {
+                            this.count += 366;
+                        } else {
+                            this.count += 365;
+                        }
+
+                    });
+                }
+
+                if (this.month > workMonth) {
+                    for (workMonth; workMonth < this.month; workMonth++) {
+                        this.count += this.daysInMonth[workMonth];
+                    }
+                }
+
+                if (this.day > workDay) {
+                    this.count += Math.abs(this.day - workDay);
+                }
+
+                // alert(this.alert + this.workList[this.count % this.workList.length]);
+                this.works.innerText = this.alert + this.workList[this.count % this.workList.length]
+            }
+        }
+
+        $obj.init();
+
+    </script>
+</body>
+
+</html>
