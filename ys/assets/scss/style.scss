@@ -13,6 +13,7 @@
     margin-top: 20px;
     display: flex;
     align-items: center;
+    
 }
 
 #inputDate {
@@ -27,4 +28,7 @@
     font-size: 1em;
     padding: 5px;
     border-radius: 5px;
+    line-height: 1;
+    white-space: nowrap;
+    margin-left: 10px;
 }
