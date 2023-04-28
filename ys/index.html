@@ -26,7 +26,7 @@
     <script>
         let $obj = {
             date: new Date(),
-            daysInMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+            // daysInMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
             year: 0,
             month: 0,
             day: 0,
@@ -44,18 +44,8 @@
 
                 this.timeErr = "请查询设定日期(" + this.fistWorkDay[0] + "年" + this.fistWorkDay[1] + "月" + this
                     .fistWorkDay[2] + "日" + ")之后的日期"
-
-                this.secondMonth(this.year);
-
                 this.query();
-
                 this.workTime(this.fistWorkDay[0], this.fistWorkDay[1], this.fistWorkDay[2]);
-
-            },
-            secondMonth(y) {
-                if (((y % 4) === 0) && ((y % 100) !== 0) || ((y % 400) === 0)) {
-                    this.daysInMonth[1] = 29;
-                }
             },
             query() {
                 document.querySelector(".btn").addEventListener("click", () => {
@@ -69,8 +59,12 @@
                     if (queryDate != '') {
                         this.alert = this.year + "年" + this.month + "月" + this.day + "日 是：";
 
-                        if ((this.year >= this.fistWorkDay[0]) && (this.month >= this.fistWorkDay[1]) && (
-                                this.day >= this.fistWorkDay[2])) {
+                        let workDate = new Date(this.fistWorkDay[0], (this.fistWorkDay[1] - 1), this
+                            .fistWorkDay[2]);
+                        let searchDate = new Date(queryDateArr[0], (Number(queryDateArr[1]) - 1),
+                            queryDateArr[2]);
+
+                        if (searchDate.getTime() >= workDate.getTime()) {
                             this.workTime(this.fistWorkDay[0], this.fistWorkDay[1], this.fistWorkDay[2]);
                         } else {
                             alert(this.timeErr);
@@ -86,33 +80,11 @@
                 });
             },
             workTime(workYear, workMonth, workDay) {
-                if (this.year > workYear) {
-                    let uyear = [];
-                    for (workYear; workYear < this.year; workYear++) {
-                        uyear.push(Number(workYear));
-                    }
-                    // console.log(uyear);
+                let workDate = new Date(workYear, (workMonth - 1), workDay);
+                let today = new Date(this.year, (this.month - 1), this.day);
 
-                    uyear.forEach(element => {
-                        if (((element % 4) === 0) && ((element % 100) !== 0) || ((element % 400) ===
-                                0)) {
-                            this.count += 366;
-                        } else {
-                            this.count += 365;
-                        }
-
-                    });
-                }
-
-                if (this.month > workMonth) {
-                    for (workMonth; workMonth < this.month; workMonth++) {
-                        this.count += this.daysInMonth[workMonth];
-                    }
-                }
-
-                if (this.day > workDay) {
-                    this.count += Math.abs(this.day - workDay);
-                }
+                this.count = Math.abs(workDate.getTime() - today.getTime());
+                this.count = Math.floor(this.count / (24 * 3600 * 1000));
 
                 // alert(this.alert + this.workList[this.count % this.workList.length]);
                 this.works.innerText = this.alert + this.workList[this.count % this.workList.length]
