@@ -64,6 +64,11 @@
                         let searchDate = new Date(queryDateArr[0], (Number(queryDateArr[1]) - 1),
                             queryDateArr[2]);
 
+                        let thistoday = new Date(this.date.getFullYear(),this.date.getMonth(),this.date.getDate());
+                        if(searchDate.getTime() == thistoday.getTime()) {
+                            this.alert = "今天是：";
+                        }
+
                         if (searchDate.getTime() >= workDate.getTime()) {
                             this.workTime(this.fistWorkDay[0], this.fistWorkDay[1], this.fistWorkDay[2]);
                         } else {
