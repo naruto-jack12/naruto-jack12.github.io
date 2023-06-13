@@ -1,73 +1,89 @@
-let $obj = {
-    date: new Date(),
-    // daysInMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
-    year: 0,
-    month: 0,
-    day: 0,
-    workList: ["白(1)", "夜(1)", "下夜(1)", "白(2)", "夜(2)", "下夜(2)", "休(1)", "休(2)"],
-    fistWorkDay: ['2023', '4', '07'],
-    // workList: [1, 2, 3, 21, 22, 23, 0, 0],
-    count: 0,
-    works: document.querySelector("#js_html"),
-    alert: "今天是：",
-    timeErr: "",
-    init() {
-        this.year = this.date.getFullYear();
-        this.month = this.date.getMonth() + 1;
-        this.day = this.date.getDate();
+window.WorkListTime = function( options ) {
 
-        this.timeErr = "请查询设定日期(" + this.fistWorkDay[0] + "年" + this.fistWorkDay[1] + "月" + this
-            .fistWorkDay[2] + "日" + ")之后的日期"
-        this.query();
-        this.workTime(this.fistWorkDay[0], this.fistWorkDay[1], this.fistWorkDay[2]);
-    },
-    query() {
-        document.querySelector(".btn").addEventListener("click", () => {
-            let queryDate = document.querySelector("#inputDate").value;
+    //  SCOPE
+    /// ---------------------------      
+    var that  =   this;
+
+
+    //  OPTIONS
+    /// ---------------------------  
+    options                     = options || {};
+    options.date                = options.hasOwnProperty('date') ? options.date : new Date();
+    options.year                = options.hasOwnProperty('year') ? options.year : 0;
+    options.month               = options.hasOwnProperty('month') ? options.month : 0;
+    options.day                 = options.hasOwnProperty('day') ? options.day : 0;
+    options.fistWorkDay         = options.hasOwnProperty('fistWorkDay') ? options.fistWorkDay : ['2023', '4', '07'];
+    options.workList            = options.hasOwnProperty('workList') ? options.workList : [1, 2, 3, 21, 22, 23, 0, 0];
+    options.count               = options.hasOwnProperty('count') ? options.count : 0;
+    options.works               = options.hasOwnProperty('works') ? options.works : document.querySelector("#js_html");
+    options.alert               = options.hasOwnProperty('alert') ? options.alert : "今天是：";
+    options.timeErr             = options.hasOwnProperty('timeErr') ? options.timeErr : "";
+    options.queryDate           = options.hasOwnProperty('queryDate') ? options.queryDate : document.querySelector("#inputDate");
+    options.queryBtn            = options.hasOwnProperty('queryBtn') ? options.queryBtn : document.querySelector(".btn");
+
+
+    /// --------------------------- 
+
+
+    this.init = function() {
+        options.year = options.date.getFullYear();
+        options.month = options.date.getMonth() + 1;
+        options.day = options.date.getDate();
+
+        options.timeErr = "请查询设定日期(" + options.fistWorkDay[0] + "年" + options.fistWorkDay[1] + "月" + options.fistWorkDay[2] + "日" + ")之后的日期";
+    
+        that.query();
+        that.workTime(options.fistWorkDay[0], options.fistWorkDay[1], options.fistWorkDay[2]);
+    };
+
+    this.query = function() {
+        options.queryBtn.addEventListener("click", () => {
+            let queryDate = options.queryDate.value;
             let queryDateArr = queryDate.split('-');
-            this.year = queryDateArr[0];
-            this.month = Number(queryDateArr[1]);
-            this.day = queryDateArr[2];
-            this.count = 0;
+            options.year = queryDateArr[0];
+            options.month = Number(queryDateArr[1]);
+            options.day = queryDateArr[2];
+            options.count = 0;
 
             if (queryDate != '') {
-                this.alert = this.year + "年" + this.month + "月" + this.day + "日 是：";
+                options.alert = options.year + "年" + options.month + "月" + options.day + "日 是：";
 
-                let workDate = new Date(this.fistWorkDay[0], (this.fistWorkDay[1] - 1), this
+                let workDate = new Date(options.fistWorkDay[0], (options.fistWorkDay[1] - 1), options
                     .fistWorkDay[2]);
                 let searchDate = new Date(queryDateArr[0], (Number(queryDateArr[1]) - 1),
                     queryDateArr[2]);
 
-                let thistoday = new Date(this.date.getFullYear(),this.date.getMonth(),this.date.getDate());
+                let thistoday = new Date(options.date.getFullYear(),options.date.getMonth(),options.date.getDate());
                 if(searchDate.getTime() == thistoday.getTime()) {
-                    this.alert = "今天是：";
+                    options.alert = "今天是：";
                 }
 
                 if (searchDate.getTime() >= workDate.getTime()) {
-                    this.workTime(this.fistWorkDay[0], this.fistWorkDay[1], this.fistWorkDay[2]);
+                    this.workTime(options.fistWorkDay[0], options.fistWorkDay[1], options.fistWorkDay[2]);
                 } else {
-                    alert(this.timeErr);
+                    alert(options.timeErr);
                 }
             }
 
             document.querySelector("#inputDate").value = "";
-            this.year = this.date.getFullYear();
-            this.month = this.date.getMonth() + 1;
-            this.day = this.date.getDate();
+            options.year = options.date.getFullYear();
+            options.month = options.date.getMonth() + 1;
+            options.day = options.date.getDate();
 
 
         });
-    },
-    workTime(workYear, workMonth, workDay) {
+    };
+
+    this.workTime = function(workYear, workMonth, workDay) {
         let workDate = new Date(workYear, (workMonth - 1), workDay);
-        let today = new Date(this.year, (this.month - 1), this.day);
+        let today = new Date(options.year, (options.month - 1), options.day);
 
-        this.count = Math.abs(workDate.getTime() - today.getTime());
-        this.count = Math.floor(this.count / (24 * 3600 * 1000));
+        options.count = Math.abs(workDate.getTime() - today.getTime());
+        options.count = Math.floor(options.count / (24 * 3600 * 1000));
 
-        // alert(this.alert + this.workList[this.count % this.workList.length]);
-        this.works.innerText = this.alert + this.workList[this.count % this.workList.length]
-    }
+        options.works.innerText = options.alert + options.workList[options.count % options.workList.length]
+    };
+
+
+    this.init();
 }
-
-$obj.init();
