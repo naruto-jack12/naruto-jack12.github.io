@@ -59,7 +59,7 @@ window.WorkListTime = function( options ) {
                 }
 
                 if (searchDate.getTime() >= workDate.getTime()) {
-                    this.workTime(options.fistWorkDay[0], options.fistWorkDay[1], options.fistWorkDay[2]);
+                    that.workTime(options.fistWorkDay[0], options.fistWorkDay[1], options.fistWorkDay[2]);
                 } else {
                     alert(options.timeErr);
                 }
@@ -87,3 +87,8 @@ window.WorkListTime = function( options ) {
 
     this.init();
 }
+
+var initWorkListTime = new WorkListTime({
+    fistWorkDay: ['2023', '4', '07'],
+    workList: ["白(1)", "夜(1)", "下夜(1)", "白(2)", "夜(2)", "下夜(2)", "休(1)", "休(2)"],
+});
