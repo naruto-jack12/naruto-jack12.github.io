@@ -1,0 +1,70 @@
+@import "reset";
+
+body {
+    overflow-x: hidden;
+}
+
+
+#app {
+    width: 500px;
+    max-width: 100%;
+    margin: auto;
+    padding: 10px;
+}
+
+.boxes {
+    text-align: center;
+}
+
+.weeks {
+    display: flex;
+}
+
+.week {
+    width: calc(100% / 7);
+    padding: 10px;
+}
+
+.days {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.day {
+    width: calc(100% / 7);
+    padding: 10px;
+}
+
+.today {
+    background-color: #aaa;
+}
+
+
+.boxes-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btn {
+    padding: 5px 20px;
+    cursor: pointer;
+    background-color: #888;
+    border: 1px solid #888;
+    color: #fff;
+    user-select: none;
+    transition: .3s;
+
+    &:hover {
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0,0,0,.05);
+        color: #000;
+    }
+}
+
+.month {
+    padding: 5px 10px;
+    white-space: nowrap;
+    font-weight: 700px;
+    font-size: 1.25em;
+}
