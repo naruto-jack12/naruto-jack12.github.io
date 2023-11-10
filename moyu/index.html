@@ -13,9 +13,81 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <div id="app"></div>
+    <div id="app">
+        <div class="today"></div>
+    </div>
     
 
-    <script></script>
+    <script>
+        const date = new Date();
+
+        var today = document.querySelector(".today");
+
+
+        const weekday=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+        let week = date.getDay();
+        
+        console.log(date);
+        // today.innerHTML = "今天是：" + date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日 " + weekday[week];
+        // console.log(date.getHours()); // 时
+        // console.log(date.getMinutes()); // 分
+        // console.log(date.getSeconds()); // 秒
+
+        function numTwo($num) {
+            if($num < 10) {
+                $num = "0" + $num;
+            }
+            return $num;
+        }
+
+        setInterval(() => {
+            let date = new Date();
+            
+            // 年月日
+            let year = date.getFullYear();
+            let month = date.getMonth() + 1;
+            let day = date.getDate();
+            let week = date.getDay();
+
+            // 时分秒
+            let hour = date.getHours();
+            let minute = date.getMinutes();
+            let second = date.getSeconds();
+
+            hour = numTwo(hour);
+            minute = numTwo(minute);
+            second = numTwo(second);
+
+            today.innerHTML =  "今天是：" + year + "年" + month + "月" + day + "日 " + weekday[week] + " " + hour  + ":" + minute  + ":" + second;
+        }, 1000);
+
+        
+        
+        var weekendBreak = function () {
+            if(week != 0 && week != 6) {
+                console.log(6 - week);
+            }else {
+                if(week == 6) {
+                    console.log(7);
+                }else {
+                    console.log(6);
+                }
+            }
+        }
+
+        var SingleBreak = function() {
+            if(week != 0) {
+                console.log(7 - week);
+            }else {
+                console.log(7);
+            }
+        }
+        
+        weekendBreak();
+        SingleBreak();
+        
+
+
+    </script>
 </body>
 </html>

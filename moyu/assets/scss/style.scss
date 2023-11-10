@@ -1,1 +1,21 @@
 @import "reset";
+
+:root {
+    --font-color: #333;
+}
+
+.body {}
+
+.inner {
+    width: 1340px;
+    max-width: 100%;
+    margin: auto;
+    padding: 0 20px;
+}
+
+#app {
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 20px;
+    height: 100vh;
+}
