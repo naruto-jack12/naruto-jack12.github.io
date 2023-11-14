@@ -18,13 +18,13 @@ function numTwo($num) {
     return $num;
 }
 
-var todayTime = setInterval(() => {
+var todayTime = () => {
     let date = new Date();
 
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
     let day = date.getDate();
-
+    
     // 时分秒
     let hour = date.getHours();
     let minute = date.getMinutes();
@@ -37,8 +37,11 @@ var todayTime = setInterval(() => {
     minute = numTwo(minute);
     second = numTwo(second);
 
-    today.innerHTML = "今天是：" + year + "年" + month + "月" + day + "日 " + weekday[week] + " " + hour + ":" + minute + ":" + second;
-}, 1000);
+    today.innerHTML =  "今天是：" + year + "年" + month + "月" + day + "日 " + weekday[week] + " " + hour  + ":" + minute  + ":" + second;
+}
+
+todayTime();
+setInterval(todayTime, 1000);
 
 var weekendBreak = () => {
     let obj = document.querySelector(".weekendBreak");
