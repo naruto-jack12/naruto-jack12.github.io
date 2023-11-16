@@ -2,14 +2,21 @@ const date = new Date();
 
 var today = document.querySelector(".today");
 
-
+// const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const weekday = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
 let week = date.getDay();
 
 console.log(date);
+let year = date.getFullYear();
+let month = date.getMonth() + 1;
+let day = date.getDate();
 // console.log(date.getHours()); // 时
 // console.log(date.getMinutes()); // 分
 // console.log(date.getSeconds()); // 秒
+
+// if (((year % 4) === 0) && ((year % 100) !== 0) || ((year % 400) === 0)) {
+//     daysInMonth[2] = 29;
+// }
 
 function numTwo($num) {
     if ($num < 10) {
@@ -41,6 +48,7 @@ var todayTime = () => {
 }
 
 todayTime();
+
 setInterval(todayTime, 1000);
 
 var weekendBreak = () => {
@@ -61,8 +69,8 @@ var weekendBreak = () => {
     obj.innerHTML = "距离周六还有：" + item + "天";
 }
 
-var SingleBreak = () => {
-    let obj = document.querySelector(".SingleBreak");
+var singleBreak = () => {
+    let obj = document.querySelector(".singleBreak");
     let item;
     if (week != 0) {
         // console.log(7 - week);
@@ -75,7 +83,7 @@ var SingleBreak = () => {
 }
 
 weekendBreak();
-SingleBreak();
+singleBreak();
 
 /* 距离当月某日还有多少天 */
 var range = ($day) => {
@@ -104,7 +112,6 @@ var range = ($day) => {
 var solar = calendar.solar2lunar();
 var lunar = calendar.lunar2solar();
 
-// var lunar = calendar.solar2lunar(year,10,1);
 // console.log(solar);
 // console.log(lunar);
 
@@ -129,7 +136,7 @@ lunartoday();
 
 
 
-var LunarFestival = ($month, $day) => {
+var lunarFestival = ($month, $day) => {
     let festival = calendar.lunar2solar(year, $month, $day);
 
     let lunarDay = new Date(festival.date);
@@ -146,10 +153,12 @@ var LunarFestival = ($month, $day) => {
     // console.log(date);
     count = Math.abs(lunarDay.getTime() - date.getTime());
     count = Math.floor(count / (24 * 3600 * 1000));
-    console.log(count);
+    // console.log(count);
+
+    return count;
 }
 
-// LunarFestival(1,1);
+// lunarFestival(1,1);
 
 
 var solarFestival = ($month, $day) => {
@@ -162,8 +171,58 @@ var solarFestival = ($month, $day) => {
     }
     count = Math.abs(festival.getTime() - date.getTime());
     count = Math.floor(count / (24 * 3600 * 1000));
-    console.log(count);
+    // console.log(count);
 
+    return count;
 }
 
 // solarFestival(1,1);
+
+
+var festivalDate = () => {
+    var lfestival = document.querySelectorAll(".lunarFestival");
+    var sfestival = document.querySelectorAll(".solarFestival");
+
+    // console.log(lfestival);
+    // console.log(sfestival);
+
+
+    for (var i = 0; i < lfestival.length; i++) {
+
+
+        let lfestivalDate = lfestival[i].dataset;
+        let $month = lfestivalDate.month;
+        let $day = lfestivalDate.day;
+
+        let festival = new Date(year, $month, $day);
+
+        if (festival.getTime() < date.getTime()) {
+            festival = calendar.lunar2solar((year + 1), $month, $day);
+        } else {
+            festival = calendar.lunar2solar(year, $month, $day);
+        }
+
+
+        lfestival[i].innerHTML = "距离" + festival.lunarFestival + "还有：" + lunarFestival($month, $day) + "天";
+
+    }
+
+    for (var j = 0; j < sfestival.length; j++) {
+
+        let sfestivalDate = sfestival[j].dataset;
+        let $month = sfestivalDate.month;
+        let $day = sfestivalDate.day;
+
+        let festival = new Date(year, $month, $day);
+
+        if (festival.getTime() < date.getTime()) {
+            festival = calendar.solar2lunar((year + 1), $month, $day);
+        } else {
+            festival = calendar.solar2lunar(year, $month, $day);
+        }
+
+        sfestival[j].innerHTML = "距离" + festival.festival + "还有：" + solarFestival($month, $day);
+    }
+}
+
+festivalDate();
