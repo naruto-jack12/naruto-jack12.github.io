@@ -2,7 +2,7 @@ const date = new Date();
 
 var today = document.querySelector(".today");
 
-// const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const weekday = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
 let week = date.getDay();
 
@@ -14,9 +14,9 @@ let day = date.getDate();
 // console.log(date.getMinutes()); // 分
 // console.log(date.getSeconds()); // 秒
 
-// if (((year % 4) === 0) && ((year % 100) !== 0) || ((year % 400) === 0)) {
-//     daysInMonth[2] = 29;
-// }
+if (((year % 4) === 0) && ((year % 100) !== 0) || ((year % 400) === 0)) {
+    daysInMonth[2] = 29;
+}
 
 function numTwo($num) {
     if ($num < 10) {
@@ -103,10 +103,30 @@ var range = ($day) => {
         count = Math.floor(count / (24 * 3600 * 1000));
     }
 
-    console.log(count);
+    // console.log(count);
+
+    return count;
 }
 
 // range(1);
+
+var rangeDate = () => {
+    // endMonth
+    let endMonth = document.querySelector(".endMonth");
+    endMonth.innerHTML =  "距离月底（" + daysInMonth[month-1] + "号）还有：" + range(daysInMonth[month-1]) + "天";
+
+
+    let rangeDay = document.querySelectorAll(".rangeDay");
+    
+    for (var i = 0; i< rangeDay.length; i++) {
+
+        let rangeData = rangeDay[i].dataset;
+        let $day = rangeData.range;
+
+        rangeDay[i].innerHTML =  "距离" + $day + "号还有：" + range($day) + "天";
+    }
+}
+rangeDate();
 
 
 var solar = calendar.solar2lunar();
@@ -169,7 +189,7 @@ var solarFestival = ($month, $day) => {
         festival = new Date((year + 1), ($month - 1), $day);
     }
 
-    
+
     count = Math.abs(festival.getTime() - date.getTime());
     count = Math.floor(count / (24 * 3600 * 1000));
     // console.log(count);
