@@ -221,7 +221,7 @@ var festivalDate = () => {
             festival = calendar.solar2lunar(year, $month, $day);
         }
 
-        sfestival[j].innerHTML = "距离" + festival.festival + "还有：" + solarFestival($month, $day);
+        sfestival[j].innerHTML = "距离" + festival.festival + "还有：" + solarFestival($month, $day) + "天";
     }
 }
 
