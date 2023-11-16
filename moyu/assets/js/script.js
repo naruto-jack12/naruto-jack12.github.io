@@ -24,7 +24,7 @@ var todayTime = () => {
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
     let day = date.getDate();
-    
+
     // 时分秒
     let hour = date.getHours();
     let minute = date.getMinutes();
@@ -37,7 +37,7 @@ var todayTime = () => {
     minute = numTwo(minute);
     second = numTwo(second);
 
-    today.innerHTML =  "今天是：" + year + "年" + month + "月" + day + "日 " + weekday[week] + " " + hour  + ":" + minute  + ":" + second;
+    today.innerHTML = "今天是：" + year + "年" + month + "月" + day + "日 " + weekday[week] + " " + hour + ":" + minute + ":" + second;
 }
 
 todayTime();
@@ -76,3 +76,94 @@ var SingleBreak = () => {
 
 weekendBreak();
 SingleBreak();
+
+/* 距离当月某日还有多少天 */
+var range = ($day) => {
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let count = 0;
+    // console.log($day - day);
+
+    let today = new Date(year, (month - 1), day);
+
+    if ($day > day) {
+        count = $day - day;
+    } else {
+        let workDate = new Date(year, month, $day);
+        count = Math.abs(workDate.getTime() - today.getTime());
+        count = Math.floor(count / (24 * 3600 * 1000));
+    }
+
+    console.log(count);
+}
+
+// range(1);
+
+
+var solar = calendar.solar2lunar();
+var lunar = calendar.lunar2solar();
+
+// var lunar = calendar.solar2lunar(year,10,1);
+// console.log(solar);
+// console.log(lunar);
+
+var lunartoday = () => {
+    var today = document.querySelector(".lunartoday");
+    var $festival = "";
+    var $lunarFestival = "";
+
+    if (lunar.festival != null) {
+        $festival = lunar.festival;
+    }
+    if (lunar.lunarFestival != null) {
+        $lunarFestival = lunar.lunarFestival;
+    }
+
+    var festival = ' <span class="festival">' + $festival + $lunarFestival + '</span>';
+
+    today.innerHTML = lunar.gzYear + "(" + lunar.Animal + ")" + "年 " + lunar.IMonthCn + lunar.IDayCn + "  " + lunar.gzMonth + "月" + lunar.gzDay + "日" + festival;
+}
+
+lunartoday();
+
+
+
+var LunarFestival = ($month, $day) => {
+    let festival = calendar.lunar2solar(year, $month, $day);
+
+    let lunarDay = new Date(festival.date);
+    let count = 0;
+
+
+    if (lunarDay.getTime() < date.getTime()) {
+        year = year + 1
+        festival = calendar.lunar2solar(year, $month, $day);
+        lunarDay = new Date(festival.date);
+    }
+
+    // console.log(lunarDay);
+    // console.log(date);
+    count = Math.abs(lunarDay.getTime() - date.getTime());
+    count = Math.floor(count / (24 * 3600 * 1000));
+    console.log(count);
+}
+
+// LunarFestival(1,1);
+
+
+var solarFestival = ($month, $day) => {
+    let festival = new Date(year, $month, $day);
+    let count = 0;
+
+    if (festival.getTime() < date.getTime()) {
+        year = year + 1
+        festival = new Date(year, $month, $day);
+    }
+    count = Math.abs(festival.getTime() - date.getTime());
+    count = Math.floor(count / (24 * 3600 * 1000));
+    console.log(count);
+
+}
+
+// solarFestival(1,1);
