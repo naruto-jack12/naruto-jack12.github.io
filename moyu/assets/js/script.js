@@ -162,13 +162,14 @@ var lunarFestival = ($month, $day) => {
 
 
 var solarFestival = ($month, $day) => {
-    let festival = new Date(year, $month, $day);
+    let festival = new Date(year, ($month - 1), $day);
     let count = 0;
 
     if (festival.getTime() < date.getTime()) {
-        year = year + 1
-        festival = new Date(year, $month, $day);
+        festival = new Date((year + 1), ($month - 1), $day);
     }
+
+    
     count = Math.abs(festival.getTime() - date.getTime());
     count = Math.floor(count / (24 * 3600 * 1000));
     // console.log(count);
