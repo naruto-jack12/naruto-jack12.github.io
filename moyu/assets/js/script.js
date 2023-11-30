@@ -113,7 +113,9 @@ var range = ($day) => {
 var rangeDate = () => {
     // endMonth
     let endMonth = document.querySelector(".endMonth");
-    endMonth.innerHTML =  "距离月底（" + daysInMonth[month-1] + "号）还有：" + range(daysInMonth[month-1]) + "天";
+    let $endDay = day == daysInMonth[month-1]? '0': range(daysInMonth[month-1]);
+    
+    endMonth.innerHTML =  "距离月底（" + daysInMonth[month-1] + "号）还有：" + $endDay + "天";
 
 
     let rangeDay = document.querySelectorAll(".rangeDay");
