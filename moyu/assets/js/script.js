@@ -166,8 +166,7 @@ var lunarFestival = ($month, $day) => {
 
 
     if (lunarDay.getTime() < date.getTime()) {
-        year = year + 1
-        festival = calendar.lunar2solar(year, $month, $day);
+        festival = calendar.lunar2solar((year + 1), $month, $day);
         lunarDay = new Date(festival.date);
     }
 
