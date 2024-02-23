@@ -15,7 +15,7 @@ let day = date.getDate();
 // console.log(date.getSeconds()); // 秒
 
 if (((year % 4) === 0) && ((year % 100) !== 0) || ((year % 400) === 0)) {
-    daysInMonth[2] = 29;
+    daysInMonth[1] = 29;
 }
 
 function numTwo($num) {
