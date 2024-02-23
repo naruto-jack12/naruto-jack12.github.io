@@ -1,0 +1,87 @@
+@import "reset";
+
+/* --------------------------------------------------------- */
+/* mixin */
+@mixin ab {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+}
+
+@mixin coverImg {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	object-fit: cover;
+	object-position: center;
+}
+/* --------------------------------------------------------- */
+
+:root {
+    --font-color: #333;
+    // --key-color:  ;
+}
+
+
+/* ------------------------------------------------------ */
+/* scrollbar */
+::-webkit-scrollbar {
+    display: none;
+}
+
+
+::-webkit-scrollbar-thumb {
+    display: none;
+}
+
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+    display: none
+}
+/* ------------------------------------------------------ */
+
+
+body {
+    overflow-x: hidden;
+    font-weight: 400;
+    font-style: normal;
+    color: var(--font-color);
+}
+
+.inner {
+    width: 1440px;
+    max-width: 100%;
+    margin: auto;
+    padding: 0 20px;
+}
+
+.nowrap {
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.hasbg {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    position: relative;
+
+    img {
+        @include coverImg;
+    }
+}
+
+svg{
+    width: 1em;
+    min-width: 1em;
+    height: 1em;
+}
+
+/* =================================================================== */

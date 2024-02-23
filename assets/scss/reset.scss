@@ -1,0 +1,98 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	outline:0;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+table,
+td,
+th {
+	border: 1px solid #333;
+}
+html {
+	font-size: 100%;
+	background-color: #fff;
+	word-break: break-word;
+}
+body {
+	min-height: 100vh;
+	color: #333;
+	overflow-x: hidden;
+	font: normal normal normal 14px/1.6 sans-serif;
+	background-color: #fff;
+}
+a,
+a:active,
+a:link,
+a:visited {
+	text-decoration: none;
+	color: inherit;
+}
+a:hover {
+	text-decoration: underline;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+dialog,
+hr,
+img {
+	display: block;
+}
+audio,
+canvas,
+iframe,
+img,
+svg,
+progress,
+video {
+	display: inline-block;
+}
+button,
+input,
+select,
+textarea {
+	font-family: inherit;
+}
+textarea {
+	resize: vertical;
+}
+input,
+select {
+	vertical-align: middle;
+}
+button {
+	vertical-align: inherit;
+	line-height: inherit;
+	cursor: pointer;
+}
+code,
+kbd,
+pre,
+samp {
+	font-family: monospace, sans-serif;
+	font-size: 1em;
+}
+mark {
+	background-color: #ff0;
+}
+small {
+	font-size: 80%;
+}
+img {
+	max-inline-size: 100%;
+	height: auto;
+}
