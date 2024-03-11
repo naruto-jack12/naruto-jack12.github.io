@@ -141,18 +141,26 @@ var lunartoday = () => {
     var today = document.querySelector(".lunartoday");
     var $festival = "";
     var $lunarFestival = "";
+    var $term = "";
 
     if (lunar.festival != null) {
         $festival = lunar.festival;
+        $festival = ' <span class="festival">' + $festival + '</span>'
     }
     if (lunar.lunarFestival != null) {
         $lunarFestival = lunar.lunarFestival;
+        $lunarFestival = ' <span class="festival lunar">' + $lunarFestival + '</span>'
     }
 
-    var festival = ' <span class="festival">' + $festival + $lunarFestival + '</span>';
+    if(lunar.isTerm) {
+        $term = lunar.Term;
+        $term = ' <span class="term">' + $term + '</span>'
+    }
 
-    today.innerHTML = lunar.gzYear + "(" + lunar.Animal + ")" + "年 " + lunar.IMonthCn + lunar.IDayCn + "  " + lunar.gzMonth + "月" + lunar.gzDay + "日" + festival;
+
+    today.innerHTML = lunar.gzYear + "(" + lunar.Animal + ")" + "年 " + lunar.IMonthCn + lunar.IDayCn + "  " + lunar.gzMonth + "月" + lunar.gzDay + "日" + $festival + $lunarFestival + $term;
 }
+
 
 lunartoday();
 
