@@ -1,3 +1,7 @@
+/* 
+https://gitee.com/mirrors/calendar-js 
+*/
+
 var calendar = (function () {
     'use strict';
   

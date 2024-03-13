@@ -256,3 +256,26 @@ var festivalDate = () => {
 }
 
 festivalDate();
+
+var solarTermsDate = () => {
+    var sTerms = document.querySelectorAll(".solarTerms");
+    for (let z = 0; z < sTerms.length; z++) {
+        let sTermsDate = sTerms[z].dataset.terms;
+        let sTermDate = calendar.solarTerm.indexOf(sTermsDate) + 1;
+        let $month = Math.ceil(sTermDate / 2);
+        let $day = calendar.getTerm(year,sTermDate);
+
+        let solarTerms = new Date(year, ($month - 1), $day);
+
+        if (solarTerms.getTime() < date.getTime()) {
+            solarTerms = calendar.solar2lunar((year + 1), $month, $day);
+        }else {
+            solarTerms = calendar.solar2lunar(year, $month, $day);
+        }
+
+        sTerms[z].innerHTML = "距离" + sTermsDate + "还有：" + solarFestival($month, $day) + "天";
+
+    }
+}
+
+solarTermsDate();
