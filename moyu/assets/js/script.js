@@ -93,14 +93,14 @@ var range = ($day) => {
     let count = 0;
     // console.log($day - day);
 
-    let today = new Date(year, (month - 1), day);
+    // let today = new Date(year, (month - 1), day);
 
-    if ($day > day) {
+    if ($day >= day) {
         count = $day - day;
     } else {
         let workDate = new Date(year, month, $day);
-        count = Math.abs(workDate.getTime() - today.getTime());
-        count = Math.floor(count / (24 * 3600 * 1000));
+        count = Math.abs(workDate.getTime() - date.getTime());
+        count = Math.ceil(count / (24 * 3600 * 1000));
     }
 
     // console.log(count);
@@ -181,7 +181,7 @@ var lunarFestival = ($month, $day) => {
     // console.log(lunarDay);
     // console.log(date);
     count = Math.abs(lunarDay.getTime() - date.getTime());
-    count = Math.floor(count / (24 * 3600 * 1000));
+    count = Math.ceil(count / (24 * 3600 * 1000));
     // console.log(count);
 
     return count;
@@ -200,7 +200,7 @@ var solarFestival = ($month, $day) => {
 
 
     count = Math.abs(festival.getTime() - date.getTime());
-    count = Math.floor(count / (24 * 3600 * 1000));
+    count = Math.ceil(count / (24 * 3600 * 1000));
     // console.log(count);
 
     return count;
