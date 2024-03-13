@@ -6,7 +6,7 @@ const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const weekday = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
 let week = date.getDay();
 
-console.log(date);
+// console.log(date);
 let year = date.getFullYear();
 let month = date.getMonth() + 1;
 let day = date.getDate();
@@ -158,7 +158,7 @@ var lunartoday = () => {
     }
 
 
-    today.innerHTML = lunar.gzYear + "(" + lunar.Animal + ")" + "年 " + lunar.IMonthCn + lunar.IDayCn + "  " + lunar.gzMonth + "月" + lunar.gzDay + "日" + $festival + $lunarFestival + $term;
+    today.innerHTML = lunar.gzYear + "(" + lunar.Animal + ")" + "年 " + lunar.IMonthCn + lunar.IDayCn + "  " + lunar.gzMonth + "月" + lunar.gzDay + "日" + "  " +  lunar.astro + $festival + $lunarFestival + $term;
 }
 
 
