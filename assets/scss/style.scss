@@ -22,10 +22,14 @@
 	object-position: center;
 }
 /* --------------------------------------------------------- */
+$flex_width: calc(100% / var(--flex-list-col-num) - (var(--flex-list-column-gap) * calc(var(--flex-list-col-num) - 1) / var(--flex-list-col-num)));
 
 :root {
     --font-color: #333;
     // --key-color:  ;
+
+    --flex-list-col-num: 0;
+    --flex-list-column-gap: 0;
 }
 
 
