@@ -1,0 +1,30 @@
+.mobile-message {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 85%;
+    box-sizing: border-box;
+    margin: 40px auto;
+    color: #666;
+
+    h1 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    p {
+        color: #666;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .icon {
+        font-size: 50px;
+        margin-bottom: 20px;
+        color: #ff6b6b;
+    }
+}
+

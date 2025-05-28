@@ -11,6 +11,11 @@
     --theme-item7-color: #6de669;
 }
 
+* {
+    padding: 0;
+    margin: 0;
+}
+
 body {
     font-weight: 400;
 }
@@ -18,12 +23,15 @@ body {
 
 h1 {
     text-align: center;
+    margin: 20px;
 }
 
 
 .container {
     display: flex;
     gap: 20px;
+    width: 1000px;
+    margin: auto;
 }
 
 .left {

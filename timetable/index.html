@@ -5,7 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>课程表</title>
 
+    <link rel="stylesheet" href="assets/css/mobile-message.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        @media (max-width: 1000px) {
+            #mobileMessage {
+                display: block!important;
+            }
+
+            h1 {
+                display: none;
+
+            }
+
+            .container {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
     <h1>课程表</h1>
@@ -130,5 +148,30 @@
     </div>
 
     <script src="assets/js/script.js"></script>
+
+    <div class="mobile-message" id="mobileMessage">
+        <div class="icon">📱</div>
+        <h1>请使用电脑访问</h1>
+        <p>为了获得更好的使用体验，请使用电脑浏览器访问本网站。</p>
+        <small>(浏览器宽度过小，不能完整展示)</small>
+        <p>手机端暂不支持完整功能。</p>
+    </div>
+    <script>
+        // 检测是否为移动设备
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+        
+        // 如果是移动设备，显示提示信息
+        if (isMobileDevice()) {
+            document.getElementsByTagName('body')[0].classList.add('mobile');
+            document.getElementById('mobileMessage').style.display = 'block';
+            // 可以在这里添加其他逻辑，比如阻止页面其他内容显示
+            document.body.innerHTML = document.getElementById('mobileMessage').outerHTML;
+        } else {
+            document.getElementById('mobileMessage').style.display = 'none';
+            // 这里可以加载正常的网页内容
+        }
+    </script>
 </body>
 </html>
