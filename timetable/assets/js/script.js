@@ -2,67 +2,82 @@ const container = document.querySelector('.container');
 let source;
 
 container.ondragstart = (e) => {
-    e.dataTransfer.effectAllowed = e.target.dataset.effect;
-    source = e.target;
-    // console.log('start', e.target);
+    if (e.target.classList.contains('item')) {
+        e.dataTransfer.effectAllowed = e.target.dataset.effect;
+        source = e.target;
+    }
 }
 
 container.ondragover = (e) => {
     e.preventDefault();
-    // console.log('over', e.target);
 }
 
-function clearStyle() {
-    document.querySelectorAll('.drop-over').forEach((el) => {
+function clearDropTargets() {
+    document.querySelectorAll('.drop-over').forEach(el => {
         el.classList.remove('drop-over');
     });
 }
 
 function getDropNode(node) {
-    while (node) {
-        if (node.dataset.allow) {
+    while (node && node !== document) {
+        if (node.dataset?.allow) {
             return node;
         }
-
         node = node.parentNode;
     }
+    return null;
 }
 
 container.ondragenter = (e) => {
-    // console.log('enter', e.target);
-    clearStyle();
+    clearDropTargets();
     const node = getDropNode(e.target);
-    if(!node){
-        return;
-    }
-    if(source.dataset.effect === node.dataset.allow) {
+    if (!node) return;
+
+    // 允许三种拖拽情况：
+    // 1. 从左侧复制到课表 (copy → copy)
+    // 2. 在课表内移动 (move → copy)
+    // 3. 从课表移回左侧 (move → move)
+    const isCopyToTable = source.dataset.effect === 'copy' && node.dataset.allow === 'copy';
+    const isMoveInTable = source.dataset.effect === 'move' && node.dataset.allow === 'copy';
+    const isMoveBackToLeft = source.dataset.effect === 'move' && node.dataset.allow === 'move';
+
+    if (isCopyToTable || isMoveInTable || isMoveBackToLeft) {
         node.classList.add('drop-over');
     }
 }
-    
-
-container.ondragleave = (e) => {
-    // console.log('leave', e.target);
-}
 
 container.ondrop = (e) => {
-    // console.log('drop', e.target);
-    clearStyle();
-    const node = getDropNode(e.target);
-    if(!node){
-        return;
-    }
-    if(source.dataset.effect !== node.dataset.allow) {
-        return;
-    }
+    clearDropTargets();
+    const targetNode = getDropNode(e.target);
+    if (!targetNode) return;
 
-    if(node.dataset.allow === 'copy') {
-        node.innerHTML = '';
+    // 情况1：从左侧复制到课表
+    if (source.dataset.effect === 'copy' && targetNode.dataset.allow === 'copy') {
+        if (targetNode.firstChild) {
+            targetNode.removeChild(targetNode.firstChild);
+        }
         const cloned = source.cloneNode(true);
         cloned.dataset.effect = 'move';
-        node.appendChild(cloned);
-    }else {
+        targetNode.appendChild(cloned);
+    }
+    // 情况2：在课表内移动
+    else if (source.dataset.effect === 'move' && targetNode.dataset.allow === 'copy') {
+        if (targetNode.firstChild) {
+            const existingItem = targetNode.firstChild;
+            source.parentNode.appendChild(existingItem);
+        }
+        targetNode.appendChild(source);
+    }
+    // 情况3：从课表移回左侧
+    else if (source.dataset.effect === 'move' && targetNode.dataset.allow === 'move') {
         source.remove();
     }
-
 }
+
+// 处理课表内动态生成的项目的拖拽
+document.addEventListener('dragstart', (e) => {
+    if (e.target.classList.contains('item') && e.target.parentNode.classList.contains('right')) {
+        e.dataTransfer.effectAllowed = 'move';
+        source = e.target;
+    }
+});
