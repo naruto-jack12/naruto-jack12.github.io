@@ -7,6 +7,8 @@
 
     <link rel="stylesheet" href="assets/css/mobile-message.css">
     <link rel="stylesheet" href="assets/css/style.css">
+
+    <script src="assets/js/html2canvas.js"></script>
     
     <style>
         @media (max-width: 1000px) {
@@ -14,140 +16,143 @@
                 display: block!important;
             }
 
-            h1 {
-                display: none;
-
-            }
-
-            .container {
+            #app {
                 display: none;
             }
         }
     </style>
 </head>
 <body>
-    <h1>课程表</h1>
-    <div class="container">
-        <div class="left" data-allow="move">
-            <div data-effect="copy" draggable="true" class="item color1">语文</div>
-            <div data-effect="copy" draggable="true" class="item color2">数学</div>
-            <div data-effect="copy" draggable="true" class="item color3">英语</div>
-            <div data-effect="copy" draggable="true" class="item color4">音乐</div>
-            <div data-effect="copy" draggable="true" class="item color5">政治</div>
-            <div data-effect="copy" draggable="true" class="item color6">历史</div>
-            <div data-effect="copy" draggable="true" class="item color7">体育</div>
-        </div>
-        <div class="right">
-            <table>
-                <!-- 列的分组 -->
-                <colgroup>
-                    <col />
-                    <col />
-                    <col />
-                    <col />
-                    <col />
-                    <col />
-                    <col />
-                    <col />
-                </colgroup>
+    <div id="app">
+        <div class="inner">
+            <div class="wrapper">
+                <h1>课程表</h1>
+                <div class="container">
+                    <div class="left" data-allow="move">
+                        <div data-effect="copy" draggable="true" class="item color1">语文</div>
+                        <div data-effect="copy" draggable="true" class="item color2">数学</div>
+                        <div data-effect="copy" draggable="true" class="item color3">英语</div>
+                        <div data-effect="copy" draggable="true" class="item color4">音乐</div>
+                        <div data-effect="copy" draggable="true" class="item color5">政治</div>
+                        <div data-effect="copy" draggable="true" class="item color6">历史</div>
+                        <div data-effect="copy" draggable="true" class="item color7">体育</div>
+                    </div>
+                    <div class="right">
+                        <table>
+                            <!-- 列的分组 -->
+                            <colgroup>
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                            </colgroup>
 
-                <thead>
-                    <tr>
-                        <td></td>
-                        <th>星期一</th>
-                        <th>星期二</th>
-                        <th>星期三</th>
-                        <th>星期四</th>
-                        <th>星期五</th>
-                        <th>星期六</th>
-                        <th>星期天</th>
-                    </tr>
-                </thead>
+                            <thead>
+                                <tr>
+                                    <td></td>
+                                    <th>星期一</th>
+                                    <th>星期二</th>
+                                    <th>星期三</th>
+                                    <th>星期四</th>
+                                    <th>星期五</th>
+                                    <th>星期六</th>
+                                    <th>星期天</th>
+                                </tr>
+                            </thead>
 
-                <tbody>
-                    <tr>
-                        <th rowspan="4" class="span">上午</th>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                    </tr>
-                    <tr>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                    </tr>
-                    <tr>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                    </tr>
-                    <tr>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                    </tr>
-                    <tr class="none">
-                        <td colspan="8"></td>
-                    </tr>
-                    <tr>
-                        <th rowspan="4" class="span">下午</th>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                    </tr>
-                    <tr>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                    </tr>
-                    <tr>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                    </tr>
-                    <tr>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                        <td data-allow="copy"></td>
-                    </tr>
-                </tbody>
-            </table>
+                            <tbody>
+                                <tr>
+                                    <th rowspan="4" class="span">上午</th>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                </tr>
+                                <tr>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                </tr>
+                                <tr>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                </tr>
+                                <tr>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                </tr>
+                                <tr class="none">
+                                    <td colspan="8"></td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="4" class="span">下午</th>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                </tr>
+                                <tr>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                </tr>
+                                <tr>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                </tr>
+                                <tr>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                    <td data-allow="copy"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="screenshotBtn"><button>保存课表截图</button></div>
         </div>
     </div>
 
     <script src="assets/js/script.js"></script>
+    <script src="assets/js/save.js"></script>
 
     <div class="mobile-message" id="mobileMessage">
         <div class="icon">📱</div>

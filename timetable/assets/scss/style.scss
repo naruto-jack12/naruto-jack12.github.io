@@ -9,11 +9,13 @@
     --theme-item5-color: #00dffd;
     --theme-item6-color: #c200fd;
     --theme-item7-color: #6de669;
+    --theme-screenshotBtn-color: #4CAF50;
 }
 
 * {
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -23,15 +25,21 @@ body {
 
 h1 {
     text-align: center;
-    margin: 20px;
+    margin-bottom: 20px;
 }
 
+.inner {
+    width: 1040px;
+    margin: auto;
+}
+
+.wrapper {
+    padding: 20px;
+}
 
 .container {
     display: flex;
     gap: 20px;
-    width: 1000px;
-    margin: auto;
 }
 
 .left {
@@ -124,4 +132,22 @@ table {
 
 .drop-over {
     background-color: var(--drop-over-color);
+}
+
+.screenshotBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    button {
+        padding: 10px 15px;
+        background-color: var(--theme-screenshotBtn-color);
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin: 20px auto;
+        text-align: center;
+        display: inline-block;
+    }
 }
