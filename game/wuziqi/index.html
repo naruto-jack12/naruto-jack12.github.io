@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五子棋</title>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <script>
+        function auto_copyright($year) {
+            var $currentdate = new Date();
+            var $currentyear = $currentdate.getFullYear();
+            var $cty = $currentyear.toString();
+            var $sty = $year.toString();
+            if ($currentyear > $year) {
+                document.write($sty + ' - ' + $cty);
+                console.log($cty);
+            } else {
+                document.write($cty);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>五子棋游戏</h1>
+            <p>黑棋与白棋轮流落子，先将五个棋子连成一线者获胜</p>
+        </header>
+        
+        <div class="game-area">
+            <div class="game-mode">
+                <button id="pvp-mode" class="active">双人对战</button>
+                <button id="pve-mode">人机对战</button>
+            </div>
+            
+            <div class="ai-level" id="ai-level">
+                <button data-level="1">初级AI</button>
+                <button data-level="2" class="active">中级AI</button>
+                <button data-level="3">高级AI</button>
+            </div>
+            
+            <div class="status" id="status">黑棋先行</div>
+            
+            <div class="board-container">
+                <div class="board" id="board"></div>
+            </div>
+            
+            <div class="game-info">
+                <div class="player-info">
+                    <div class="player-indicator black-indicator current" id="black-indicator"></div>
+                    <div>黑棋</div>
+                </div>
+                <div class="player-info">
+                    <div class="player-indicator white-indicator" id="white-indicator"></div>
+                    <div>白棋</div>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button id="restart">重新开始</button>
+                <button id="undo">悔棋</button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© <script>auto_copyright(2025);</script> 五子棋游戏</p>
+        </footer>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
