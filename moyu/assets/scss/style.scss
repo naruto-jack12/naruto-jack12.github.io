@@ -2,9 +2,10 @@
 
 :root {
     --font-color: #333;
+    --border-color: #ccc; 
 }
 
-.body {}
+// .body {}
 
 .inner {
     width: 1340px;
@@ -18,4 +19,12 @@
     font-weight: 400;
     padding: 20px;
     height: 100vh;
+}
+
+/* closest date */
+.closest-date {
+    display: inline-block;
+    border-top: var(--border-color) dashed 1px;
+    padding-top: .5em;
+    margin-top: .5em;
 }

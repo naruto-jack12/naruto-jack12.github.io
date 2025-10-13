@@ -57,7 +57,7 @@ var calendar = (function () {
   
     var festival = {
       '1-1': {
-        title: '元旦节'
+        title: '元旦'
       },
       '2-14': {
         title: '情人节'
