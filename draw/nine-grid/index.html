@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抽奖</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>抽奖</h1>
+            <p class="subtitle">点击开始，试试你的手气！</p>
+        </header>
+        
+        <div class="main-content">
+            <section class="lottery-section">
+                <h2 class="section-title">抽奖区域</h2>
+                
+                <div class="grid-container" id="grid">
+                    <!-- 九宫格项目由JS动态生成 -->
+                </div>
+                
+                <button class="draw-btn" id="drawBtn">开始抽奖</button>
+                
+                <div class="prize-management">
+                    <h3 class="section-title">奖品设置</h3>
+                    <div class="prize-list" id="prizeList">
+                        <!-- 奖品列表由JS动态生成 -->
+                    </div>
+                </div>
+            </section>
+            
+            <section class="records-section">
+                <h2 class="section-title">中奖记录</h2>
+                <div class="records-list" id="recordsList">
+                    <!-- 中奖记录由JS动态生成 -->
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <!-- 中奖结果弹窗 -->
+    <div class="result-modal" id="resultModal">
+        <div class="modal-content">
+            <h2 class="modal-title">恭喜您！</h2>
+            <p>您抽中了：</p>
+            <div class="modal-prize" id="modalPrize"></div>
+            <button class="modal-close" id="modalClose">确定</button>
+        </div>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
