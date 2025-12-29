@@ -1,0 +1,35 @@
+
+.cell {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #ddd;
+    border: 2px outset #eee;
+    user-select: none;
+}
+
+.cell.revealed {
+    border: 1px solid #999;
+    background-color: #f5f5f5;
+}
+
+.cell.flagged {
+    background-color: #ffeb3b;
+}
+
+.cell.mine {
+    background-color: #f44336;
+}
+
+.cell-1 { color: blue; }
+.cell-2 { color: green; }
+.cell-3 { color: red; }
+.cell-4 { color: darkblue; }
+.cell-5 { color: brown; }
+.cell-6 { color: teal; }
+.cell-7 { color: black; }
+.cell-8 { color: gray; }
