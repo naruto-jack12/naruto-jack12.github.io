@@ -62,6 +62,38 @@ class Minesweeper {
             e.preventDefault();
             this.handleRightClick(e);
         });
+
+        // ===== 新增：手机端长按标记地雷 =====
+    let longPressTimer = null;
+    this.boardElement.addEventListener('touchstart', (e) => {
+        if (this.gameOver) return;
+        const cell = e.target.closest('.cell');
+        if (!cell || cell.classList.contains('revealed')) return;
+
+        // 阻止默认长按菜单（如 Safari 的“拷贝”）
+        e.preventDefault();
+
+        // 启动长按计时器（通常 500ms）
+        longPressTimer = setTimeout(() => {
+            this.handleRightClick(e); // 复用右键逻辑
+        }, 500);
+    });
+
+    this.boardElement.addEventListener('touchend', () => {
+        if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+        }
+    });
+
+    this.boardElement.addEventListener('touchmove', () => {
+        if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+        }
+    });
+    // ===================================
+
         this.resetBtn.addEventListener('click', () => this.resetGame());
         this.levelSelect.addEventListener('change', () => this.changeLevel());
     }
