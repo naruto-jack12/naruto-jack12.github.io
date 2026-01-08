@@ -229,6 +229,21 @@ class Minesweeper {
 
     changeLevel() {
         const level = this.levelSelect.value;
+
+        const isMobile = window.innerWidth <= 768;
+
+        // 如果是移动端，且选择了中级（'40'）或高级（'99'），弹出提示
+        if (isMobile && (level === '40' || level === '99')) {
+            // alert('📱 中级和高级模式在手机上操作困难，建议在电脑端游玩以获得最佳体验！');
+            showToast('📱 中级和高级模式在手机上操作困难，建议在电脑端游玩！');
+
+            this.levelSelect.value = '10';
+            this.boardSize = 9;
+            this.mineCount = 10;
+            this.resetGame();
+            return; // ⚠️ 提前退出，不再执行下面的设置
+        }
+
         if (level === '10') {
             this.boardSize = 9;
             this.mineCount = 10;
@@ -241,6 +256,25 @@ class Minesweeper {
         }
         this.resetGame();
     }
+}
+
+// 在类外部或作为工具函数
+function showToast(message) {
+    let toast = document.getElementById('mobile-notice-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'mobile-notice-toast';
+        document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.style.opacity = '1';
+    toast.style.visibility = 'visible';
+    
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.5s';
+        toast.style.visibility = 'hidden';
+    }, 2500);
 }
 
 // 初始化游戏
