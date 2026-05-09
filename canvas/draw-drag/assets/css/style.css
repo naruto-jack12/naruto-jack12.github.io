@@ -1,1 +1,15 @@
-*{padding:0;margin:0}input{display:block;margin:20px auto}canvas{display:block;margin:auto;background-color:#a9a9a9}
+* {
+  padding: 0;
+  margin: 0;
+}
+
+input {
+  display: block;
+  margin: 20px auto;
+}
+
+canvas {
+  display: block;
+  margin: auto;
+  background-color: darkgrey;
+}
