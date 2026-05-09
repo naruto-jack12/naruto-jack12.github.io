@@ -139,7 +139,7 @@ body {
 // ==================== 资源分类样式 ====================
 .resource-categories {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax($grid-min-width, 1fr));
+    // grid-template-columns: repeat(auto-fit, minmax($grid-min-width, 1fr));
     gap: $grid-gap;
 }
 
