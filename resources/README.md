@@ -159,7 +159,7 @@ sass assets/scss/style.scss:assets/css/style.css --watch
 
 如发现链接失效或有更好的推荐，欢迎通过以下方式反馈：
 
-- 📮 [GitHub Issues](https://github.com/naruto-jack12/naruto-jack12.github.io/issues)
+- 📮 [GitHub Issues #2 - 页面反馈](https://github.com/naruto-jack12/naruto-jack12.github.io/issues/2)
 
 ## 📄 许可证
 

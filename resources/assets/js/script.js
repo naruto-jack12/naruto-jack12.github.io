@@ -66,7 +66,7 @@ class ResourceRenderer {
             return;
         }
 
-        // 清空容器
+        // 清空容器（包括加载动画）
         container.innerHTML = '';
 
         // 验证数据是否为数组
@@ -87,6 +87,9 @@ class ResourceRenderer {
                 container.appendChild(section);
             }
         });
+        
+        // 添加淡入动画
+        container.classList.add('fade-in');
     }
 
     /**
@@ -202,10 +205,54 @@ class ResourceRenderer {
     }
 }
 
+// ==================== 主题切换功能 ====================
+class ThemeManager {
+    constructor() {
+        this.themeToggle = document.getElementById('themeToggle');
+        this.themeIcon = this.themeToggle?.querySelector('.theme-icon');
+        this.currentTheme = localStorage.getItem('theme') || 'light';
+        
+        this.init();
+    }
+
+    init() {
+        // 应用保存的主题
+        this.applyTheme(this.currentTheme);
+        
+        // 绑定点击事件
+        if (this.themeToggle) {
+            this.themeToggle.addEventListener('click', () => this.toggleTheme());
+        }
+    }
+
+    toggleTheme() {
+        const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        this.applyTheme(newTheme);
+        this.saveTheme(newTheme);
+    }
+
+    applyTheme(theme) {
+        this.currentTheme = theme;
+        document.documentElement.setAttribute('data-theme', theme);
+        
+        // 更新图标
+        if (this.themeIcon) {
+            this.themeIcon.textContent = theme === 'light' ? '🌙' : '☀️';
+        }
+    }
+
+    saveTheme(theme) {
+        localStorage.setItem('theme', theme);
+    }
+}
+
 // ==================== 初始化 ====================
 
 // 页面加载完成后初始化渲染器
 document.addEventListener('DOMContentLoaded', () => {
+    // 初始化主题管理器
+    new ThemeManager();
+    
     // 创建渲染器实例（可以传入自定义配置）
     const renderer = new ResourceRenderer({
         // 在这里可以覆盖默认配置
