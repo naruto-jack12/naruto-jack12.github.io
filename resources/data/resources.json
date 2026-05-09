@@ -1,6 +1,6 @@
 [
     {
-        "category": "追剧观影资源",
+        "category": "影视资源",
         "items": [
             {
                 "name": "星光影视大全官网-免费在线观看高清电影电视剧-星光影视",
@@ -31,6 +31,21 @@
                 "name": "",
                 "description": "",
                 "url": ""
+            }
+        ]
+    },
+    {
+        "category": "漫画资源",
+        "items": [
+            {
+                "name": "漫画160",
+                "description": "",
+                "url": "https://www.mh160mh.com/"
+            },
+            {
+                "name": "包子漫画",
+                "description": "",
+                "url": "https://cn.baozimhcn.com/"
             }
         ]
     }
