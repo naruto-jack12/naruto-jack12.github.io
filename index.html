@@ -8,50 +8,90 @@
     <meta name="applicable-device" content="pc,mobile">
     <meta name="format-detection" content="telephone=no, email=no, address=no">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
-    <title>naruto-jack12</title>
+    <title>NARUTO-JACK12 | 个人主页</title>
 
-    <link rel="stylesheet" href="assets/css/style.css?var=2025">
+    <link rel="stylesheet" href="assets/css/style.css?var=2026">
 </head>
 <body>
+    <!-- 粒子背景 -->
+    <canvas id="particle-canvas"></canvas>
+    
+    <!-- 主题切换按钮 -->
+    <div class="theme-toggle" id="themeToggle" title="切换主题">
+        <span class="theme-icon">🌙</span>
+    </div>
     
     <div id="app">
-        <div class="logo"><img src="favicon.ico" alt="NARUTO-JACK12" width="100px"></div>
-        <br>
-        <div class="links">
-            <a href="moyu">摸鱼办</a>
-            <a href="ys">班表</a>
-            <a href="calendar">日历</a>
-            <a href="timetable">课程表</a>
-            <a href="game/MineSweeper">扫雷</a>
-            <a href="resources">免费资源导航</a>
+        <!-- Logo区域 -->
+        <div class="hero-section">
+            <div class="logo-container">
+                <div class="logo-glow"></div>
+                <img src="favicon.ico" alt="NARUTO-JACK12" class="logo-img">
+            </div>
+            <h1 class="gradient-text">NARUTO-JACK12</h1>
+            <p class="subtitle">探索 · 创造 · 分享</p>
         </div>
 
-        <div class="bg">
-            <svg id="eyes" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="googly eyes emoji that track the mouse cursor">
-                <defs>
-                    <linearGradient id="a" x1="0" x2="0" y1="46.676" y2="82.083" gradientUnits="userSpaceOnUse">
-                    <stop offset="0" style="stop-color:#424242"/>
-                    <stop offset="1" style="stop-color:#212121"/>
-                    </linearGradient>
-                    <g id="eye-shape">
-                    <path style="fill:#fafafa" d="M34.16 106.51C18.73 106.51 6.19 87.44 6.19 64s12.55-42.51 27.97-42.51S62.13 40.56 62.13 64s-12.55 42.51-27.97 42.51"/>
-                    <path style="fill:#b0bec5" d="M34.16 23.49c6.63 0 12.98 4 17.87 11.27 5.22 7.75 8.1 18.14 8.1 29.24s-2.88 21.49-8.1 29.24c-4.89 7.27-11.24 11.27-17.87 11.27s-12.98-4-17.87-11.27C11.06 85.49 8.19 75.1 8.19 64s2.88-21.49 8.1-29.24c4.89-7.27 11.23-11.27 17.87-11.27m0-4C17.61 19.49 4.19 39.42 4.19 64s13.42 44.51 29.97 44.51S64.13 88.58 64.13 64 50.71 19.49 34.16 19.49"/>
-                    </g>
-                    <path id="pupil-shape" style="fill:url(#a)" d="M25.63 59.84c-2.7-2.54-2.1-7.58 1.36-11.26.18-.19.36-.37.55-.54-1.54-.87-3.23-1.36-5.01-1.36-7.19 0-13.02 7.93-13.02 17.7s5.83 17.7 13.02 17.7 13.02-7.93 13.02-17.7c0-1.75-.19-3.45-.54-5.05-3.24 2.33-7.11 2.64-9.38.51"/>
-                </defs>
-                <use href="#eye-shape" id="eye-left"/>
-                <use href="#pupil-shape" id="pupil-left"/>
-                <g transform="translate(59.68 0)">
-                    <use href="#eye-shape" id="eye-right" />
-                    <use href="#pupil-shape" id="pupil-right"/>
-                </g>
-            </svg>
+        <!-- 链接卡片区域 -->
+        <div class="links-container">
+            <a href="resources" class="link-card" data-color="#a29bfe">
+                <div class="card-icon">🎁</div>
+                <div class="card-content">
+                    <h3>免费资源导航</h3>
+                    <p>优质资源整合</p>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+            
+            <a href="moyu" class="link-card" data-color="#ff6b6b">
+                <div class="card-icon">🐟</div>
+                <div class="card-content">
+                    <h3>摸鱼办</h3>
+                    <p>工作之余的小乐趣</p>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
 
-            <canvas id="canvas" class="point-line"></canvas>
+            <a href="ys" class="link-card" data-color="#4ecdc4">
+                <div class="card-icon">📅</div>
+                <div class="card-content">
+                    <h3>班表</h3>
+                    <p>工作时间安排</p>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="calendar" class="link-card" data-color="#45b7d1">
+                <div class="card-icon">🗓️</div>
+                <div class="card-content">
+                    <h3>日历</h3>
+                    <p>日期查询工具</p>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="timetable" class="link-card" data-color="#f9ca24">
+                <div class="card-icon">⏰</div>
+                <div class="card-content">
+                    <h3>课程表</h3>
+                    <p>学习计划管理</p>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="game/MineSweeper" class="link-card" data-color="#6c5ce7">
+                <div class="card-icon">💣</div>
+                <div class="card-content">
+                    <h3>扫雷</h3>
+                    <p>经典益智游戏</p>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
         </div>
     </div>
 
-    <script src="assets/js/script.js?var=2025"></script>
+    <script src="assets/js/script.js?var=2026"></script>
 </body>
 </html>
 

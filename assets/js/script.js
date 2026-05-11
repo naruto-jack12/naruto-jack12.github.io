@@ -1,342 +1,214 @@
-/* eyesSVG */
-const eyesSVG = document.querySelector('#eyes');
-const eyes = [
-  {
-    eye: eyesSVG.querySelector('#eye-left'),
-    pupil: eyesSVG.querySelector('#pupil-left'),
-    offsetX: 0
-  },
-  {
-    eye: eyesSVG.querySelector('#eye-right'),
-    pupil: eyesSVG.querySelector('#pupil-right'),
-    offsetX: 0
-  }
-];
+/**
+ * 粒子背景动画系统
+ */
+class ParticleSystem {
+    constructor() {
+        this.canvas = document.getElementById('particle-canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.particles = [];
+        this.particleCount = 100;
+        this.connectionDistance = 150;
+        this.mouseDistance = 200;
+        
+        this.mouse = {
+            x: null,
+            y: null,
+            radius: this.mouseDistance
+        };
 
-const updateEye = (ev, {eye, pupil, offsetX}) => {
-  const eyeRect = eye.getBoundingClientRect();
-  const centerX = eyeRect.left + eyeRect.width / 2;
-  const centerY = eyeRect.top + eyeRect.height / 2;
+        this.init();
+    }
 
-  const distX = ev.clientX - centerX;
-  const distY = ev.clientY - centerY;
+    init() {
+        this.resize();
+        this.createParticles();
+        this.animate();
+        this.addEventListeners();
+    }
 
-  const pupilRect = pupil.getBoundingClientRect();
-  const maxDistX = pupilRect.width / 2;
-  const maxDistY = pupilRect.height / 2;
+    resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+    }
 
-  const angle = Math.atan2(distY, distX);
+    createParticles() {
+        this.particles = [];
+        // 从 CSS 变量获取颜色配置
+        const rootStyles = getComputedStyle(document.documentElement);
+        const colorBase = parseInt(rootStyles.getPropertyValue('--particle-color-base')) || 100;
+        const colorRange = parseInt(rootStyles.getPropertyValue('--particle-color-range')) || 155;
+        
+        for (let i = 0; i < this.particleCount; i++) {
+            this.particles.push({
+                x: Math.random() * this.canvas.width,
+                y: Math.random() * this.canvas.height,
+                size: Math.random() * 3 + 1,
+                speedX: (Math.random() - 0.5) * 0.5,
+                speedY: (Math.random() - 0.5) * 0.5,
+                color: `rgba(${colorBase + Math.random() * colorRange}, ${colorBase + Math.random() * colorRange}, 255, ${0.3 + Math.random() * 0.5})`
+            });
+        }
+    }
 
-  const newPupilX = offsetX + Math.min(maxDistX, Math.max(-maxDistX, Math.cos(angle) * maxDistX));
-  const newPupilY = Math.min(maxDistY, Math.max(-maxDistY, Math.sin(angle) * maxDistY));
-  
-  const svgCTM = eyesSVG.getScreenCTM();
-  const scaledPupilX = newPupilX / svgCTM.a; 
-  const scaledPupilY = newPupilY / svgCTM.d;
+    drawParticles() {
+        this.particles.forEach(particle => {
+            this.ctx.beginPath();
+            this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+            this.ctx.fillStyle = particle.color;
+            this.ctx.fill();
+        });
+    }
 
-  pupil.setAttribute('transform', `translate(${scaledPupilX}, ${scaledPupilY})`);
+    connectParticles() {
+        const rootStyles = getComputedStyle(document.documentElement);
+        const connectionColor = rootStyles.getPropertyValue('--connection-color').trim() || 'rgba(100, 150, 255, 0.2)';
+        
+        for (let i = 0; i < this.particles.length; i++) {
+            for (let j = i; j < this.particles.length; j++) {
+                const dx = this.particles[i].x - this.particles[j].x;
+                const dy = this.particles[i].y - this.particles[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < this.connectionDistance) {
+                    const opacity = 1 - (distance / this.connectionDistance);
+                    this.ctx.beginPath();
+                    this.ctx.strokeStyle = connectionColor.replace('0.2', (opacity * 0.2).toFixed(2));
+                    this.ctx.lineWidth = 1;
+                    this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
+                    this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
+                    this.ctx.stroke();
+                }
+            }
+        }
+    }
+
+    updateParticles() {
+        this.particles.forEach(particle => {
+            // 鼠标交互
+            if (this.mouse.x != null && this.mouse.y != null) {
+                const dx = this.mouse.x - particle.x;
+                const dy = this.mouse.y - particle.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < this.mouse.radius) {
+                    const forceDirectionX = dx / distance;
+                    const forceDirectionY = dy / distance;
+                    const force = (this.mouse.radius - distance) / this.mouse.radius;
+                    const directionX = forceDirectionX * force * 2;
+                    const directionY = forceDirectionY * force * 2;
+
+                    particle.x -= directionX;
+                    particle.y -= directionY;
+                }
+            }
+
+            // 移动粒子
+            particle.x += particle.speedX;
+            particle.y += particle.speedY;
+
+            // 边界检测
+            if (particle.x < 0 || particle.x > this.canvas.width) {
+                particle.speedX = -particle.speedX;
+            }
+            if (particle.y < 0 || particle.y > this.canvas.height) {
+                particle.speedY = -particle.speedY;
+            }
+        });
+    }
+
+    animate() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.updateParticles();
+        this.drawParticles();
+        this.connectParticles();
+        requestAnimationFrame(() => this.animate());
+    }
+
+    addEventListeners() {
+        window.addEventListener('resize', () => {
+            this.resize();
+            this.createParticles();
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            this.mouse.x = e.x;
+            this.mouse.y = e.y;
+        });
+
+        window.addEventListener('mouseout', () => {
+            this.mouse.x = null;
+            this.mouse.y = null;
+        });
+    }
 }
 
-// Pupil position starts off-centre on the X axis
-const calcOffset = () => {
-  for (const props of eyes) {
-    props.pupil.removeAttribute('transform');
-    const eyeRect = props.eye.getBoundingClientRect();
-    const pupilRect = props.pupil.getBoundingClientRect();
-    props.offsetX = ((eyeRect.right - pupilRect.right) - (pupilRect.left - eyeRect.left)) / 2;
-  }
-}
-calcOffset();
+// ==================== 主题切换功能 ====================
+class ThemeManager {
+    constructor() {
+        this.themeToggle = document.getElementById('themeToggle');
+        this.themeIcon = this.themeToggle?.querySelector('.theme-icon');
+        this.currentTheme = localStorage.getItem('theme') || 'dark';
+        
+        this.init();
+    }
 
-globalThis.addEventListener('resize', () => {
-  calcOffset();
+    init() {
+        // 应用保存的主题
+        this.applyTheme(this.currentTheme);
+        
+        // 绑定点击事件
+        if (this.themeToggle) {
+            this.themeToggle.addEventListener('click', () => this.toggleTheme());
+        }
+    }
+
+    toggleTheme() {
+        const newTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
+        this.applyTheme(newTheme);
+        this.saveTheme(newTheme);
+    }
+
+    applyTheme(theme) {
+        this.currentTheme = theme;
+        document.documentElement.setAttribute('data-theme', theme);
+        
+        // 更新图标
+        if (this.themeIcon) {
+            this.themeIcon.textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
+        
+        console.log(`🎨 主题已切换至: ${theme === 'dark' ? '深色' : '浅色'}`);
+    }
+
+    saveTheme(theme) {
+        localStorage.setItem('theme', theme);
+    }
+}
+
+// ==================== 卡片颜色动态设置 ====================
+function setupCardColors() {
+    const cards = document.querySelectorAll('.link-card');
+    cards.forEach(card => {
+        const color = card.getAttribute('data-color');
+        card.addEventListener('mouseenter', () => {
+            card.style.boxShadow = `0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px ${color}40`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.boxShadow = '';
+        });
+    });
+}
+
+// ==================== 初始化 ====================
+document.addEventListener('DOMContentLoaded', () => {
+    // 启动主题管理器
+    new ThemeManager();
+    
+    // 启动粒子系统
+    new ParticleSystem();
+    
+    // 设置卡片颜色
+    setupCardColors();
+    
+    console.log('🎨 NARUTO-JACK12 个人主页已加载');
 });
-
-let frame = 0;
-globalThis.addEventListener('mousemove', (ev) => {
-  cancelAnimationFrame(frame);
-  frame = requestAnimationFrame(() => {
-    for (const eye of eyes) {
-      updateEye(ev, eye);
-    }
-  });
-});
-
-/* ------------------------------------------------------------------- */
-/* point-line */
-function canvas() {
-    // JavaScript Document
-    var requestAnimationFrame = window.requestAnimationFrame || function (callback) {
-        window.setTimeout(callback, 1000 / 60)
-    };
-    var canvas = document.getElementsByTagName("canvas")[0];
-    var ctx = canvas.getContext("2d");
-    var maximumPossibleDistance;
-    var centerX;
-    var centerY;
-    var mousePositionX;
-    var mousePositionY;
-    var mouseElement;
-    var isRunning;
-    var lines = 0;
-    var objects = [];
-    var initAnimation = function () {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        maximumPossibleDistance = Math.round(Math.sqrt((canvas.width * canvas.width) + (canvas.height * canvas.height)));
-        centerX = Math.floor(canvas.width / 2);
-        centerY = Math.floor(canvas.height / 2);
-        objects.length = 0;
-        clearCanvas();
-        createParticles();
-    };
-    window.addEventListener("resize", function () {
-        initAnimation();
-    }, false);
-    var options = {
-        particlesNumber: 100,
-        initialSize: 3,
-        moveLimit: 50,
-        durationMin: 50,
-        durationMax: 300,
-        drawConnections: true,
-        mouseInteractionDistance: 200,
-        mouseGravity: true,
-        drawMouseConnections: true,
-        red: Math.floor(Math.random() * 256 + 1),
-        green: Math.floor(Math.random() * 255),
-        blue: Math.floor(Math.random() * 256),
-        opacity: 1,
-        connectionRed: Math.floor(Math.random() * 256 + 1),
-        connectionGreen: Math.floor(Math.random() * 255),
-        connectionBlue: Math.floor(Math.random() * 256),
-        connectionOpacity: 0.1,
-        mouseConnectionRed: Math.floor(Math.random() * 256 + 1),
-        mouseConnectionGreen: Math.floor(Math.random() * 255),
-        mouseConnectionBlue: Math.floor(Math.random() * 256),
-        mouseConnectionOpacity: 0.1
-    }
-    // ----------------------------------------------------
-    // Helper functions //
-    //-----------------------------------------------------
-    var getRandomBetween = function (a, b) {
-        return Math.floor(Math.random() * b) + a;
-    };
-    var hitTest = function (object1, object2) {
-        if ((object1.positionX < object2.positionX + object2.size) && (object1.positionX + object2.size > object2.positionX) &&
-            (object1.positionY < object2.positionY + object2.size) && (object1.positionY > object2.positionY)) {
-            return true;
-        } else {
-            return false;
-        };
-    };
-    // Get distance between particles by using Pythagorean theorem
-    var getDistance = function (element1, element2) {
-        var difX = Math.round(Math.abs(element1.positionX - element2.positionX));
-        var difY = Math.round(Math.abs(element1.positionY - element2.positionY));
-        return Math.round(Math.sqrt((difX * difX) + (difY * difY)));
-    };
-    // ----------------------------------------------------
-    // Particle constructor function //
-    //-----------------------------------------------------
-    function Particle(positionX, positionY, size, red, green, blue, opacity) {
-        this.positionX = positionX;
-        this.positionY = positionY;
-        this.size = size;
-        this.duration = getRandomBetween(options.durationMin, options.durationMax);
-        this.limit = options.moveLimit
-        this.timer = 0;
-        this.red = red
-        this.green = green
-        this.blue = blue
-        this.opacity = opacity
-        this.color = "rgba(" + this.red + "," + this.green + "," + this.blue + ",+" + this.opacity + ")";
-    };
-    // ----------------------------------------------------
-    // Mouse Particle constructor function //
-    //-----------------------------------------------------
-    function MouseParticle(positionX, positionY, size, red, green, blue, opacity) {
-        this.positionX = mousePositionX;
-        this.positionY = mousePositionY;
-        this.size = size;
-        this.red = red
-        this.green = green
-        this.blue = blue
-        this.opacity = opacity
-        this.color = "rgba(" + this.red + "," + this.green + "," + this.blue + ",+" + this.opacity + ")";
-    };
-    Particle.prototype.animateTo = function (newX, newY) {
-        var duration = this.duration;
-        var animatePosition = function (newPosition, currentPosition) {
-            if (newPosition > currentPosition) {
-                var step = (newPosition - currentPosition) / duration;
-                newPosition = currentPosition + step;
-            } else {
-                var step = (currentPosition - newPosition) / duration;
-                newPosition = currentPosition - step;
-            };
-            return newPosition;
-        }
-        this.positionX = animatePosition(newX, this.positionX)
-        this.positionY = animatePosition(newY, this.positionY)
-        // generate new vector
-        if (this.timer == this.duration) {
-            this.calculateVector();
-            this.timer = 0;
-        } else {
-            this.timer++;
-        }
-    };
-    Particle.prototype.updateColor = function () {
-        this.color = "rgba(" + this.red + "," + this.green + "," + this.blue + ",+" + this.opacity + ")";
-    };
-    Particle.prototype.calculateVector = function () {
-        var distance
-        var newPosition = {};
-        var particle = this;
-        var getCoordinates = function () {
-            newPosition.positionX = getRandomBetween(0, window.innerWidth);
-            newPosition.positionY = getRandomBetween(0, window.innerHeight);
-            distance = getDistance(particle, newPosition);
-        };
-        while ((typeof distance === "undefined") || (distance > this.limit)) {
-            getCoordinates();
-        }
-        this.vectorX = newPosition.positionX;
-        this.vectorY = newPosition.positionY;
-    };
-    Particle.prototype.testInteraction = function () {
-        if (!options.drawConnections) return;
-        var closestElement;
-        var distanceToClosestElement = maximumPossibleDistance;
-        for (var x = 0; x < objects.length; x++) {
-            var testedObject = objects[x];
-            var distance = getDistance(this, testedObject)
-            if ((distance < distanceToClosestElement) && (testedObject !== this)) {
-                distanceToClosestElement = distance;
-                closestElement = testedObject;
-            }
-        };
-        if (closestElement) {
-            ctx.beginPath();
-            ctx.moveTo(this.positionX + this.size / 2, this.positionY + this.size / 2);
-            ctx.lineTo(closestElement.positionX + closestElement.size * 0.5, closestElement.positionY + closestElement.size * 0.5);
-            ctx.strokeStyle = "rgba(" + options.connectionRed + "," + options.connectionGreen + "," + options.connectionBlue + "," + options.connectionOpacity + ")";
-            ctx.stroke();
-            lines++
-        }
-    };
-    MouseParticle.prototype.testInteraction = function () {
-        if (options.mouseInteractionDistance === 0) return;
-        var closestElements = []
-        var distanceToClosestElement = maximumPossibleDistance;
-        for (var x = 0; x < objects.length; x++) {
-            var testedObject = objects[x];
-            var distance = getDistance(this, testedObject)
-            if ((distance < options.mouseInteractionDistance) && (testedObject !== this)) {
-                closestElements.push(objects[x])
-            }
-        }
-        for (var x = 0; x < closestElements.length; x++) {
-            if (options.drawMouseConnections) {
-                var element = closestElements[x]
-                ctx.beginPath();
-                ctx.moveTo(this.positionX, this.positionY);
-                ctx.lineTo(element.positionX + element.size * 0.5, element.positionY + element.size * 0.5);
-                ctx.strokeStyle = "rgba(" + options.mouseConnectionRed + "," + options.mouseConnectionGreen + "," + options.mouseConnectionBlue + "," + options.mouseConnectionOpacity + ")";
-                ctx.stroke();
-                lines++
-            }
-            if (options.mouseGravity) {
-                closestElements[x].vectorX = this.positionX;
-                closestElements[x].vectorY = this.positionY;
-            }
-        }
-    };
-    Particle.prototype.updateAnimation = function () {
-        this.animateTo(this.vectorX, this.vectorY);
-        this.testInteraction();
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.positionX, this.positionY, this.size, this.size);
-    };
-    MouseParticle.prototype.updateAnimation = function () {
-        this.positionX = mousePositionX;
-        this.positionY = mousePositionY;
-        this.testInteraction();
-    };
-    var createParticles = function () {
-        // create mouse particle
-        mouseElement = new MouseParticle(0, 0, options.initialSize, 255, 255, 255)
-        for (var x = 0; x < options.particlesNumber; x++) {
-            var randomX = Math.floor((Math.random() * window.innerWidth) + 1);
-            var randomY = Math.floor((Math.random() * window.innerHeight) + 1);
-            var particle = new Particle(randomX, randomY, options.initialSize, options.red, options.green, options.blue, options.opacity)
-            particle.calculateVector()
-            objects.push(particle)
-        }
-    };
-    var updatePosition = function () {
-        for (var x = 0; x < objects.length; x++) {
-            objects[x].updateAnimation()
-        }
-        // handle mouse 
-        mouseElement.updateAnimation()
-    };
-    window.onmousemove = function (e) {
-        mousePositionX = e.clientX;
-        mousePositionY = e.clientY;
-    }
-    var clearCanvas = function () {
-        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
-    };
-    var stopAnimation = function () {
-        window.cancelAnimationFrame(myAnimation)
-        isRunning = false;
-    };
-    // ----------------------------------------------------
-    // FPS //
-    //-----------------------------------------------------
-    var lastCalledTime
-    var fps
-    var averageFps;
-    var averageFpsTemp = 0;
-    var averageFpsCounter = 0;
-
-    function requestFps() {
-        if (!lastCalledTime) {
-            lastCalledTime = Date.now();
-            fps = 0;
-            return;
-        }
-        delta = (new Date().getTime() - lastCalledTime) / 1000;
-        lastCalledTime = Date.now();
-        fps = Math.floor(1 / delta);
-        averageFpsTemp = averageFpsTemp + fps;
-        averageFpsCounter++;
-        if (averageFpsCounter === 5) {
-            averageFps = Math.floor(averageFpsTemp / 5)
-            averageFpsCounter = 0;
-            averageFpsTemp = 0;
-        }
-        if (!averageFps) {
-            return;
-        } else if (averageFps < 10) {}
-    }
-    // ----------------------------------------------------
-    // Init! //
-    //-----------------------------------------------------
-    var loop = function () {
-        clearCanvas();
-        updatePosition();
-        // ctx.fillStyle = "transparent";
-        ctx.fillStyle = "#333";
-        // ctx.fillText("FPS: " + fps + " lines: " + lines + " Average FPS: " + averageFps, 10, 20);
-        lines = 0;
-        myAnimation = requestAnimationFrame(loop);
-        isRunning = true;
-        // requestFps();
-    };
-    initAnimation();
-    loop();
-}
-canvas();
