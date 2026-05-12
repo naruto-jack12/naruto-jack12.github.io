@@ -2,4 +2,9 @@
 
 
 
-[摸鱼办](https://naruto-jack12.github.io/moyu) [班表](https://naruto-jack12.github.io/ys) [日历](https://naruto-jack12.github.io/calendar) [课程表](https://naruto-jack12.github.io/timetable) [扫雷](https://naruto-jack12.github.io/game/MineSweeper) [免费资源导航](https://naruto-jack12.github.io/resources)
+[免费资源导航](https://naruto-jack12.github.io/resources)
+[摸鱼办](https://naruto-jack12.github.io/moyu) 
+[班表](https://naruto-jack12.github.io/ys) 
+[日历](https://naruto-jack12.github.io/calendar) 
+[课程表](https://naruto-jack12.github.io/timetable) 
+[扫雷](https://naruto-jack12.github.io/game/MineSweeper) 
