@@ -185,18 +185,47 @@ class ThemeManager {
     }
 }
 
-// ==================== 卡片颜色动态设置 ====================
-function setupCardColors() {
-    const cards = document.querySelectorAll('.link-card');
-    cards.forEach(card => {
-        const color = card.getAttribute('data-color');
-        card.addEventListener('mouseenter', () => {
-            card.style.boxShadow = `0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px ${color}40`;
-        });
-        card.addEventListener('mouseleave', () => {
-            card.style.boxShadow = '';
-        });
+// ==================== 从 JSON 加载链接卡片 ====================
+function setupCardHover(card, color) {
+    card.addEventListener('mouseenter', () => {
+        card.style.boxShadow = `0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px ${color}40`;
     });
+    card.addEventListener('mouseleave', () => {
+        card.style.boxShadow = '';
+    });
+}
+
+function createCard(item) {
+    const a = document.createElement('a');
+    a.href = item.href;
+    a.className = 'link-card';
+    a.setAttribute('data-color', item.color);
+    a.innerHTML = `
+        <div class="card-icon">${item.icon}</div>
+        <div class="card-content">
+            <h3>${item.title}</h3>
+            <p>${item.desc}</p>
+        </div>
+        <div class="card-arrow">→</div>
+    `;
+    setupCardHover(a, item.color);
+    return a;
+}
+
+async function loadLinks() {
+    const container = document.querySelector('.links-container');
+    if (!container) return;
+
+    try {
+        const res = await fetch('assets/data/links.json');
+        const data = await res.json();
+        container.innerHTML = '';
+        data.forEach(item => {
+            container.appendChild(createCard(item));
+        });
+    } catch (err) {
+        console.error('❌ 加载链接数据失败:', err);
+    }
 }
 
 // ==================== 初始化 ====================
@@ -207,8 +236,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // 启动粒子系统
     new ParticleSystem();
     
-    // 设置卡片颜色
-    setupCardColors();
+    // 加载链接卡片
+    loadLinks();
     
     console.log('🎨 NARUTO-JACK12 个人主页已加载');
 });

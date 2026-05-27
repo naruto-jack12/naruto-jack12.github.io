@@ -1,0 +1,65 @@
+[
+    {
+        "href": "resources",
+        "icon": "🎁",
+        "title": "免费资源导航",
+        "desc": "优质资源整合",
+        "color": "#a29bfe"
+    },
+    {
+        "href": "moyu",
+        "icon": "🐟",
+        "title": "摸鱼办",
+        "desc": "工作之余的小乐趣",
+        "color": "#ff6b6b"
+    },
+    {
+        "href": "ys",
+        "icon": "📅",
+        "title": "班表",
+        "desc": "工作时间安排",
+        "color": "#4ecdc4"
+    },
+    {
+        "href": "timetable",
+        "icon": "⏰",
+        "title": "课程表",
+        "desc": "学习计划管理",
+        "color": "#f9ca24"
+    },
+    {
+        "href": "watermark-remover",
+        "icon": "🎨",
+        "title": "去水印",
+        "desc": "简单图片去水印工具",
+        "color": "#00b894"
+    },
+    {
+        "href": "pdf-tool",
+        "icon": "📄",
+        "title": "PDF工具",
+        "desc": "PDF文档处理工具箱",
+        "color": "#e17055"
+    },
+    {
+        "href": "game/MineSweeper",
+        "icon": "💣",
+        "title": "扫雷",
+        "desc": "经典益智游戏",
+        "color": "#6c5ce7"
+    },
+    {
+        "href": "game/muyu",
+        "icon": "📿",
+        "title": "电子木鱼",
+        "desc": "赛博积德，功德+1",
+        "color": "#fdcb6e"
+    },
+    {
+        "href": "game/wuziqi",
+        "icon": "⚫",
+        "title": "五子棋",
+        "desc": "人机对战五子棋",
+        "color": "#636e72"
+    }
+]
