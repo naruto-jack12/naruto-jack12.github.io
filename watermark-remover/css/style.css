@@ -365,6 +365,30 @@ html, body {
   overflow-y: auto;
 }
 
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-secondary);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.panel-header h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.panel-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 .panel-section {
   padding: 13px 16px;
   border-bottom: 1px solid var(--border);
@@ -631,6 +655,59 @@ html, body {
   font-variant-numeric: tabular-nums;
 }
 
+/* ===== Panel Header (for mobile drawer) ===== */
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-secondary);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.panel-header h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.panel-header .btn-icon {
+  width: 30px;
+  height: 30px;
+  display: none;
+  padding: 0;
+  border: none;
+  background: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.panel-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ===== Panel Bottom (fixed action bar on mobile) ===== */
+/* ===== Panel Bottom (fixed action bar on mobile) ===== */
+.panel-bottom {
+  display: none;
+  flex-direction: row;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+}
+
+.panel-bottom .btn {
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
 /* ===== AI Panel ===== */
 #aiStatus {
   word-break: break-all;
@@ -736,7 +813,71 @@ html, body {
     font-size: 15px;
   }
   .panel {
-    width: 200px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-height: 45vh;
+    border-left: none;
+    border-top: 1px solid var(--border);
+    border-radius: 16px 16px 0 0;
+    z-index: 150;
+    transform: translateY(calc(100% - 48px));
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  }
+  .panel.expanded {
+    transform: translateY(0);
+  }
+  .panel-header {
+    cursor: pointer;
+    padding: 10px 12px;
+    border-radius: 16px 16px 0 0;
+    flex-direction: column;
+    gap: 5px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .panel-header::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 4px;
+    background: var(--text-muted);
+    border-radius: 2px;
+    opacity: 0.5;
+    margin: 0 auto;
+  }
+  .panel-header h3 {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .panel-header .btn-icon {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform-origin: center center;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    color: var(--text-muted);
+  }
+  .panel.expanded .panel-header .btn-icon {
+    transform: translateY(-50%) rotate(180deg);
+  }
+  .panel-scroll {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .panel-section {
+    padding: 8px 12px;
+  }
+  .panel-section-title {
+    margin-bottom: 6px;
   }
   .toolbar {
     width: 56px;
@@ -775,11 +916,7 @@ html, body {
     font-size: 14px;
   }
   .panel {
-    width: 100%;
-    max-height: 180px;
-    border-left: none;
-    border-top: 1px solid var(--border);
-    overflow-y: auto;
+    max-height: 40vh;
   }
   .panel-section {
     padding: 8px 12px;
@@ -864,7 +1001,7 @@ html, body {
     display: none;
   }
   .panel {
-    max-height: 160px;
+    max-height: 35vh;
   }
   .panel-section {
     padding: 6px 10px;

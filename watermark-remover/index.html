@@ -94,81 +94,89 @@
         </div>
       </section>
 
-      <aside class="panel">
-        <div class="panel-notice">
-          <svg viewBox="0 0 16 16" width="14" height="14" fill="none" style="flex-shrink:0">
-            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/>
-            <path d="M8 4.5v4M8 10.5v.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-          </svg>
-          <span>只能做单一颜色背景图片处理，复杂背景图片可能会有问题</span>
+      <aside class="panel" id="panel">
+        <div class="panel-header" id="panelHeader">
+          <h3>操作面板</h3>
+          <button class="btn-icon" id="btnTogglePanel" title="收起/展开">
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 10l4-4 4 4"/></svg>
+          </button>
         </div>
-        <div class="panel-section">
-          <div class="panel-section-title">选择工具</div>
-          <div class="panel-row">
-            <button class="btn btn-sm btn-primary" id="btnClearSel" disabled>清除选区</button>
+        <div class="panel-scroll">
+          <div class="panel-notice">
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="none" style="flex-shrink:0">
+              <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M8 4.5v4M8 10.5v.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+            <span>只能做单一颜色背景图片处理，复杂背景图片可能会有问题</span>
           </div>
-          <div class="slider-group" style="margin-top:8px">
-            <label>画笔大小 <span id="brushSizeLabel">20</span></label>
-            <input type="range" id="brushSize" min="5" max="100" value="20" step="1"
-                   oninput="document.getElementById('brushSizeLabel').textContent=this.value">
-          </div>
-          <div class="slider-group" style="margin-top:8px;display:none" id="cloneSizeGroup">
-            <label>仿制大小 <span id="cloneSizeLabel">30</span></label>
-            <input type="range" id="cloneSize" min="10" max="150" value="30" step="1"
-                   oninput="document.getElementById('cloneSizeLabel').textContent=this.value">
-          </div>
-        </div>
-
-        <div class="panel-section">
-          <div class="panel-section-title">去除方式</div>
-          <div class="panel-row">
-            <button class="btn btn-sm btn-primary" id="btnApplyInpaint" disabled>智能填充</button>
-            <button class="btn btn-sm" id="btnApplyPatch" disabled>纹理填充</button>
-          </div>
-          <div class="panel-row">
-            <button class="btn btn-sm" id="btnApplyFast" disabled>快速修复</button>
-            <button class="btn btn-sm" id="btnApplyBlur" disabled>模糊</button>
-          </div>
-          <div class="slider-group" style="margin-top:8px">
-            <label>修复半径 <span id="radiusLabel">5</span></label>
-            <input type="range" id="inpaintRadius" min="2" max="15" value="5" step="1"
-                   oninput="document.getElementById('radiusLabel').textContent=this.value">
-          </div>
-        </div>
-
-        <div class="panel-section">
-          <div class="panel-section-title">AI 修复</div>
-          <div class="panel-row">
-            <button class="btn btn-sm btn-primary" id="btnApplyAI" disabled>检测中...</button>
-          </div>
-          <div id="aiProgressWrap" style="display:none;margin-top:6px">
-            <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden">
-              <div id="aiProgress" style="height:100%;width:0%;background:var(--accent);transition:width .2s"></div>
+          <div class="panel-section">
+            <div class="panel-section-title">选择工具</div>
+            <div class="panel-row">
+              <button class="btn btn-sm btn-primary" id="btnClearSel" disabled>清除选区</button>
+            </div>
+            <div class="slider-group" style="margin-top:8px">
+              <label>画笔大小 <span id="brushSizeLabel">20</span></label>
+              <input type="range" id="brushSize" min="5" max="100" value="20" step="1"
+                     oninput="document.getElementById('brushSizeLabel').textContent=this.value">
+            </div>
+            <div class="slider-group" style="margin-top:8px;display:none" id="cloneSizeGroup">
+              <label>仿制大小 <span id="cloneSizeLabel">30</span></label>
+              <input type="range" id="cloneSize" min="10" max="150" value="30" step="1"
+                     oninput="document.getElementById('cloneSizeLabel').textContent=this.value">
             </div>
           </div>
-          <div style="font-size:11px;color:var(--text-secondary);margin-top:4px" id="aiStatus">检测模型...</div>
-        </div>
 
-        <div class="panel-section">
-          <div class="panel-section-title">操作历史</div>
-          <div class="panel-row">
-            <button class="btn btn-sm" id="btnUndo" disabled>撤销</button>
-            <button class="btn btn-sm" id="btnRedo" disabled>重做</button>
+          <div class="panel-section">
+            <div class="panel-section-title">去除方式</div>
+            <div class="panel-row">
+              <button class="btn btn-sm btn-primary" id="btnApplyInpaint" disabled>智能填充</button>
+              <button class="btn btn-sm" id="btnApplyPatch" disabled>纹理填充</button>
+            </div>
+            <div class="panel-row">
+              <button class="btn btn-sm" id="btnApplyFast" disabled>快速修复</button>
+              <button class="btn btn-sm" id="btnApplyBlur" disabled>模糊</button>
+            </div>
+            <div class="slider-group" style="margin-top:8px">
+              <label>修复半径 <span id="radiusLabel">5</span></label>
+              <input type="range" id="inpaintRadius" min="2" max="15" value="5" step="1"
+                     oninput="document.getElementById('radiusLabel').textContent=this.value">
+            </div>
           </div>
-        </div>
 
-        <div class="panel-section">
-          <div class="panel-section-title">使用提示</div>
-          <div style="font-size:12px;color:var(--text-secondary);line-height:1.7">
-            <p>1. 选择水印区域</p>
-            <p>2. 选择去除方式</p>
-            <p>3. 点击应用处理</p>
-            <p style="margin-top:6px;opacity:0.7">
-              按住 <kbd style="background:var(--bg-card);border:1px solid var(--border);border-radius:2px;padding:0 4px">对比</kbd> 查看原图
-            </p>
-            <p style="opacity:0.7">
-              仿制图章: <kbd style="background:var(--bg-card);border:1px solid var(--border);border-radius:2px;padding:0 4px">Ctrl+点击</kbd> 设源点
-            </p>
+          <div class="panel-section">
+            <div class="panel-section-title">AI 修复</div>
+            <div class="panel-row">
+              <button class="btn btn-sm btn-primary" id="btnApplyAI" disabled>检测中...</button>
+            </div>
+            <div id="aiProgressWrap" style="display:none;margin-top:6px">
+              <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+                <div id="aiProgress" style="height:100%;width:0%;background:var(--accent);transition:width .2s"></div>
+              </div>
+            </div>
+            <div style="font-size:11px;color:var(--text-secondary);margin-top:4px" id="aiStatus">检测模型...</div>
+          </div>
+
+          <div class="panel-section">
+            <div class="panel-section-title">操作历史</div>
+            <div class="panel-row">
+              <button class="btn btn-sm" id="btnUndo" disabled>撤销</button>
+              <button class="btn btn-sm" id="btnRedo" disabled>重做</button>
+            </div>
+          </div>
+
+          <div class="panel-section">
+            <div class="panel-section-title">使用提示</div>
+            <div style="font-size:12px;color:var(--text-secondary);line-height:1.7">
+              <p>1. 选择水印区域</p>
+              <p>2. 选择去除方式</p>
+              <p>3. 点击应用处理</p>
+              <p style="margin-top:6px;opacity:0.7">
+                按住 <kbd style="background:var(--bg-card);border:1px solid var(--border);border-radius:2px;padding:0 4px">对比</kbd> 查看原图
+              </p>
+              <p style="opacity:0.7">
+                仿制图章: <kbd style="background:var(--bg-card);border:1px solid var(--border);border-radius:2px;padding:0 4px">Ctrl+点击</kbd> 设源点
+              </p>
+            </div>
           </div>
         </div>
       </aside>

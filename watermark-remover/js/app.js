@@ -21,6 +21,7 @@ const App = (() => {
     btnOpen: null, btnDownload: null, btnToggleOrig: null,
     zoomIn: null, zoomOut: null, zoomLevel: null,
     statusBar: null, processingOverlay: null,
+    panel: null, panelHeader: null, btnTogglePanel: null,
   };
 
   function init() {
@@ -67,6 +68,9 @@ const App = (() => {
     DOM.zoomLevel = document.getElementById('zoomLevel');
     DOM.statusBar = document.getElementById('statusBar');
     DOM.processingOverlay = document.getElementById('processingOverlay');
+    DOM.panel = document.getElementById('panel');
+    DOM.panelHeader = document.getElementById('panelHeader');
+    DOM.btnTogglePanel = document.getElementById('btnTogglePanel');
   }
 
   function getTouchXY(e) {
@@ -128,6 +132,16 @@ const App = (() => {
     DOM.btnDownload.addEventListener('click', downloadResult);
     DOM.btnTheme.addEventListener('click', toggleTheme);
 
+    // Panel toggle (mobile bottom drawer)
+    DOM.panelHeader.addEventListener('click', togglePanel);
+    DOM.btnTogglePanel.addEventListener('click', (e) => { e.stopPropagation(); togglePanel(); });
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth > 768) return;
+      if (DOM.panel.classList.contains('expanded') && !DOM.panel.contains(e.target)) {
+        DOM.panel.classList.remove('expanded');
+      }
+    });
+
     DOM.btnToggleOrig.addEventListener('mousedown', () => { if (editor) { editor.showOriginal = true; editor.render(); } });
     DOM.btnToggleOrig.addEventListener('mouseup', () => { if (editor) { editor.showOriginal = false; editor.render(); } });
     DOM.btnToggleOrig.addEventListener('mouseleave', () => { if (editor) { editor.showOriginal = false; editor.render(); } });
@@ -168,6 +182,10 @@ const App = (() => {
     });
   }
 
+  function togglePanel() {
+    DOM.panel.classList.toggle('expanded');
+  }
+
   function initEditor() {
     editor = new Editor.Editor(DOM.canvas, DOM.overlay);
     editor.brushSize = parseInt(DOM.brushSize.value);
@@ -176,6 +194,9 @@ const App = (() => {
   }
 
   function setTool(tool) {
+    if (window.innerWidth <= 768 && DOM.panel) {
+      DOM.panel.classList.add('expanded');
+    }
     activeTool = tool;
     cloneSourceSet = false;
     if (editor) {
