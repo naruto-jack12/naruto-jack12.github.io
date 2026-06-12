@@ -973,14 +973,14 @@ body::after {
     align-items: center;
     justify-content: space-between;
     padding: 6px 10px;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--item-bg);
     border-radius: 8px;
     font-size: 0.8rem;
     color: var(--text-secondary);
 }
 
 .history-item .time {
-    color: rgba(255, 255, 255, 0.25);
+    color: color-mix(in srgb, var(--text-secondary) 60%, transparent);
     font-size: 0.7rem;
     flex-shrink: 0;
     margin-left: 8px;
