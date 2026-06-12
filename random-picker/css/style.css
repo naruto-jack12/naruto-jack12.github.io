@@ -1170,17 +1170,17 @@ body::after {
 .custom-preset-item .delete-preset-btn {
     padding: 5px 10px;
     border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border);
     background: transparent;
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--text-secondary);
     font-size: 12px;
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .custom-preset-item .delete-preset-btn:hover {
-    border-color: rgba(233, 69, 96, 0.3);
-    background: rgba(233, 69, 96, 0.1);
+    border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
     color: var(--accent);
 }
 
