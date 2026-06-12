@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>随机选择器</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="icon">🎯</span>
+            <h1>随机选择器</h1>
+            <p>添加选项，让命运来决定吧</p>
+        </div>
+
+        <div class="result-area" id="resultArea">
+            <span class="result-placeholder" id="resultDisplay">等待选择...</span>
+            <div class="particles-container" id="particlesContainer"></div>
+        </div>
+
+        <div class="input-group">
+            <input type="text" id="inputField" placeholder="输入选项，逗号分隔可多项添加" autocomplete="off" maxlength="200">
+            <button class="btn btn-add" id="btnAdd">＋ 添加</button>
+        </div>
+
+        <div class="preset-row">
+            <span class="preset-hint">快捷预设：</span>
+            <button class="btn-preset" data-preset="lunch">🍱 午餐</button>
+            <button class="btn-preset" data-preset="dice">🎲 骰子</button>
+            <button class="btn-preset" data-preset="yesno">✅ 是否</button>
+            <button class="btn-preset" data-preset="drink">🥤 饮品</button>
+        </div>
+
+        <div class="custom-presets" id="customPresets"></div>
+
+        <div class="btn-row">
+            <button class="btn btn-select" id="btnSelect" disabled>🎰 开始选择</button>
+            <button class="btn btn-clear" id="btnClear" disabled>🗑️ 清空</button>
+        </div>
+
+        <div class="options-label">
+            <span>📋 选项列表</span>
+            <span class="count-badge" id="countBadge">0</span>
+        </div>
+        <ul class="options-list" id="optionsList"></ul>
+
+        <div class="options-actions">
+            <button class="btn-preset-action" id="savePresetBtn">💾 保存为预设</button>
+            <button class="btn-preset-action" id="managePresetBtn">📁 管理预设</button>
+        </div>
+
+        <div class="extra-bar" id="extraBar">
+            <div class="settings-row">
+                <div class="setting-item">
+                    <label for="count">抽取数量</label>
+                    <div class="count-control">
+                        <button class="count-btn" id="countDown">−</button>
+                        <input type="number" id="count" value="1" min="1" max="99">
+                        <button class="count-btn" id="countUp">+</button>
+                    </div>
+                </div>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="allowDuplicates">
+                    <span class="checkbox-custom"></span>
+                    允许重复
+                </label>
+                <button class="btn btn-copy" id="copyBtn">📋 复制</button>
+            </div>
+        </div>
+
+        <div class="history-area" id="historyArea" style="display:none;">
+            <div class="history-header">
+                <span>📜 历史记录</span>
+                <span class="history-count" id="historyCount">0</span>
+            </div>
+            <div class="history-list" id="historyList"></div>
+            <div class="history-empty" id="historyEmpty">暂无记录</div>
+        </div>
+    </div>
+
+    <!-- 自定义预设弹窗 -->
+    <div class="modal-overlay" id="presetModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>自定义预设</h3>
+                <button class="modal-close" id="modalClose">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="save-preset-form">
+                    <input type="text" id="presetNameInput" placeholder="输入预设名称..." maxlength="20">
+                    <button class="btn btn-add" id="confirmSavePreset">保存</button>
+                </div>
+                <div class="custom-preset-list" id="customPresetList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
