@@ -1,4 +1,4 @@
-# [NARUTO-JACK12](https://naruto-jack12.github.io)
+﻿# [NARUTO-JACK12](https://naruto-jack12.github.io)
 
 > 探索 · 创造 · 分享
 
@@ -8,6 +8,7 @@
 |------|------|
 | [🗂️ 免费资源导航](https://naruto-jack12.github.io/resources) | 优质资源整合导航 |
 | [🐟 摸鱼办](https://naruto-jack12.github.io/moyu) | 工作之余的小乐趣 |
+| [🎯 随机选择器](https://naruto-jack12.github.io/random-picker) | 让命运来决定吧 |
 | [📅 班表](https://naruto-jack12.github.io/ys) | 工作时间安排管理 |
 | [⏰ 课程表](https://naruto-jack12.github.io/timetable) | 学习计划管理 |
 | [🎨 去水印](https://naruto-jack12.github.io/watermark-remover) | 简单图片去水印工具 |

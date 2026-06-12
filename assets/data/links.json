@@ -1,4 +1,4 @@
-[
+﻿[
     {
         "href": "resources",
         "icon": "🎁",
@@ -12,6 +12,13 @@
         "title": "摸鱼办",
         "desc": "工作之余的小乐趣",
         "color": "#ff6b6b"
+    },
+    {
+        "href": "random-picker",
+        "icon": "🎯",
+        "title": "随机选择器",
+        "desc": "让命运来决定吧",
+        "color": "#e84393"
     },
     {
         "href": "ys",
