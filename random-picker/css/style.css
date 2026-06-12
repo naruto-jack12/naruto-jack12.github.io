@@ -1,4 +1,5 @@
-:root {
+:root,
+[data-theme="default"] {
     --bg: #1a1a2e;
     --card-bg: #16213e;
     --accent: #e94560;
@@ -17,6 +18,114 @@
     --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+[data-theme="blue"] {
+    --bg: #0a1628;
+    --card-bg: #0f1e3a;
+    --accent: #4a9eff;
+    --accent-hover: #6eb3ff;
+    --gold: #f0c040;
+    --text: #e0e0e0;
+    --text-secondary: #a0a0b8;
+    --border: #1a2a4a;
+    --input-bg: #111e3a;
+    --item-bg: #142542;
+    --item-hover: #1a3050;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    --glow: 0 0 30px rgba(74, 158, 255, 0.4);
+}
+
+[data-theme="green"] {
+    --bg: #0a1a12;
+    --card-bg: #0f2218;
+    --accent: #2ecc71;
+    --accent-hover: #54d98c;
+    --gold: #f0c040;
+    --text: #e0e0e0;
+    --text-secondary: #a0a0b8;
+    --border: #1a2a1e;
+    --input-bg: #112218;
+    --item-bg: #142e1e;
+    --item-hover: #1a3826;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    --glow: 0 0 30px rgba(46, 204, 113, 0.4);
+}
+
+[data-theme="purple"] {
+    --bg: #140a20;
+    --card-bg: #1a1030;
+    --accent: #a855f7;
+    --accent-hover: #c084fc;
+    --gold: #f0c040;
+    --text: #e0e0e0;
+    --text-secondary: #a0a0b8;
+    --border: #221a34;
+    --input-bg: #18102e;
+    --item-bg: #1e1440;
+    --item-hover: #281c4e;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    --glow: 0 0 30px rgba(168, 85, 247, 0.4);
+}
+
+[data-theme="orange"] {
+    --bg: #1a1208;
+    --card-bg: #221a0e;
+    --accent: #f59e0b;
+    --accent-hover: #fbbf24;
+    --gold: #f0c040;
+    --text: #e0e0e0;
+    --text-secondary: #a0a0b8;
+    --border: #2a2214;
+    --input-bg: #1e180e;
+    --item-bg: #2e2214;
+    --item-hover: #3a2e1a;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    --glow: 0 0 30px rgba(245, 158, 11, 0.4);
+}
+
+/* ==================== 亮色模式 ==================== */
+[data-mode="light"] {
+    --bg: #f0f2f5;
+    --card-bg: #ffffff;
+    --text: #1a1a2e;
+    --text-secondary: #666680;
+    --border: #e0e0e8;
+    --input-bg: #f5f5f8;
+    --item-bg: #f0f0f4;
+    --item-hover: #e8e8ee;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+[data-mode="light"] .container::before {
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+[data-mode="light"] body::before {
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+[data-mode="light"] body::after {
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+[data-mode="light"] .header h1 { color: var(--text); }
+[data-mode="light"] .btn-select { box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12); }
+[data-mode="light"] .result-area { background: var(--bg); }
+[data-mode="light"] .option-tag {
+    color: var(--text);
+    border-color: var(--border);
+    background: var(--item-bg);
+}
+[data-mode="light"] .option-tag:hover {
+    border-color: var(--accent);
+}
+[data-mode="light"] .btn-preset-action {
+    border-color: var(--border);
+    background: transparent;
+}
+[data-mode="light"] .btn-preset-action:hover {
+    border-color: var(--accent);
+    background: rgba(233, 69, 96, 0.06);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -26,10 +135,6 @@
 body {
     font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
     background: var(--bg);
-    background-image:
-        radial-gradient(ellipse at 20% 20%, rgba(233, 68, 96, 0.08) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 70%, rgba(100, 140, 240, 0.07) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(240, 192, 64, 0.04) 0%, transparent 60%);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -37,6 +142,55 @@ body {
     padding: 20px;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* 动态光晕 */
+body::before {
+    content: '';
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+    top: -150px;
+    left: -100px;
+    animation: orbA 20s ease-in-out infinite alternate;
+    transition: background 0.6s;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--accent) 7%, transparent);
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+    bottom: -80px;
+    right: -60px;
+    animation: orbB 25s ease-in-out infinite alternate;
+    transition: background 0.6s;
+}
+
+@keyframes orbA {
+    0% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(100px, 80px) scale(1.1); }
+    66% { transform: translate(60px, 150px) scale(0.95); }
+    100% { transform: translate(30px, 40px) scale(1.05); }
+}
+
+@keyframes orbB {
+    0% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(-80px, -60px) scale(1.15); }
+    66% { transform: translate(-120px, -40px) scale(0.9); }
+    100% { transform: translate(-40px, -100px) scale(1.05); }
 }
 
 .container {
@@ -80,7 +234,7 @@ body {
 }
 
 .header h1 {
-    color: #fff;
+    color: var(--text);
     font-size: 1.7rem;
     font-weight: 700;
     letter-spacing: 0.5px;
@@ -91,6 +245,110 @@ body {
     color: var(--text-secondary);
     font-size: 0.9rem;
     margin-top: 2px;
+}
+
+.header-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 2px;
+}
+
+.header-actions {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 6px;
+}
+
+.mode-float-btn {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 50;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(22, 33, 62, 0.8);
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.mode-float-btn:hover {
+    transform: scale(1.1);
+    border-color: var(--accent);
+}
+
+[data-mode="light"] .mode-float-btn {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.theme-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.04);
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.theme-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent);
+}
+
+.theme-picker {
+    position: absolute;
+    top: 90px;
+    right: 32px;
+    display: none;
+    gap: 6px;
+    padding: 10px 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    z-index: 10;
+}
+
+.theme-picker.open {
+    display: flex;
+}
+
+.theme-option {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--c);
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.theme-option:hover {
+    transform: scale(1.2);
+}
+
+.theme-option.active {
+    border-color: #fff;
+    box-shadow: 0 0 12px var(--c);
 }
 
 /* ==================== 结果区 ==================== */
@@ -131,7 +389,7 @@ body {
 .result-text {
     font-size: 2rem;
     font-weight: 800;
-    color: #fff;
+    color: var(--text);
     letter-spacing: 2px;
     text-align: center;
     padding: 18px 20px;
@@ -173,7 +431,7 @@ body {
     gap: 6px;
     background: var(--item-bg);
     border: 1px solid rgba(233, 69, 96, 0.2);
-    color: #d0d0e0;
+    color: var(--text-secondary);
     padding: 8px 16px 8px 10px;
     border-radius: 22px;
     font-size: 0.95rem;
@@ -230,7 +488,7 @@ body {
     border-radius: var(--radius-sm);
     border: 2px solid var(--border);
     background: var(--input-bg);
-    color: #fff;
+    color: var(--text);
     font-size: 1rem;
     outline: none;
     transition: var(--transition);
@@ -291,13 +549,14 @@ body {
 
 .preset-hint {
     color: var(--text-secondary);
-    font-size: 0.78rem;
+    font-weight: 600;
     line-height: 2;
     margin-right: 2px;
 }
 
 .btn-preset {
     font-size: 0.78rem;
+    font-weight: 600;
     padding: 6px 14px;
     border-radius: 20px;
     background: var(--item-bg);
@@ -309,8 +568,8 @@ body {
 }
 
 .btn-preset:hover {
-    border-color: var(--border);
-    color: #fff;
+    border-color: var(--accent);
+    color: var(--accent);
     background: var(--item-hover);
 }
 
@@ -440,8 +699,8 @@ body {
 }
 
 .btn-clear:hover {
-    border-color: #666;
-    color: #fff;
+    border-color: var(--accent);
+    color: var(--accent);
     background: rgba(255, 255, 255, 0.03);
 }
 
@@ -491,7 +750,7 @@ body {
     align-items: center;
     gap: 7px;
     background: var(--item-bg);
-    color: #d0d0e0;
+    color: var(--text);
     padding: 7px 14px;
     border-radius: 22px;
     font-size: 0.9rem;
@@ -507,9 +766,9 @@ body {
 }
 
 .option-tag:hover {
-    border-color: #555;
+    border-color: var(--accent);
     background: var(--item-hover);
-    color: #fff;
+    color: var(--accent);
 }
 
 .option-tag .delete-tag {
@@ -604,7 +863,7 @@ body {
     text-align: center;
     font-size: 15px;
     font-weight: 600;
-    color: #fff;
+    color: var(--text);
     outline: none;
 }
 
@@ -659,8 +918,8 @@ body {
 }
 
 .btn-copy:hover {
-    border-color: #666;
-    color: #fff;
+    border-color: var(--accent);
+    color: var(--accent);
     background: rgba(255, 255, 255, 0.03);
 }
 
@@ -795,7 +1054,7 @@ body {
 
 .modal-header h3 {
     font-size: 1rem;
-    color: #fff;
+    color: var(--text);
     font-weight: 600;
 }
 
@@ -816,7 +1075,7 @@ body {
 
 .modal-close:hover {
     background: rgba(255, 255, 255, 0.12);
-    color: #fff;
+    color: var(--accent);
 }
 
 .modal-body {
@@ -837,7 +1096,7 @@ body {
     border-radius: var(--radius-sm);
     border: 2px solid var(--border);
     background: var(--input-bg);
-    color: #fff;
+    color: var(--text);
     font-size: 14px;
     outline: none;
     transition: border-color 0.2s;
@@ -882,7 +1141,7 @@ body {
 
 .custom-preset-item .name {
     font-size: 14px;
-    color: #e0e0e0;
+    color: var(--text);
     font-weight: 500;
 }
 

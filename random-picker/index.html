@@ -8,11 +8,24 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <button class="mode-float-btn" id="modeBtn" title="切换亮暗">🌙</button>
     <div class="container">
         <div class="header">
-            <span class="icon">🎯</span>
+            <div class="header-top">
+                <span class="icon">🎯</span>
+                <div class="header-actions">
+                    <button class="theme-btn" id="themeBtn" title="切换主题">🎨</button>
+                </div>
+            </div>
             <h1>随机选择器</h1>
             <p>添加选项，让命运来决定吧</p>
+        </div>
+        <div class="theme-picker" id="themePicker">
+            <div class="theme-option" data-theme="default" style="--c:#e94560" title="红色"></div>
+            <div class="theme-option" data-theme="blue" style="--c:#4a9eff" title="蓝色"></div>
+            <div class="theme-option" data-theme="green" style="--c:#2ecc71" title="绿色"></div>
+            <div class="theme-option" data-theme="purple" style="--c:#a855f7" title="紫色"></div>
+            <div class="theme-option" data-theme="orange" style="--c:#f59e0b" title="橙色"></div>
         </div>
 
         <div class="result-area" id="resultArea">

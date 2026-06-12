@@ -538,6 +538,112 @@
         if (e.ctrlKey && e.shiftKey && e.key === 'X') { e.preventDefault(); btnClear.click(); }
     });
 
+    // ==================== 主题切换 ====================
+    const THEME_KEY = 'randomPickerTheme';
+    const MODE_KEY = 'randomPickerMode';
+
+    function applyTheme(name) {
+        document.documentElement.setAttribute('data-theme', name);
+        localStorage.setItem(THEME_KEY, name);
+        document.querySelectorAll('.theme-option').forEach(el => {
+            el.classList.toggle('active', el.dataset.theme === name);
+        });
+    }
+
+    function applyMode(mode) {
+        const modeBtn = document.getElementById('modeBtn');
+        if (mode === 'light') {
+            document.documentElement.setAttribute('data-mode', 'light');
+            modeBtn.textContent = '☀️';
+            modeBtn.title = '切换暗色模式';
+        } else {
+            document.documentElement.removeAttribute('data-mode');
+            modeBtn.textContent = '🌙';
+            modeBtn.title = '切换亮色模式';
+        }
+        localStorage.setItem(MODE_KEY, mode);
+    }
+
+    const savedTheme = localStorage.getItem(THEME_KEY) || 'default';
+    const savedMode = localStorage.getItem(MODE_KEY) || 'dark';
+    applyTheme(savedTheme);
+    applyMode(savedMode);
+
+    document.getElementById('themeBtn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.getElementById('themePicker').classList.toggle('open');
+    });
+
+    document.getElementById('modeBtn').addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-mode') === 'light' ? 'dark' : 'light';
+        applyMode(current);
+    });
+
+    document.querySelectorAll('.theme-option').forEach(el => {
+        el.addEventListener('click', () => {
+            applyTheme(el.dataset.theme);
+            document.getElementById('themePicker').classList.remove('open');
+        });
+    });
+
+    document.addEventListener('click', () => {
+        document.getElementById('themePicker').classList.remove('open');
+    });
+
+    // ==================== 背景粒子 ====================
+    (function createParticles() {
+        const container = document.createElement('div');
+        container.style.cssText = 'position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden';
+        document.body.appendChild(container);
+
+        const count = 35;
+        const particles = [];
+        const accent = () => getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#e94560';
+
+        for (let i = 0; i < count; i++) {
+            const el = document.createElement('div');
+            const size = 2 + Math.random() * 3;
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            const speed = 0.15 + Math.random() * 0.4;
+            const drift = (Math.random() - 0.5) * 0.2;
+            particles.push({ el, x, y, speed, drift, size });
+            const c = accent();
+            el.style.cssText = `
+                position:absolute; width:${size}px; height:${size}px; border-radius:50%;
+                background:${c}; opacity:${0.15 + Math.random() * 0.25};
+                left:${x}%; top:${y}%;
+                transition:background 0.6s, opacity 0.6s;
+                box-shadow:0 0 ${size * 3}px ${c};
+            `;
+            container.appendChild(el);
+        }
+
+        let animId;
+        function animate() {
+            for (const p of particles) {
+                p.y -= p.speed * 0.03;
+                p.x += p.drift * 0.02;
+                if (p.y < -5) { p.y = 105; p.x = Math.random() * 100; }
+                if (p.x < -5) p.x = 105;
+                if (p.x > 105) p.x = -5;
+                p.el.style.left = `${p.x}%`;
+                p.el.style.top = `${p.y}%`;
+            }
+            animId = requestAnimationFrame(animate);
+        }
+        animate();
+
+        const obs = new MutationObserver(() => {
+            const c = accent();
+            for (const p of particles) {
+                p.el.style.background = c;
+                p.el.style.boxShadow = `0 0 ${p.size * 2}px ${c}`;
+            }
+        });
+        obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-mode'] });
+    })();
+
     // ==================== 注入 shake 动画 ====================
     if (!document.getElementById('shakeStyle')) {
         const s = document.createElement('style');
@@ -559,7 +665,7 @@
         .then(r => r.json())
         .then(data => {
             BUILTIN_PRESETS = data;
-            setOptions(BUILTIN_PRESETS.lunch || []);
+            setOptions([]);
             renderCustomPresets();
             inputField.focus();
         })
