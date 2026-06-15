@@ -1,0 +1,414 @@
+:root {
+    --bg: #0a0a1a;
+    --card-bg: #12122a;
+    --border: #1e1e3f;
+    --text: #e0e0f0;
+    --accent: #6c5ce7;
+    --accent-glow: #a29bfe;
+    --danger: #e74c3c;
+    --gold: #f9ca24;
+    --digit-bg: #1a1a35;
+    --digit-border: #2a2a55;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    background-image:
+        radial-gradient(ellipse at 20% 20%, rgba(108, 92, 231, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 60%, rgba(249, 202, 36, 0.05) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 80%, rgba(231, 76, 60, 0.04) 0%, transparent 50%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: var(--text);
+}
+
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle var(--dur) ease-in-out infinite;
+    animation-delay: var(--delay);
+    opacity: 0;
+}
+@keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.8); }
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 750px;
+}
+
+.main-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 40px 35px 35px;
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+        0 0 80px rgba(108, 92, 231, 0.08);
+    backdrop-filter: blur(10px);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+.main-card:hover {
+    box-shadow:
+        0 30px 70px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+        0 0 100px rgba(108, 92, 231, 0.12);
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #e0e0f0 0%, #a29bfe 50%, #f9ca24 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.subtitle {
+    font-size: 0.9rem;
+    color: #8888aa;
+    margin-bottom: 28px;
+    letter-spacing: 0.04em;
+}
+
+.target-name-section {
+    margin-bottom: 10px;
+}
+.target-name-input {
+    background: transparent;
+    border: none;
+    border-bottom: 2px dashed var(--border);
+    color: #c0c0dd;
+    font-size: 1.1rem;
+    text-align: center;
+    padding: 8px 16px;
+    width: 280px;
+    max-width: 90%;
+    outline: none;
+    transition: border-color 0.3s;
+    letter-spacing: 0.03em;
+}
+.target-name-input:focus {
+    border-bottom-color: var(--accent);
+    color: #fff;
+}
+.target-name-input::placeholder {
+    color: #555577;
+}
+
+.countdown-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 20px 0 28px;
+}
+.time-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 70px;
+}
+.digit-wrapper {
+    position: relative;
+    background: var(--digit-bg);
+    border: 2px solid var(--digit-border);
+    border-radius: 18px;
+    padding: 16px 10px;
+    min-width: 75px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    transition: all 0.35s ease;
+    overflow: hidden;
+}
+.digit-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.03) 0%,
+            transparent 40%,
+            transparent 60%,
+            rgba(0, 0, 0, 0.2) 100%);
+    pointer-events: none;
+    border-radius: 16px;
+}
+.digit-wrapper.pulse {
+    animation: digitPulse 0.5s ease-out;
+}
+@keyframes digitPulse {
+    0% {
+        transform: scale(1);
+        border-color: var(--accent-glow);
+        box-shadow: 0 0 30px rgba(108, 92, 231, 0.6);
+    }
+    100% {
+        transform: scale(1);
+        border-color: var(--digit-border);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+}
+.digit {
+    font-size: 3.2rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+    font-family: 'SF Mono', 'JetBrains Mono', 'Consolas', 'Monaco', 'PingFang SC', monospace;
+    position: relative;
+    z-index: 1;
+    line-height: 1;
+}
+.digit.days {
+    color: #f9ca24;
+    text-shadow: 0 0 30px rgba(249, 202, 36, 0.4);
+}
+.digit.hours {
+    color: #a29bfe;
+    text-shadow: 0 0 30px rgba(162, 155, 254, 0.4);
+}
+.digit.minutes {
+    color: #74b9ff;
+    text-shadow: 0 0 30px rgba(116, 185, 255, 0.4);
+}
+.digit.seconds {
+    color: #ff7675;
+    text-shadow: 0 0 30px rgba(255, 118, 117, 0.4);
+}
+.label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #8888aa;
+    margin-top: 8px;
+    font-weight: 500;
+}
+.separator {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: #444466;
+    margin: 0 -2px;
+    align-self: flex-start;
+    padding-top: 14px;
+    animation: separatorBlink 2s ease-in-out infinite;
+}
+@keyframes separatorBlink {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+.progress-section {
+    margin: 0 0 20px;
+}
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #7777aa;
+    margin-bottom: 6px;
+    letter-spacing: 0.03em;
+}
+.progress-bar-outer {
+    background: #1a1a35;
+    border-radius: 20px;
+    height: 8px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+.progress-bar-inner {
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #6c5ce7, #a29bfe, #f9ca24);
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.settings-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.settings-row label {
+    font-size: 0.85rem;
+    color: #9999bb;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+}
+.datetime-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+.datetime-wrap input[type="datetime-local"] {
+    background: var(--digit-bg);
+    border: 2px solid var(--digit-border);
+    border-radius: 10px;
+    color: #ddd;
+    padding: 10px 14px 10px 36px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.3s;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    min-width: 200px;
+}
+.datetime-wrap input[type="datetime-local"]:focus {
+    border-color: var(--accent);
+}
+.datetime-wrap input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.85) brightness(1.5);
+    cursor: pointer;
+    padding: 4px;
+    opacity: 0.9;
+    transition: opacity 0.2s, transform 0.2s;
+}
+.datetime-wrap input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+    transform: scale(1.15);
+}
+.datetime-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    pointer-events: none;
+    color: #a29bfe;
+    line-height: 1;
+}
+.btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    font-weight: 600;
+    transition: all 0.25s;
+    white-space: nowrap;
+    font-family: inherit;
+    position: relative;
+    overflow: hidden;
+}
+.btn:hover {
+    background: #7d6ff0;
+    box-shadow: 0 8px 25px rgba(108, 92, 231, 0.4);
+    transform: translateY(-2px);
+}
+.btn:active {
+    transform: scale(0.96);
+    transition: transform 0.1s;
+}
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent-glow);
+}
+.btn-outline:hover {
+    background: rgba(108, 92, 231, 0.1);
+    box-shadow: 0 8px 25px rgba(108, 92, 231, 0.25);
+}
+.btn-preset {
+    font-size: 0.78rem;
+    padding: 7px 13px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    color: #aaaacc;
+    cursor: pointer;
+    transition: all 0.25s;
+    font-family: inherit;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+}
+.btn-preset:hover {
+    border-color: var(--accent-glow);
+    color: #fff;
+    background: rgba(108, 92, 231, 0.1);
+}
+.btn-preset.active {
+    border-color: var(--accent);
+    background: rgba(108, 92, 231, 0.2);
+    color: #fff;
+    box-shadow: 0 0 12px rgba(108, 92, 231, 0.25);
+}
+
+.expired-badge {
+    display: inline-block;
+    background: var(--danger);
+    color: #fff;
+    padding: 8px 22px;
+    border-radius: 25px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    animation: bounceBadge 0.6s ease-in-out infinite alternate;
+    font-size: 1rem;
+}
+@keyframes bounceBadge {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-8px); }
+}
+
+@media (max-width: 600px) {
+    .main-card {
+        padding: 25px 16px 20px;
+        border-radius: 20px;
+    }
+    .title { font-size: 1.4rem; }
+    .digit { font-size: 2rem; }
+    .digit-wrapper {
+        padding: 10px 6px;
+        min-width: 52px;
+        border-radius: 12px;
+    }
+    .digit-wrapper::after { border-radius: 10px; }
+    .separator { font-size: 1.6rem; padding-top: 8px; }
+    .countdown-display { gap: 5px; }
+    .time-block { min-width: 50px; }
+    .label { font-size: 0.68rem; }
+    .settings-row { gap: 6px; }
+    .btn { padding: 8px 14px; font-size: 0.8rem; }
+    .btn-preset { font-size: 0.7rem; padding: 6px 10px; }
+}

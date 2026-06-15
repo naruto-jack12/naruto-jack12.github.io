@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="在线精确倒计时工具，支持自定义目标时间、快捷预设，精确到秒。适合节日倒计时、活动倒计时、考试倒计时等场景。">
+<meta name="keywords" content="倒计时,倒计时器,在线倒计时,春节倒计时,元旦倒计时,精确倒计时,秒计时">
+<meta name="author" content="Countdown">
+<meta property="og:title" content="⏳ 精确倒计时">
+<meta property="og:description" content="在线精确倒计时工具，支持自定义目标时间、快捷预设，精确到秒。">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2312122a'/%3E%3Ctext x='4' y='25' font-size='22' fill='%23e94560' font-family='Arial'%3E⏳%3C/text%3E%3C/svg%3E">
+<title>⏳ 精确倒计时</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="stars" id="starsContainer"></div>
+<div class="container">
+    <div class="main-card">
+        <h1 class="title">⏳ 倒计时时钟</h1>
+
+        <div class="target-name-section">
+            <input type="text" class="target-name-input" id="targetNameInput"
+                   placeholder="🎯 输入倒计时名称..." maxlength="30">
+        </div>
+
+        <div class="countdown-display" id="countdownDisplay">
+            <div class="time-block">
+                <div class="digit-wrapper" id="daysWrapper">
+                    <span class="digit days" id="days">00</span>
+                </div>
+                <span class="label">天</span>
+            </div>
+            <span class="separator">:</span>
+            <div class="time-block">
+                <div class="digit-wrapper" id="hoursWrapper">
+                    <span class="digit hours" id="hours">00</span>
+                </div>
+                <span class="label">时</span>
+            </div>
+            <span class="separator">:</span>
+            <div class="time-block">
+                <div class="digit-wrapper" id="minutesWrapper">
+                    <span class="digit minutes" id="minutes">00</span>
+                </div>
+                <span class="label">分</span>
+            </div>
+            <span class="separator">:</span>
+            <div class="time-block">
+                <div class="digit-wrapper" id="secondsWrapper">
+                    <span class="digit seconds" id="seconds">00</span>
+                </div>
+                <span class="label">秒</span>
+            </div>
+        </div>
+
+        <div class="progress-section" id="progressSection">
+            <div class="progress-info">
+                <span id="progressLabel">已过时间</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar-outer">
+                <div class="progress-bar-inner" id="progressBar" style="width: 0%;"></div>
+            </div>
+        </div>
+
+        <div class="settings-row">
+            <label for="datetimePicker">📅 目标时间：</label>
+            <span class="datetime-wrap">
+                <span class="datetime-icon">📅</span>
+                <input type="datetime-local" id="datetimePicker">
+            </span>
+            <button class="btn" id="btnSet">✅ 设定</button>
+            <button class="btn btn-outline" id="btnReset">🔄 重置</button>
+        </div>
+
+        <div class="settings-row" style="margin-top: 4px;" id="presetRow"></div>
+
+        <div id="messageArea" style="margin-top: 14px; min-height: 28px;"></div>
+    </div>
+</div>
+<script src="assets/js/script.js"></script>
+</body>
+</html>
