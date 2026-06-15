@@ -11,6 +11,7 @@
 | [🎯 随机选择器](https://naruto-jack12.github.io/random-picker) | 让命运来决定吧 |
 | [📅 班表](https://naruto-jack12.github.io/ys) | 工作时间安排管理 |
 | [⏰ 课程表](https://naruto-jack12.github.io/timetable) | 学习计划管理 |
+| [⏳ 倒计时](https://naruto-jack12.github.io/countdown) | 精确到秒的倒计时工具 |
 | [🎨 去水印](https://naruto-jack12.github.io/watermark-remover) | 简单图片去水印工具 |
 | [📄 PDF工具](https://naruto-jack12.github.io/pdf-tool) | PDF文档处理工具箱 |
 | [💣 扫雷](https://naruto-jack12.github.io/game/MineSweeper) | 经典益智游戏 |

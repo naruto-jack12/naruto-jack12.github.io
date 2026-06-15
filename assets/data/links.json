@@ -35,6 +35,13 @@
         "color": "#f9ca24"
     },
     {
+        "href": "countdown",
+        "icon": "⏳",
+        "title": "倒计时",
+        "desc": "精确到秒的倒计时工具",
+        "color": "#e94560"
+    },
+    {
         "href": "watermark-remover",
         "icon": "🎨",
         "title": "去水印",
