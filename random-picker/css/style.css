@@ -1219,6 +1219,24 @@ body::after {
 }
 
 /* ==================== 响应式 ==================== */
+@media (max-width: 520px) {
+    .mode-float-btn {
+        right: auto;
+        left: 16px;
+        top: 12px;
+        width: 36px;
+        height: 36px;
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 520px) {
+    .theme-picker {
+        right: 16px;
+        top: 82px;
+    }
+}
+
 @media (max-width: 480px) {
     .container {
         padding: 24px 16px 20px;
