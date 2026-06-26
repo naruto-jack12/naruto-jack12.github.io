@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown 编辑器 - 在线 Markdown 编辑与实时预览</title>
+  <meta name="description" content="功能齐全的在线 Markdown 编辑器，支持实时预览、代码语法高亮、数学公式渲染、Mermaid 图表绘制、Emoji 选择器、暗色主题。完全本地加载，无需网络。">
+  <meta name="keywords" content="Markdown,编辑器,在线,实时预览,代码高亮,数学公式,Mermaid,图表,KaTeX,Prism,CodeMirror">
+  <meta name="author" content="Markdown Editor">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#1a73e8">
+
+  <meta property="og:title" content="Markdown 编辑器 - 在线 Markdown 编辑与实时预览">
+  <meta property="og:description" content="功能齐全的在线 Markdown 编辑器，支持实时预览、代码语法高亮、数学公式渲染、Mermaid 图表绘制。">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="favicon.svg">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Markdown 编辑器">
+  <meta name="twitter:description" content="功能齐全的在线 Markdown 编辑器，支持实时预览、代码语法高亮、数学公式渲染、Mermaid 图表绘制。">
+
+  <link rel="canonical" href="https://markdown-editor.example.com/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/lib/prism.min.css">
+  <link rel="stylesheet" href="assets/css/lib/katex.min.css">
+  <link rel="stylesheet" href="assets/css/lib/codemirror.min.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Markdown 编辑器",
+    "description": "功能齐全的在线 Markdown 编辑器，支持实时预览、代码语法高亮、数学公式渲染、Mermaid 图表绘制。",
+    "applicationCategory": "WebApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "CNY"
+    },
+    "featureList": [
+      "实时预览",
+      "代码语法高亮",
+      "数学公式渲染",
+      "Mermaid 图表",
+      "Emoji 选择器",
+      "暗色主题",
+      "导出 HTML/PDF"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <span class="logo">MD</span>
+      <span class="divider-line"></span>
+      <button onclick="newFile()" title="新建 (Ctrl+N)">📄 新建</button>
+      <button onclick="openFile()" title="打开文件 (Ctrl+O)">📂 打开</button>
+      <button onclick="saveFile()" title="保存 (Ctrl+S)">💾 保存</button>
+      <span class="divider-line"></span>
+      <button onclick="exportHTML()" title="导出 HTML">🌐 HTML</button>
+      <button onclick="exportPDF()" title="打印/导出 PDF">📄 PDF</button>
+    </div>
+    <div class="toolbar-right">
+      <div class="pane-tools">
+        <button onclick="toggleSearch()" title="搜索替换 (Ctrl+F)">🔍</button>
+        <button onclick="undo()" title="撤销 (Ctrl+Z)">↩</button>
+        <button onclick="redo()" title="重做 (Ctrl+Y)">↪</button>
+      </div>
+      <span class="divider-line"></span>
+      <span class="file-name" id="fileName">untitled.md</span>
+      <span class="divider-line"></span>
+      <div class="view-tabs">
+        <span class="view-tab" onclick="setViewMode('edit')" data-mode="edit">编辑</span>
+        <span class="view-tab active" onclick="setViewMode('split')" data-mode="split">分栏</span>
+        <span class="view-tab" onclick="setViewMode('preview')" data-mode="preview">预览</span>
+      </div>
+      <span class="divider-line"></span>
+      <button onclick="toggleOutline()" title="目录" id="outlineToggle">📋</button>
+      <button onclick="toggleShortcutHelp()" title="快捷键帮助">❓</button>
+      <button id="themeToggle" onclick="toggleTheme()" title="切换主题">🌙</button>
+    </div>
+  </div>
+
+  <div class="format-bar" id="formatBar">
+    <button onclick="format('bold')" title="加粗 (Ctrl+B)"><strong>B</strong></button>
+    <button onclick="format('italic')" title="斜体 (Ctrl+I)"><em>I</em></button>
+    <button onclick="format('strikethrough')" title="删除线 (Ctrl+Shift+S)"><s>S</s></button>
+    <span class="divider-line"></span>
+    <button onclick="format('h1')" title="标题 1">H1</button>
+    <button onclick="format('h2')" title="标题 2">H2</button>
+    <button onclick="format('h3')" title="标题 3">H3</button>
+    <span class="divider-line"></span>
+    <button onclick="format('ul')" title="无序列表">≡ 列表</button>
+    <button onclick="format('ol')" title="有序列表">#. 列表</button>
+    <button onclick="format('task')" title="任务列表">☑ 任务</button>
+    <span class="divider-line"></span>
+    <button onclick="format('blockquote')" title="引用">❝ 引用</button>
+    <button onclick="format('code')" title="行内代码 (Ctrl+Shift+C)">⟨⟩ 代码</button>
+    <span class="codeblock-group">
+      <button onclick="toggleCodeLang()" title="代码块">▦ 代码块 ▾</button>
+      <div class="lang-popover" id="langPopover">
+        <div class="lang-popover-header">选择语言</div>
+        <div class="lang-popover-grid" id="langGrid"></div>
+      </div>
+    </span>
+    <button onclick="format('table')" title="插入表格">⊞ 表格</button>
+    <span class="divider-line"></span>
+    <button onclick="format('link')" title="链接 (Ctrl+K)">🔗 链接</button>
+    <button onclick="format('image')" title="图片">🖼 图片</button>
+    <span class="divider-line"></span>
+    <span class="emoji-group">
+      <button onclick="toggleEmojiPicker()" title="插入 Emoji">😊 Emoji ▾</button>
+      <div class="emoji-popover" id="emojiPopover">
+        <div class="emoji-popover-header">选择 Emoji</div>
+        <div class="emoji-popover-tabs" id="emojiTabs"></div>
+        <div class="emoji-popover-grid" id="emojiGrid"></div>
+      </div>
+    </span>
+    <span class="chart-group">
+      <button onclick="toggleChartPicker()" title="插入图表">📊 图表 ▾</button>
+      <div class="chart-popover" id="chartPopover">
+        <div class="chart-popover-header">选择图表类型</div>
+        <div class="chart-popover-grid" id="chartGrid"></div>
+      </div>
+    </span>
+    <button onclick="format('hr')" title="分隔线">— 分隔线</button>
+  </div>
+
+  <div class="search-bar" id="searchBar">
+    <input type="text" id="searchInput" placeholder="搜索..." oninput="searchInEditor()">
+    <input type="text" id="replaceInput" placeholder="替换为...">
+    <button onclick="replaceNext()">替换</button>
+    <button onclick="replaceAll()">全部替换</button>
+    <span class="search-count" id="searchCount"></span>
+    <button class="close-btn" onclick="toggleSearch()">✕</button>
+  </div>
+
+  <div class="container">
+    <div class="pane editor-pane" id="editorPane">
+      <div class="pane-header">
+        <span>编辑</span>
+        <span class="word-count" id="editorWordCount">0 字</span>
+      </div>
+      <div class="editor-wrap">
+        <textarea id="editor" placeholder="在此输入 Markdown..."></textarea>
+      </div>
+    </div>
+    <div class="divider" id="divider"></div>
+    <div class="pane preview-pane" id="previewPane">
+      <div class="pane-header">
+        <span>预览</span>
+        <span class="word-count" id="previewWordCount">0 字</span>
+      </div>
+      <div class="preview" id="preview"></div>
+    </div>
+    <div class="outline-pane" id="outlinePane">
+      <div class="pane-header">
+        <span>📋 目录</span>
+        <button class="close-btn" onclick="toggleOutline()">✕</button>
+      </div>
+      <div class="outline-body" id="outlineBody"></div>
+    </div>
+  </div>
+
+  <div class="status-bar">
+    <span id="cursorPos">行: 1, 列: 1</span>
+    <span id="wordCount">0 字 | 0 行</span>
+    <span id="saveStatus">已保存</span>
+  </div>
+
+  <input type="file" id="fileInput" accept=".md,.markdown,.txt" style="display:none" onchange="loadFile(event)">
+
+  <div class="shortcut-help" id="shortcutHelp" onclick="if(event.target===this)closeShortcutHelp()">
+    <div class="shortcut-help-content">
+      <button class="close-btn" onclick="closeShortcutHelp()">✕</button>
+      <h3>⌨ 快捷键</h3>
+      <table>
+        <tr><td>加粗</td><td><kbd>Ctrl+B</kbd></td></tr>
+        <tr><td>斜体</td><td><kbd>Ctrl+I</kbd></td></tr>
+        <tr><td>插入链接</td><td><kbd>Ctrl+K</kbd></td></tr>
+        <tr><td>搜索替换</td><td><kbd>Ctrl+F</kbd></td></tr>
+        <tr><td>保存文件</td><td><kbd>Ctrl+S</kbd></td></tr>
+        <tr><td>另存为</td><td><kbd>Ctrl+Shift+S</kbd></td></tr>
+        <tr><td>新建文件</td><td><kbd>Ctrl+N</kbd></td></tr>
+        <tr><td>打开文件</td><td><kbd>Ctrl+O</kbd></td></tr>
+        <tr><td>撤销</td><td><kbd>Ctrl+Z</kbd></td></tr>
+        <tr><td>重做</td><td><kbd>Ctrl+Y</kbd></td></tr>
+        <tr><td>行内代码</td><td><kbd>Ctrl+Shift+C</kbd></td></tr>
+        <tr><td>切换预览</td><td><kbd>Ctrl+Shift+P</kbd></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <script src="assets/js/lib/marked.min.js"></script>
+  <script src="assets/js/lib/dompurify.min.js"></script>
+  <script src="assets/js/lib/prism.min.js"></script>
+  <script src="assets/js/lib/prism-autoloader.min.js"></script>
+  <script src="assets/js/lib/katex.min.js"></script>
+  <script src="assets/js/lib/katex-autorender.min.js"></script>
+  <script src="assets/js/lib/mermaid.min.js"></script>
+  <script src="assets/js/lib/codemirror/codemirror.min.js"></script>
+  <script src="assets/js/lib/codemirror/markdown.min.js"></script>
+  <script src="assets/js/lib/codemirror/xml.min.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
