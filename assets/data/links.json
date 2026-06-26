@@ -14,6 +14,13 @@
         "color": "#ff6b6b"
     },
     {
+        "href": "markdown-editor",
+        "icon": "📝",
+        "title": "Markdown 编辑器",
+        "desc": "在线 Markdown 编辑与实时预览",
+        "color": "#1a73e8"
+    },
+    {
         "href": "random-picker",
         "icon": "🎯",
         "title": "随机选择器",
