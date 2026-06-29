@@ -291,7 +291,7 @@ function downloadBlob(blob, filename) {
 }
 
 function clearStorage() {
-  if (!confirm('确定清除所有本地缓存？\n未保存的内容将丢失。')) return;
+  if (!confirm('确定清空自动保存的草稿？编辑器内容将被清空，请先下载保存文件。')) return;
   localStorage.removeItem('md-editor-content');
   localStorage.removeItem('md-editor-file');
   setValue('');

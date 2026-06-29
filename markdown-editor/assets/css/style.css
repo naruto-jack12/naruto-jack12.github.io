@@ -989,8 +989,11 @@ body {
   font-family: 'JetBrains Mono', monospace;
 }
 
-.status-bar span:last-child {
+.status-hint {
+  color: var(--accent);
+  font-size: 11px;
   margin-left: auto;
+  white-space: nowrap;
 }
 
 .dark .status-bar { color: var(--text2); }
@@ -1418,6 +1421,7 @@ body {
   .pane-header { padding: 5px 12px; font-size: 11px; }
   .pane-header .word-count { display: none; }
   .status-bar { padding: 3px 8px; font-size: 10px; gap: 8px; }
+  .status-bar .status-hint { display: none; }
   .status-bar span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   body { overflow: hidden; }
   .container { flex-direction: column; }
