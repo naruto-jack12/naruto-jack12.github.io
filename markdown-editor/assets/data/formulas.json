@@ -1,0 +1,121 @@
+[
+  {
+    "category": "代数",
+    "items": [
+      { "label": "x²", "latex": "x^2" },
+      { "label": "√x", "latex": "\\sqrt{x}" },
+      { "label": "n√x", "latex": "\\sqrt[n]{x}" },
+      { "label": "a/b", "latex": "\\frac{a}{b}" },
+      { "label": "√(a²+b²)", "latex": "\\sqrt{a^2 + b^2}" },
+      { "label": "a±b", "latex": "a \\pm b" },
+      { "label": "x^n", "latex": "x^{n}" },
+      { "label": "a²+b²=c²", "latex": "a^2 + b^2 = c^2" }
+    ]
+  },
+  {
+    "category": "微积分",
+    "items": [
+      { "label": "∫f(x)dx", "latex": "\\int_{a}^{b} f(x) \\,dx" },
+      { "label": "d/dx", "latex": "\\frac{d}{dx}" },
+      { "label": "∂f/∂x", "latex": "\\frac{\\partial f}{\\partial x}" },
+      { "label": "∑", "latex": "\\sum_{i=1}^{n}" },
+      { "label": "∏", "latex": "\\prod_{i=1}^{n}" },
+      { "label": "lim", "latex": "\\lim_{x \\to \\infty}" },
+      { "label": "f′(x)", "latex": "f'(x)" },
+      { "label": "∞", "latex": "\\infty" }
+    ]
+  },
+  {
+    "category": "线性代数",
+    "items": [
+      { "label": "矩阵", "latex": "\\begin{matrix} a & b \\\\ c & d \\end{matrix}" },
+      { "label": "行列式", "latex": "\\begin{vmatrix} a & b \\\\ c & d \\end{vmatrix}" },
+      { "label": "转置 Aᵀ", "latex": "A^{T}" },
+      { "label": "逆 A⁻¹", "latex": "A^{-1}" },
+      { "label": "点积", "latex": "\\vec{a} \\cdot \\vec{b}" },
+      { "label": "叉积", "latex": "\\vec{a} \\times \\vec{b}" },
+      { "label": "∇梯度", "latex": "\\nabla f" }
+    ]
+  },
+  {
+    "category": "希腊字母",
+    "items": [
+      { "label": "α", "latex": "\\alpha" },
+      { "label": "β", "latex": "\\beta" },
+      { "label": "γ", "latex": "\\gamma" },
+      { "label": "δ", "latex": "\\delta" },
+      { "label": "ε", "latex": "\\epsilon" },
+      { "label": "θ", "latex": "\\theta" },
+      { "label": "λ", "latex": "\\lambda" },
+      { "label": "μ", "latex": "\\mu" },
+      { "label": "π", "latex": "\\pi" },
+      { "label": "σ", "latex": "\\sigma" },
+      { "label": "φ", "latex": "\\phi" },
+      { "label": "ω", "latex": "\\omega" },
+      { "label": "Γ", "latex": "\\Gamma" },
+      { "label": "Δ", "latex": "\\Delta" },
+      { "label": "Θ", "latex": "\\Theta" },
+      { "label": "Π", "latex": "\\Pi" },
+      { "label": "Σ", "latex": "\\Sigma" },
+      { "label": "Ω", "latex": "\\Omega" }
+    ]
+  },
+  {
+    "category": "集合与逻辑",
+    "items": [
+      { "label": "∈", "latex": "\\in" },
+      { "label": "∉", "latex": "\\notin" },
+      { "label": "⊂", "latex": "\\subset" },
+      { "label": "⊆", "latex": "\\subseteq" },
+      { "label": "∪", "latex": "\\cup" },
+      { "label": "∩", "latex": "\\cap" },
+      { "label": "∀", "latex": "\\forall" },
+      { "label": "∃", "latex": "\\exists" },
+      { "label": "∅", "latex": "\\emptyset" },
+      { "label": "∧或∨", "latex": "\\land \\lor" },
+      { "label": "¬否定", "latex": "\\neg" },
+      { "label": "→", "latex": "\\to" },
+      { "label": "⇒", "latex": "\\Rightarrow" }
+    ]
+  },
+  {
+    "category": "关系符号",
+    "items": [
+      { "label": "≠", "latex": "\\neq" },
+      { "label": "≈", "latex": "\\approx" },
+      { "label": "≤", "latex": "\\leq" },
+      { "label": "≥", "latex": "\\geq" },
+      { "label": "≡", "latex": "\\equiv" },
+      { "label": "∼", "latex": "\\sim" },
+      { "label": "∝", "latex": "\\propto" },
+      { "label": "⊥", "latex": "\\perp" },
+      { "label": "∥", "latex": "\\parallel" }
+    ]
+  },
+  {
+    "category": "三角函数",
+    "items": [
+      { "label": "sin(x)", "latex": "\\sin(x)" },
+      { "label": "cos(x)", "latex": "\\cos(x)" },
+      { "label": "tan(x)", "latex": "\\tan(x)" },
+      { "label": "arcsin(x)", "latex": "\\arcsin(x)" },
+      { "label": "arccos(x)", "latex": "\\arccos(x)" },
+      { "label": "arctan(x)", "latex": "\\arctan(x)" },
+      { "label": "sin²x", "latex": "\\sin^2 x" },
+      { "label": "sin(a±b)", "latex": "\\sin(a \\pm b)" }
+    ]
+  },
+  {
+    "category": "其他",
+    "items": [
+      { "label": "E=mc²", "latex": "E = mc^2" },
+      { "label": "ax²+bx+c=0", "latex": "ax^2 + bx + c = 0" },
+      { "label": "二次公式", "latex": "x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}" },
+      { "label": "勾股定理", "latex": "a^2 + b^2 = c^2" },
+      { "label": "欧拉公式", "latex": "e^{i\\pi} + 1 = 0" },
+      { "label": "泰勒级数", "latex": "\\sum_{n=0}^{\\infty} \\frac{f^{(n)}(a)}{n!} (x-a)^n" },
+      { "label": "傅里叶变换", "latex": "\\hat{f}(\\xi) = \\int_{-\\infty}^{\\infty} f(x) e^{-2\\pi i x \\xi} \\,dx" },
+      { "label": "正态分布", "latex": "\\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}" }
+    ]
+  }
+]

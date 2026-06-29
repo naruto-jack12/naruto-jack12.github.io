@@ -57,18 +57,18 @@
     <div class="toolbar-left">
       <span class="logo">MD</span>
       <span class="divider-line"></span>
-      <button onclick="newFile()" title="新建 (Ctrl+N)">📄 新建</button>
-      <button onclick="openFile()" title="打开文件 (Ctrl+O)">📂 打开</button>
-      <button onclick="saveFile()" title="保存 (Ctrl+S)">💾 保存</button>
+      <button onclick="newFile()" title="新建 (Ctrl+N)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg> 新建</button>
+      <button onclick="openFile()" title="打开文件 (Ctrl+O)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> 打开</button>
+      <button onclick="saveFile()" title="保存 (Ctrl+S)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> 保存</button>
       <span class="divider-line"></span>
-      <button onclick="exportHTML()" title="导出 HTML">🌐 HTML</button>
-      <button onclick="exportPDF()" title="打印/导出 PDF">📄 PDF</button>
+      <button onclick="exportHTML()" title="导出 HTML"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> HTML</button>
+      <button onclick="exportPDF()" title="打印/导出 PDF"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg> PDF</button>
     </div>
     <div class="toolbar-right">
       <div class="pane-tools">
-        <button onclick="toggleSearch()" title="搜索替换 (Ctrl+F)">🔍</button>
-        <button onclick="undo()" title="撤销 (Ctrl+Z)">↩</button>
-        <button onclick="redo()" title="重做 (Ctrl+Y)">↪</button>
+        <button onclick="toggleSearch()" title="搜索替换 (Ctrl+F)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+        <button onclick="undo()" title="撤销 (Ctrl+Z)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></button>
+        <button onclick="redo()" title="重做 (Ctrl+Y)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
       </div>
       <span class="divider-line"></span>
       <span class="file-name" id="fileName">untitled.md</span>
@@ -79,9 +79,9 @@
         <span class="view-tab" onclick="setViewMode('preview')" data-mode="preview">预览</span>
       </div>
       <span class="divider-line"></span>
-      <button onclick="toggleOutline()" title="目录" id="outlineToggle">📋</button>
-      <button onclick="toggleShortcutHelp()" title="快捷键帮助">❓</button>
-      <button id="themeToggle" onclick="toggleTheme()" title="切换主题">🌙</button>
+      <button onclick="toggleOutline()" title="目录" id="outlineToggle"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="20" y2="6"/><line x1="10" y1="12" x2="20" y2="12"/><line x1="14" y1="18" x2="20" y2="18"/></svg></button>
+      <button onclick="toggleShortcutHelp()" title="快捷键帮助"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></button>
+      <button id="themeToggle" onclick="toggleTheme()" title="切换主题"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
     </div>
   </div>
 
@@ -93,51 +93,121 @@
     <button onclick="format('h1')" title="标题 1">H1</button>
     <button onclick="format('h2')" title="标题 2">H2</button>
     <button onclick="format('h3')" title="标题 3">H3</button>
+    <button onclick="format('h4')" title="标题 4">H4</button>
+    <button onclick="format('h5')" title="标题 5">H5</button>
+    <button onclick="format('h6')" title="标题 6">H6</button>
     <span class="divider-line"></span>
-    <button onclick="format('ul')" title="无序列表">≡ 列表</button>
-    <button onclick="format('ol')" title="有序列表">#. 列表</button>
-    <button onclick="format('task')" title="任务列表">☑ 任务</button>
+    <button onclick="format('ul')" title="无序列表"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3" cy="6" r="1" fill="currentColor" stroke="none"/><circle cx="3" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="3" cy="18" r="1" fill="currentColor" stroke="none"/></svg></button>
+    <button onclick="format('ol')" title="有序列表"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></button>
+    <button onclick="format('task')" title="任务列表"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></button>
     <span class="divider-line"></span>
-    <button onclick="format('blockquote')" title="引用">❝ 引用</button>
-    <button onclick="format('code')" title="行内代码 (Ctrl+Shift+C)">⟨⟩ 代码</button>
+    <button onclick="format('blockquote')" title="引用"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
+    <button onclick="format('code')" title="行内代码 (Ctrl+Shift+C)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l-5 7 5 7"/><path d="M15 5l5 7-5 7"/></svg></button>
     <span class="codeblock-group">
-      <button onclick="toggleCodeLang()" title="代码块">▦ 代码块 ▾</button>
+      <button onclick="toggleCodeLang()" title="代码块"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="8 8 5 12 8 16"/><polyline points="16 8 19 12 16 16"/></svg> ▾</button>
       <div class="lang-popover" id="langPopover">
         <div class="lang-popover-header">选择语言</div>
         <div class="lang-popover-grid" id="langGrid"></div>
       </div>
     </span>
-    <button onclick="format('table')" title="插入表格">⊞ 表格</button>
+    <span class="table-group">
+      <button onclick="toggleTablePicker()" title="插入表格"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg> ▾</button>
+      <div class="table-popover" id="tablePopover">
+        <div class="table-popover-header">插入表格</div>
+        <div class="table-size-display" id="tableSizeDisplay">1 × 1</div>
+        <div class="table-grid" id="tableGrid"></div>
+        <div class="table-align">
+          <label class="table-align-option active" data-align="left" onclick="setTableAlignment('left')">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="17" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="3" y2="18"/></svg>
+          </label>
+          <label class="table-align-option" data-align="center" onclick="setTableAlignment('center')">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="10" x2="6" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="18" y1="14" x2="6" y2="14"/><line x1="21" y1="18" x2="3" y2="18"/></svg>
+          </label>
+          <label class="table-align-option" data-align="right" onclick="setTableAlignment('right')">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="10" x2="7" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="7" y2="14"/><line x1="21" y1="18" x2="3" y2="18"/></svg>
+          </label>
+        </div>
+      </div>
+    </span>
+    <button onclick="format('hr')" title="分隔线"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/></svg></button>
     <span class="divider-line"></span>
-    <button onclick="format('link')" title="链接 (Ctrl+K)">🔗 链接</button>
-    <button onclick="format('image')" title="图片">🖼 图片</button>
-    <span class="divider-line"></span>
+    <span class="link-group">
+      <button onclick="toggleLinkPicker()" title="链接 (Ctrl+K)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> ▾</button>
+      <div class="link-popover" id="linkPopover">
+        <div class="link-popover-header">插入链接</div>
+        <div class="link-popover-body">
+          <input type="text" id="linkUrlInput" placeholder="链接 URL" class="link-popover-input" onkeydown="if(event.key==='Enter')insertLink()">
+          <input type="text" id="linkTextInput" placeholder="链接文字" class="link-popover-input" onkeydown="if(event.key==='Enter')insertLink()">
+          <button onclick="insertLink()" class="link-popover-btn">插入</button>
+        </div>
+      </div>
+    </span>
+    <span class="image-group">
+      <button onclick="toggleImagePicker()" title="图片"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> ▾</button>
+      <div class="image-popover" id="imagePopover">
+        <div class="image-popover-header">插入图片</div>
+        <div class="image-popover-body">
+          <input type="text" id="imageUrlInput" placeholder="图片 URL" class="image-popover-input" onkeydown="if(event.key==='Enter')insertImage()">
+          <input type="text" id="imageAltInput" placeholder="图片描述" class="image-popover-input" onkeydown="if(event.key==='Enter')insertImage()">
+          <input type="text" id="imageLinkInput" placeholder="点击跳转链接 (可选)" class="image-popover-input" onkeydown="if(event.key==='Enter')insertImage()">
+          <button onclick="insertImage()" class="image-popover-btn">插入</button>
+        </div>
+      </div>
+    </span>
     <span class="emoji-group">
-      <button onclick="toggleEmojiPicker()" title="插入 Emoji">😊 Emoji ▾</button>
+      <button onclick="toggleEmojiPicker()" title="插入 Emoji"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg> ▾</button>
       <div class="emoji-popover" id="emojiPopover">
         <div class="emoji-popover-header">选择 Emoji</div>
         <div class="emoji-popover-tabs" id="emojiTabs"></div>
         <div class="emoji-popover-grid" id="emojiGrid"></div>
       </div>
     </span>
+    <span class="divider-line"></span>
     <span class="chart-group">
-      <button onclick="toggleChartPicker()" title="插入图表">📊 图表 ▾</button>
+      <button onclick="toggleChartPicker()" title="插入图表"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> ▾</button>
       <div class="chart-popover" id="chartPopover">
         <div class="chart-popover-header">选择图表类型</div>
         <div class="chart-popover-grid" id="chartGrid"></div>
       </div>
     </span>
-    <button onclick="format('hr')" title="分隔线">— 分隔线</button>
+    <span class="datetime-group">
+      <button onclick="toggleDatetimePicker()" title="插入日期/时间"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> ▾</button>
+      <div class="datetime-popover" id="datetimePopover">
+        <div class="datetime-popover-item" onclick="insertDateTime('date')">日期 (2024-01-15)</div>
+        <div class="datetime-popover-item" onclick="insertDateTime('time')">时间 (14:30:00)</div>
+        <div class="datetime-popover-item" onclick="insertDateTime('datetime')">日期时间 (2024-01-15 14:30:00)</div>
+        <div class="datetime-popover-item" onclick="insertDateTime('cn')">中文日期 (2024年1月15日)</div>
+      </div>
+    </span>
+    <span class="formula-group">
+      <button onclick="toggleFormulaPicker()" title="插入公式"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 7V4H6l6 8-6 8h12v-3"/></svg> ▾</button>
+      <div class="formula-popover" id="formulaPopover">
+        <div class="formula-popover-header">
+          <span>选择公式</span>
+          <span class="formula-mode-switch">
+            <span class="formula-mode-option active" data-mode="inline" onclick="setFormulaMode('inline')">行内</span>
+            <span class="formula-mode-option" data-mode="block" onclick="setFormulaMode('block')">块级</span>
+          </span>
+        </div>
+        <div class="formula-popover-tabs" id="formulaTabs"></div>
+        <div class="formula-popover-grid" id="formulaGrid"></div>
+      </div>
+    </span>
   </div>
 
   <div class="search-bar" id="searchBar">
     <input type="text" id="searchInput" placeholder="搜索..." oninput="searchInEditor()">
     <input type="text" id="replaceInput" placeholder="替换为...">
-    <button onclick="replaceNext()">替换</button>
-    <button onclick="replaceAll()">全部替换</button>
+    <button class="replace-btn" onclick="replaceNext()">替换</button>
+    <button class="replace-btn" onclick="replaceAll()">全部替换</button>
+    <button class="search-arrow" onclick="searchPrev()" title="上一个"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></button>
+    <button class="search-arrow" onclick="searchNext()" title="下一个"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></button>
     <span class="search-count" id="searchCount"></span>
     <button class="close-btn" onclick="toggleSearch()">✕</button>
+    <span class="search-hint" id="searchHint">图表代码等内容的文字不支持高亮显示</span>
   </div>
+
+  <div class="mobile-notice">编辑功能仅在桌面端可用，当前为预览模式</div>
 
   <div class="container">
     <div class="pane editor-pane" id="editorPane">
@@ -157,9 +227,9 @@
       </div>
       <div class="preview" id="preview"></div>
     </div>
-    <div class="outline-pane" id="outlinePane">
+    <div class="outline-pane active" id="outlinePane">
       <div class="pane-header">
-        <span>📋 目录</span>
+        <span>目录</span>
         <button class="close-btn" onclick="toggleOutline()">✕</button>
       </div>
       <div class="outline-body" id="outlineBody"></div>
@@ -177,7 +247,7 @@
   <div class="shortcut-help" id="shortcutHelp" onclick="if(event.target===this)closeShortcutHelp()">
     <div class="shortcut-help-content">
       <button class="close-btn" onclick="closeShortcutHelp()">✕</button>
-      <h3>⌨ 快捷键</h3>
+      <h3>快捷键</h3>
       <table>
         <tr><td>加粗</td><td><kbd>Ctrl+B</kbd></td></tr>
         <tr><td>斜体</td><td><kbd>Ctrl+I</kbd></td></tr>

@@ -1,16 +1,86 @@
 [
-  { "icon": "🔀", "name": "流程图", "desc": "展示流程和分支", "template": "```mermaid\ngraph TD\n    A[开始] --> B{条件}\n    B -->|是| C[操作1]\n    B -->|否| D[操作2]\n    C --> E[结束]\n    D --> E\n```" },
-  { "icon": "🔁", "name": "时序图", "desc": "展示交互顺序", "template": "```mermaid\nsequenceDiagram\n    用户->>系统: 请求\n    系统->>数据库: 查询\n    数据库-->>系统: 返回\n    系统-->>用户: 响应\n```" },
-  { "icon": "🥧", "name": "饼图", "desc": "展示占比分布", "template": "```mermaid\npie title 占比\n    \"分类A\" : 40\n    \"分类B\" : 30\n    \"分类C\" : 20\n    \"分类D\" : 10\n```" },
-  { "icon": "🌳", "name": "类图", "desc": "展示类结构关系", "template": "```mermaid\nclassDiagram\n    class Animal {\n        +name\n        +move()\n    }\n    class Dog {\n        +bark()\n    }\n    Animal <|-- Dog\n```" },
-  { "icon": "📊", "name": "状态图", "desc": "展示状态流转", "template": "```mermaid\nstateDiagram-v2\n    [*] --> 待审核\n    待审核 --> 通过\n    待审核 --> 拒绝\n    通过 --> 处理中\n    处理中 --> 完成\n    完成 --> [*]\n```" },
-  { "icon": "📈", "name": "甘特图", "desc": "展示时间进度", "template": "```mermaid\ngantt\n    title 项目计划\n    dateFormat  YYYY-MM-DD\n    section 阶段A\n    任务1 :a1, 2024-01-01, 30d\n    任务2 :after a1, 20d\n    section 阶段B\n    任务3 :2024-02-01, 12d\n    任务4 :24d\n```" },
-  { "icon": "🧠", "name": "思维导图", "desc": "展示层级关系", "template": "```mermaid\nmindmap\n  root((中心主题))\n    分支1\n      子项A\n      子项B\n    分支2\n      子项C\n      子项D\n    分支3\n      子项E\n```" },
-  { "icon": "🗺", "name": "旅程图", "desc": "展示用户体验历程", "template": "```mermaid\njourney\n    title 用户旅程\n    section 注册流程\n      填写信息: 3: 用户\n      验证邮箱: 2: 用户\n      完成注册: 4: 用户\n    section 使用产品\n      浏览功能: 4: 用户\n      提交反馈: 3: 用户\n```" },
-  { "icon": "🗄️", "name": "ER 图", "desc": "实体关系图", "template": "```mermaid\nerDiagram\n    CUSTOMER ||--o{ ORDER : 下单\n    ORDER ||--|{ LINE_ITEM : 包含\n    CUSTOMER {\n        int id PK\n        string name\n    }\n    ORDER {\n        int id PK\n        int customer_id FK\n    }\n```" },
-  { "icon": "🌊", "name": "桑基图", "desc": "展示流量分布 (Sankey)", "template": "```mermaid\nsankey-beta\n    Sources,中间节点,流量A\n    中间节点,目标,流量B\n    来源2,中间节点,流量C\n```" },
-  { "icon": "⏳", "name": "时间线", "desc": "按时间顺序展示事件", "template": "```mermaid\ntimeline\n    title 项目里程碑\n    2024 Q1 : 需求分析\n    2024 Q2 : 开发阶段\n    2024 Q3 : 测试阶段\n    2024 Q4 : 上线发布\n```" },
-  { "icon": "🌿", "name": "Git 图", "desc": "展示 Git 分支合并历史", "template": "```mermaid\ngitGraph\n    commit id: \"初始化\"\n    branch feature\n    commit id: \"新增功能\"\n    checkout main\n    commit id: \"修复bug\"\n    merge feature\n    commit id: \"发布v1.0\"\n```" },
-  { "icon": "📉", "name": "XY 图", "desc": "折线/柱状/散点图", "template": "```mermaid\nxychart-beta\n    title \"月度数据\"\n    x-axis \"月份\" [1月, 2月, 3月, 4月]\n    y-axis \"数值\" 0 --> 100\n    bar [20, 45, 60, 80]\n    line [15, 40, 55, 75]\n```" },
-  { "icon": "🏗️", "name": "C4 图", "desc": "软件架构上下文", "template": "```mermaid\nC4Context\n    title 系统上下文图\n    Person(用户, \"用户\")\n    System(系统, \"我们的系统\")\n    Rel(用户, 系统, \"使用\")\n    System_Ext(外部, \"外部服务\")\n    Rel(系统, 外部, \"调用\")\n```" }
+  {
+    "icon": "<svg viewBox='0 0 24 24' width='24' height='24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polygon points='12,3 21,12 12,21 3,12'/><path d='M12 7v4l-3 2'/></svg>",
+    "name": "流程图",
+    "desc": "展示流程和分支",
+    "template": "```mermaid\ngraph TD\n    A[开始] --> B{条件}\n    B -->|是| C[操作1]\n    B -->|否| D[操作2]\n    C --> E[结束]\n    D --> E\n```"
+  },
+  {
+    "icon": "<svg viewBox='0 0 24 24' width='24' height='24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='6' y1='4' x2='6' y2='20'/><line x1='18' y1='4' x2='18' y2='20'/><path d='M6 10l4 2-4 2'/><path d='M18 14l-4-2 4-2'/></svg>",
+    "name": "时序图",
+    "desc": "展示交互顺序",
+    "template": "```mermaid\nsequenceDiagram\n    用户->>系统: 请求\n    系统->>数据库: 查询\n    数据库-->>系统: 返回\n    系统-->>用户: 响应\n```"
+  },
+  {
+    "icon": "<svg viewBox='0 0 24 24' width='24' height='24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M12 3a9 9 0 0 1 9 9h-9z'/></svg>",
+    "name": "饼图",
+    "desc": "展示占比分布",
+    "template": "```mermaid\npie title 占比\n    \"分类A\" : 40\n    \"分类B\" : 30\n    \"分类C\" : 20\n    \"分类D\" : 10\n```"
+  },
+  {
+    "icon": "<svg viewBox='0 0 24 24' width='24' height='24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='18' height='18' rx='2'/><line x1='3' y1='9' x2='21' y2='9'/><line x1='3' y1='16' x2='21' y2='16'/></svg>",
+    "name": "类图",
+    "desc": "展示类结构关系",
+    "template": "```mermaid\nclassDiagram\n    class Animal {\n        +name\n        +move()\n    }\n    class Dog {\n        +bark()\n    }\n    Animal <|-- Dog\n```"
+  },
+  {
+    "icon": "<svg viewBox='0 0 24 24' width='24' height='24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='8'/><circle cx='12' cy='12' r='3'/><path d='M20 12l3 2-3 2'/></svg>",
+    "name": "状态图",
+    "desc": "展示状态流转",
+    "template": "```mermaid\nstateDiagram-v2\n    [*] --> 待审核\n    待审核 --> 通过\n    待审核 --> 拒绝\n    通过 --> 处理中\n    处理中 --> 完成\n    完成 --> [*]\n```"
+  },
+  {
+    "icon": "<svg viewBox='0 0 24 24' width='24' height='24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='16' height='4' rx='2'/><rect x='3' y='10' width='10' height='4' rx='2'/><rect x='3' y='16' width='18' height='4' rx='2'/></svg>",
+    "name": "甘特图",
+    "desc": "展示时间进度",
+    "template": "```mermaid\ngantt\n    title 项目计划\n    dateFormat  YYYY-MM-DD\n    section 阶段A\n    任务1 :a1, 2024-01-01, 30d\n    任务2 :after a1, 20d\n    section 阶段B\n    任务3 :2024-02-01, 12d\n    任务4 :24d\n```"
+  },
+  {
+    "icon": "<svg viewBox='0 0 24 24' width='24' height='24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='3'/><line x1='9' y1='9' x2='4' y2='4'/><line x1='15' y1='9' x2='20' y2='4'/><line x1='9' y1='15' x2='4' y2='20'/><line x1='15' y1='15' x2='20' y2='20'/></svg>",
+    "name": "思维导图",
+    "desc": "展示层级关系",
+    "template": "```mermaid\nmindmap\n  root((中心主题))\n    分支1\n      子项A\n      子项B\n    分支2\n      子项C\n      子项D\n    分支3\n      子项E\n```"
+  },
+  {
+    "icon": "<svg viewBox='0 0 24 24' width='24' height='24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2a8 8 0 0 0-8 8c0 5 8 12 8 12s8-7 8-12a8 8 0 0 0-8-8z'/><circle cx='12' cy='10' r='3'/></svg>",
+    "name": "旅程图",
+    "desc": "展示用户体验历程",
+    "template": "```mermaid\njourney\n    title 用户旅程\n    section 注册流程\n      填写信息: 3: 用户\n      验证邮箱: 2: 用户\n      完成注册: 4: 用户\n    section 使用产品\n      浏览功能: 4: 用户\n      提交反馈: 3: 用户\n```"
+  },
+  {
+    "icon": "<svg viewBox='0 0 24 24' width='24' height='24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='8' width='8' height='8' rx='1'/><polygon points='14,5 22,12 14,19'/></svg>",
+    "name": "ER 图",
+    "desc": "实体关系图",
+    "template": "```mermaid\nerDiagram\n    CUSTOMER ||--o{ ORDER : 下单\n    ORDER ||--|{ LINE_ITEM : 包含\n    CUSTOMER {\n        int id PK\n        string name\n    }\n    ORDER {\n        int id PK\n        int customer_id FK\n    }\n```"
+  },
+  {
+    "icon": "<svg viewBox='0 0 24 24' width='24' height='24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 4h18v4H3z'/><path d='M3 16h18v4H3z'/><path d='M3 8l18 8'/><path d='M3 12l18-4'/></svg>",
+    "name": "桑基图",
+    "desc": "展示流量分布 (Sankey)",
+    "template": "```mermaid\nsankey-beta\n    Sources,中间节点,流量A\n    中间节点,目标,流量B\n    来源2,中间节点,流量C\n```"
+  },
+  {
+    "icon": "<svg viewBox='0 0 24 24' width='24' height='24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='3' y1='12' x2='21' y2='12'/><circle cx='6' cy='12' r='2.5'/><circle cx='12' cy='12' r='2.5'/><circle cx='18' cy='12' r='2.5'/></svg>",
+    "name": "时间线",
+    "desc": "按时间顺序展示事件",
+    "template": "```mermaid\ntimeline\n    title 项目里程碑\n    2024 Q1 : 需求分析\n    2024 Q2 : 开发阶段\n    2024 Q3 : 测试阶段\n    2024 Q4 : 上线发布\n```"
+  },
+  {
+    "icon": "<svg viewBox='0 0 24 24' width='24' height='24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='6' cy='6' r='2.5'/><circle cx='6' cy='18' r='2.5'/><circle cx='18' cy='12' r='2.5'/><line x1='6' y1='8.5' x2='6' y2='15.5'/><line x1='6' y1='8' x2='18' y2='12'/><line x1='18' y1='12' x2='6' y2='18'/></svg>",
+    "name": "Git 图",
+    "desc": "展示 Git 分支合并历史",
+    "template": "```mermaid\ngitGraph\n    commit id: \"初始化\"\n    branch feature\n    commit id: \"新增功能\"\n    checkout main\n    commit id: \"修复bug\"\n    merge feature\n    commit id: \"发布v1.0\"\n```"
+  },
+  {
+    "icon": "<svg viewBox='0 0 24 24' width='24' height='24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 3v18h18'/><polyline points='6 16 10 11 14 13 18 8'/><rect x='6' y='14' width='3' height='6'/><rect x='15' y='8' width='3' height='12'/></svg>",
+    "name": "XY 图",
+    "desc": "折线/柱状/散点图",
+    "template": "```mermaid\nxychart-beta\n    title \"月度数据\"\n    x-axis \"月份\" [1月, 2月, 3月, 4月]\n    y-axis \"数值\" 0 --> 100\n    bar [20, 45, 60, 80]\n    line [15, 40, 55, 75]\n```"
+  },
+  {
+    "icon": "<svg viewBox='0 0 24 24' width='24' height='24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='18' height='5' rx='1'/><rect x='6' y='11' width='12' height='4' rx='1'/><rect x='9' y='18' width='6' height='3' rx='1'/><line x1='12' y1='8' x2='12' y2='11'/><line x1='12' y1='15' x2='12' y2='18'/></svg>",
+    "name": "C4 图",
+    "desc": "软件架构上下文",
+    "template": "```mermaid\nC4Context\n    title 系统上下文图\n    Person(用户, \"用户\")\n    System(系统, \"我们的系统\")\n    Rel(用户, 系统, \"使用\")\n    System_Ext(外部, \"外部服务\")\n    Rel(系统, 外部, \"调用\")\n```"
+  }
 ]
