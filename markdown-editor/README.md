@@ -98,7 +98,7 @@ markdown-editor/
 
 ### 文件操作
 - 新建文件、打开 `.md`/`.markdown`/`.txt` 文件
-- 保存到本地（自动文件名）
+- 下载到本地（自动文件名）
 - 导出为 HTML（内联样式，独立文件）、打印/导出 PDF
 
 ### 搜索替换
@@ -133,13 +133,12 @@ markdown-editor/
 | `Ctrl+B` | 加粗 |
 | `Ctrl+I` | 斜体 |
 | `Ctrl+K` | 插入链接 |
-| `Ctrl+S` | 保存文件 |
+| `Ctrl+S` | 下载文件 |
 | `Ctrl+N` | 新建文件 |
 | `Ctrl+O` | 打开文件 |
 | `Ctrl+F` | 搜索替换 |
 | `Ctrl+Z` | 撤销 |
 | `Ctrl+Y` | 重做 |
-| `Ctrl+Shift+S` | 另存为 |
 | `Ctrl+Shift+C` | 行内代码 |
 | `Ctrl+Shift+P` | 切换视图模式 |
 | `?` | 打开快捷键帮助 |

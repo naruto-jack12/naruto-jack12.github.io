@@ -5,7 +5,6 @@ const wordCount = document.getElementById('wordCount');
 const editorWordCount = document.getElementById('editorWordCount');
 const previewWordCount = document.getElementById('previewWordCount');
 const cursorPos = document.getElementById('cursorPos');
-const saveStatus = document.getElementById('saveStatus');
 const fileName = document.getElementById('fileName');
 const editorPane = document.getElementById('editorPane');
 const previewPane = document.getElementById('previewPane');
@@ -135,7 +134,7 @@ function render() {
   }
   updateWordCount();
   updateCursorPos();
-  if (!dirty) { dirty = true; updateSaveStatus(); }
+  if (!dirty) { dirty = true; }
   autoSave();
   renderOutline();
   addCopyButtons();
@@ -207,11 +206,6 @@ function updateCursorPos() {
   cursorPos.textContent = '行: ' + (cur.line + 1) + ', 列: ' + (cur.ch + 1);
 }
 
-// ====== Save Status ======
-function updateSaveStatus() {
-  saveStatus.textContent = dirty ? '⚠ 未保存' : '✓ 已保存';
-}
-
 // ====== Auto Save ======
 const AUTO_SAVE_KEY = 'md-editor-content';
 const AUTO_SAVE_FILE = 'md-editor-file';
@@ -229,19 +223,19 @@ function loadAutoSave() {
     if (meta.name) fileName.textContent = meta.name;
     render();
     dirty = false;
-    updateSaveStatus();
+  
   }
 }
 
 // ====== File Operations ======
 function newFile() {
-  if (dirty && !confirm('当前内容未保存，确定新建？')) return;
+  if (dirty && !confirm('当前内容尚未下载，确定新建？')) return;
   setValue('');
   fileName.textContent = 'untitled.md';
   currentFile = null;
   dirty = false;
   render();
-  updateSaveStatus();
+
 }
 
 function openFile() {
@@ -258,13 +252,13 @@ function loadFile(event) {
     currentFile = file;
     dirty = false;
     render();
-    updateSaveStatus();
+  
   };
   reader.readAsText(file);
   event.target.value = '';
 }
 
-function saveFile() {
+function downloadFile() {
   var content = getValue();
   if (currentFile) {
     const blob = new Blob([content], { type: 'text/markdown' });
@@ -278,7 +272,7 @@ function saveFile() {
     downloadBlob(new Blob([content], { type: 'text/markdown' }), fileName.textContent);
   }
   dirty = false;
-  updateSaveStatus();
+
 }
 
 function downloadBlob(blob, filename) {
@@ -299,7 +293,7 @@ function clearStorage() {
   currentFile = null;
   dirty = false;
   render();
-  updateSaveStatus();
+
 }
 
 // ====== Export ======
@@ -1122,7 +1116,7 @@ document.addEventListener('mouseup', () => {
 document.addEventListener('keydown', (e) => {
   const ctrl = e.ctrlKey || e.metaKey;
 
-  if (ctrl && e.key === 's') { e.preventDefault(); saveFile(); }
+  if (ctrl && e.key === 's') { e.preventDefault(); downloadFile(); }
   if (ctrl && e.key === 'o') { e.preventDefault(); openFile(); }
   if (ctrl && e.key === 'n') { e.preventDefault(); newFile(); }
   if (ctrl && e.key === 'f') { e.preventDefault(); toggleSearch(); }
