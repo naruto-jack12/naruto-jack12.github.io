@@ -290,6 +290,18 @@ function downloadBlob(blob, filename) {
   URL.revokeObjectURL(url);
 }
 
+function clearStorage() {
+  if (!confirm('确定清除所有本地缓存？\n未保存的内容将丢失。')) return;
+  localStorage.removeItem('md-editor-content');
+  localStorage.removeItem('md-editor-file');
+  setValue('');
+  fileName.textContent = 'untitled.md';
+  currentFile = null;
+  dirty = false;
+  render();
+  updateSaveStatus();
+}
+
 // ====== Export ======
 var exportCss = '';
 
