@@ -106,6 +106,7 @@ function renderTabs() {
     tab.className = 'tab-item' + (idx === currentTabIndex ? ' active' : '');
     tab.dataset.index = idx;
     tab.innerHTML = '<span class="tab-name">' + escapeHtml(file.name) + '</span><span class="tab-close" onclick="event.stopPropagation();closeTab(' + idx + ')">✕</span>';
+    tab.title = file.name + '（双击重命名）';
     tab.addEventListener('click', function() { switchTab(parseInt(this.dataset.index)); });
     tab.addEventListener('dblclick', function(e) {
       e.preventDefault();
