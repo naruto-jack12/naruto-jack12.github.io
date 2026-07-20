@@ -426,14 +426,22 @@ function downloadBlob(blob, filename) {
 }
 
 function clearStorage() {
-  if (!confirm('确定清空自动保存的草稿？编辑器内容将被清空，请先下载保存文件。')) return;
+  if (!confirm('确定清空缓存？所有标签页将关闭并恢复为默认模板，请先下载保存文件。')) return;
   localStorage.removeItem('md-editor-content');
   localStorage.removeItem('md-editor-file');
   localStorage.removeItem('md-editor-tabs');
   files = [];
   fileIdCounter = 0;
   currentTabIndex = -1;
-  addNewTab();
+  if (defaultContent) {
+    addNewTab('untitled.md', defaultContent, true);
+  } else {
+    loadText('assets/data/default-content.md', function(text) {
+      defaultContent = text;
+      addNewTab('untitled.md', defaultContent, true);
+      render();
+    });
+  }
   dirty = false;
   render();
 }
@@ -1131,10 +1139,6 @@ function highlightInPreview(query) {
     }
   }
   walk(preview);
-}
-
-function escapeHtml(s) {
-  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 function replaceNext() {
