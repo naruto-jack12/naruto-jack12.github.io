@@ -88,6 +88,119 @@ let searchMatches = [];
 let currentSearchIndex = -1;
 let theme = localStorage.getItem('md-theme') || 'light';
 
+// ====== Multi-File Tabs ======
+var files = [];
+var currentTabIndex = -1;
+var fileIdCounter = 0;
+
+function createFileObj(name, content) {
+  return { id: fileIdCounter++, name: name || 'untitled.md', content: content || '', dirty: false };
+}
+
+function renderTabs() {
+  var tabsList = document.getElementById('tabsList');
+  if (!tabsList) return;
+  tabsList.innerHTML = '';
+  files.forEach(function(file, idx) {
+    var tab = document.createElement('div');
+    tab.className = 'tab-item' + (idx === currentTabIndex ? ' active' : '');
+    tab.dataset.index = idx;
+    tab.innerHTML = '<span class="tab-name">' + escapeHtml(file.name) + '</span><span class="tab-close" onclick="event.stopPropagation();closeTab(' + idx + ')">✕</span>';
+    tab.addEventListener('click', function() { switchTab(parseInt(this.dataset.index)); });
+    tab.addEventListener('dblclick', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      openRenameModal(parseInt(this.dataset.index));
+    });
+    tabsList.appendChild(tab);
+  });
+}
+
+function addNewTab(name, content, activate) {
+  var file = createFileObj(name, content);
+  files.push(file);
+  if (activate !== false) switchTab(files.length - 1);
+  renderTabs();
+  return file;
+}
+
+function switchTab(idx) {
+  if (idx < 0 || idx >= files.length) return;
+  if (currentTabIndex >= 0 && currentTabIndex < files.length) {
+    files[currentTabIndex].content = getValue();
+    files[currentTabIndex].dirty = dirty;
+  }
+  currentTabIndex = idx;
+  var file = files[idx];
+  setValue(file.content);
+  fileName.textContent = file.name;
+  dirty = file.dirty;
+  currentFile = file._nativeFile || null;
+  render();
+  renderTabs();
+}
+
+function closeTab(idx) {
+  if (files.length <= 1) {
+    addNewTab();
+    files.splice(0, 1);
+    currentTabIndex = 0;
+    renderTabs();
+    return;
+  }
+  if (files[idx].dirty && !confirm('"' + files[idx].name + '" 尚未保存，确定关闭？')) return;
+  files.splice(idx, 1);
+  if (currentTabIndex >= files.length) currentTabIndex = files.length - 1;
+  else if (currentTabIndex > idx) currentTabIndex--;
+  var file = files[currentTabIndex];
+  setValue(file.content);
+  fileName.textContent = file.name;
+  dirty = file.dirty;
+  currentFile = file._nativeFile || null;
+  render();
+  renderTabs();
+}
+
+function getCurrentFile() {
+  if (currentTabIndex >= 0 && currentTabIndex < files.length) {
+    files[currentTabIndex].content = getValue();
+    files[currentTabIndex].dirty = dirty;
+    return files[currentTabIndex];
+  }
+  return null;
+}
+
+var renameTargetIndex = -1;
+
+function openRenameModal(idx) {
+  renameTargetIndex = idx;
+  var modal = document.getElementById('renameModal');
+  var input = document.getElementById('renameInput');
+  modal.classList.add('active');
+  input.value = files[idx].name;
+  input.focus();
+  input.select();
+}
+
+function closeRenameModal() {
+  document.getElementById('renameModal').classList.remove('active');
+  renameTargetIndex = -1;
+}
+
+function confirmRename() {
+  var input = document.getElementById('renameInput');
+  var newName = input.value.trim();
+  if (renameTargetIndex >= 0 && renameTargetIndex < files.length && newName) {
+    files[renameTargetIndex].name = newName;
+    if (renameTargetIndex === currentTabIndex) {
+      fileName.textContent = newName;
+    }
+    renderTabs();
+    autoSave();
+  }
+  closeRenameModal();
+}
+
 // ====== Render ======
 function render() {
   const html = marked.parse(getValue());
@@ -209,33 +322,63 @@ function updateCursorPos() {
 // ====== Auto Save ======
 const AUTO_SAVE_KEY = 'md-editor-content';
 const AUTO_SAVE_FILE = 'md-editor-file';
+const AUTO_SAVE_TABS = 'md-editor-tabs';
 
 function autoSave() {
+  if (currentTabIndex >= 0 && currentTabIndex < files.length) {
+    files[currentTabIndex].content = getValue();
+    files[currentTabIndex].dirty = dirty;
+  }
+  var tabsData = files.map(function(f) {
+    return { name: f.name, content: f.content, dirty: f.dirty };
+  });
+  localStorage.setItem(AUTO_SAVE_TABS, JSON.stringify(tabsData));
   localStorage.setItem(AUTO_SAVE_KEY, getValue());
-  localStorage.setItem(AUTO_SAVE_FILE, JSON.stringify({ name: fileName.textContent, modified: Date.now() }));
+  localStorage.setItem(AUTO_SAVE_FILE, JSON.stringify({ name: fileName.textContent, modified: Date.now(), tabIndex: currentTabIndex }));
 }
 
 function loadAutoSave() {
-  const saved = localStorage.getItem(AUTO_SAVE_KEY);
-  const meta = JSON.parse(localStorage.getItem(AUTO_SAVE_FILE) || '{}');
+  var savedTabs = localStorage.getItem(AUTO_SAVE_TABS);
+  if (savedTabs) {
+    try {
+      var tabsData = JSON.parse(savedTabs);
+      files = [];
+      fileIdCounter = 0;
+      tabsData.forEach(function(t) {
+        files.push(createFileObj(t.name, t.content));
+        files[files.length - 1].dirty = t.dirty || false;
+      });
+      var meta = JSON.parse(localStorage.getItem(AUTO_SAVE_FILE) || '{}');
+      currentTabIndex = (meta.tabIndex != null && meta.tabIndex < files.length) ? meta.tabIndex : 0;
+      var file = files[currentTabIndex];
+      setValue(file.content);
+      fileName.textContent = file.name;
+      dirty = file.dirty;
+      render();
+      renderTabs();
+      return;
+    } catch (e) {}
+  }
+  var saved = localStorage.getItem(AUTO_SAVE_KEY);
+  var meta = JSON.parse(localStorage.getItem(AUTO_SAVE_FILE) || '{}');
   if (saved) {
+    files = [];
+    fileIdCounter = 0;
+    var name = (meta && meta.name) ? meta.name : 'untitled.md';
+    files.push(createFileObj(name, saved));
+    currentTabIndex = 0;
     setValue(saved);
     if (meta.name) fileName.textContent = meta.name;
     render();
     dirty = false;
-  
+    renderTabs();
   }
 }
 
 // ====== File Operations ======
 function newFile() {
-  if (dirty && !confirm('当前内容尚未下载，确定新建？')) return;
-  setValue('');
-  fileName.textContent = 'untitled.md';
-  currentFile = null;
-  dirty = false;
+  addNewTab('untitled.md', '', true);
   render();
-
 }
 
 function openFile() {
@@ -243,36 +386,34 @@ function openFile() {
 }
 
 function loadFile(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    setValue(e.target.result);
-    fileName.textContent = file.name;
-    currentFile = file;
-    dirty = false;
-    render();
-  
-  };
-  reader.readAsText(file);
+  var fileList = event.target.files;
+  if (!fileList || !fileList.length) return;
+  for (var i = 0; i < fileList.length; i++) {
+    (function(file) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var tabFile = addNewTab(file.name, e.target.result, i === fileList.length - 1);
+        tabFile._nativeFile = file;
+        render();
+      };
+      reader.readAsText(file);
+    })(fileList[i]);
+  }
   event.target.value = '';
 }
 
 function downloadFile() {
   var content = getValue();
+  var name = fileName.textContent;
   if (currentFile) {
-    const blob = new Blob([content], { type: 'text/markdown' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = currentFile.name || fileName.textContent;
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadBlob(new Blob([content], { type: 'text/markdown' }), name);
   } else {
-    downloadBlob(new Blob([content], { type: 'text/markdown' }), fileName.textContent);
+    downloadBlob(new Blob([content], { type: 'text/markdown' }), name);
   }
+  var f = getCurrentFile();
+  if (f) f.dirty = false;
   dirty = false;
-
+  renderTabs();
 }
 
 function downloadBlob(blob, filename) {
@@ -288,12 +429,13 @@ function clearStorage() {
   if (!confirm('确定清空自动保存的草稿？编辑器内容将被清空，请先下载保存文件。')) return;
   localStorage.removeItem('md-editor-content');
   localStorage.removeItem('md-editor-file');
-  setValue('');
-  fileName.textContent = 'untitled.md';
-  currentFile = null;
+  localStorage.removeItem('md-editor-tabs');
+  files = [];
+  fileIdCounter = 0;
+  currentTabIndex = -1;
+  addNewTab();
   dirty = false;
   render();
-
 }
 
 // ====== Export ======
@@ -308,6 +450,17 @@ function exportHTML() {
 
 function exportPDF() {
   window.print();
+}
+
+function toggleExportDropdown(e) {
+  if (e) e.stopPropagation();
+  var drop = document.getElementById('exportDropdown');
+  drop.classList.toggle('active');
+}
+
+function closeExportDropdown() {
+  var drop = document.getElementById('exportDropdown');
+  if (drop) drop.classList.remove('active');
 }
 
 var sunSvg = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
@@ -529,6 +682,7 @@ function insertCodeblock(lang) {
 }
 
 document.addEventListener('click', function(e) {
+  closeExportDropdown();
   var popover = document.getElementById('langPopover');
   if (popover && popover.classList.contains('active') && !e.target.closest('.codeblock-group')) {
     popover.classList.remove('active');
@@ -986,27 +1140,26 @@ function escapeHtml(s) {
 function replaceNext() {
   var query = searchInput.value;
   var replace = replaceInput.value;
-  if (!query) return;
-  var start = getSelStart();
+  if (!query || searchMatches.length === 0) return;
+  if (currentSearchIndex < 0 || currentSearchIndex >= searchMatches.length) currentSearchIndex = 0;
+  var absPos = searchMatches[currentSearchIndex];
   var text = getValue();
-  var from = text.substring(start);
-  var pos = from.indexOf(query);
-  if (pos === -1) return;
-  var absPos = start + pos;
   setValue(text.substring(0, absPos) + replace + text.substring(absPos + query.length));
-  setSel(absPos + replace.length, absPos + replace.length);
+  editor.setCursor(editor.posFromIndex(absPos + replace.length));
   searchInEditor();
-  render();
 }
 
 function replaceAll() {
   var query = searchInput.value;
   var replace = replaceInput.value;
   if (!query) return;
-  var regex = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+  var regex = new RegExp(escapeRegex(query), 'g');
   setValue(getValue().replace(regex, replace));
   searchInput.value = '';
+  searchMatches = [];
+  currentSearchIndex = -1;
   searchCount.textContent = '';
+  clearPreviewHighlights();
   render();
 }
 
@@ -1175,12 +1328,12 @@ editor.on('paste', function(instance, e) {
 
 // ====== Init ======
 document.querySelectorAll('.search-arrow').forEach(function(b) { b.disabled = true; });
-if (localStorage.getItem(AUTO_SAVE_KEY)) {
+if (localStorage.getItem(AUTO_SAVE_KEY) || localStorage.getItem(AUTO_SAVE_TABS)) {
   loadAutoSave();
 } else {
   loadText('assets/data/default-content.md', function(text) {
     defaultContent = text;
-    setValue(defaultContent);
+    addNewTab('untitled.md', defaultContent, true);
     render();
   });
   render();
@@ -1190,5 +1343,15 @@ setViewMode('split');
 loadLanguages();
 loadData();
 loadText('assets/css/export.css', function(text) { exportCss = text; });
+
+var tabsListEl = document.getElementById('tabsList');
+if (tabsListEl) {
+  tabsListEl.addEventListener('wheel', function(e) {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      e.preventDefault();
+      tabsListEl.scrollLeft += e.deltaY;
+    }
+  }, { passive: false });
+}
 
 console.log('📝 Markdown 编辑器已启动！');

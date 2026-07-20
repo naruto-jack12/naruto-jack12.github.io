@@ -60,10 +60,23 @@
       <span class="divider-line"></span>
       <button onclick="newFile()" title="新建空白文件 (Ctrl+N)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg> 新建</button>
       <button onclick="openFile()" title="打开文件 (Ctrl+O)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> 打开</button>
-      <button onclick="downloadFile()" title="下载文件 (Ctrl+S)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> 下载</button>
-      <span class="divider-line"></span>
-      <button onclick="exportHTML()" title="导出 HTML"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> 导出HTML</button>
-      <button onclick="exportPDF()" title="打印/导出 PDF"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg> 导出PDF</button>
+      <span class="export-group">
+        <button class="export-main-btn" onclick="toggleExportDropdown(event)" title="导出文件"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> 导出 ▾</button>
+        <div class="export-dropdown" id="exportDropdown" onclick="event.stopPropagation()">
+          <div class="export-dropdown-item" onclick="closeExportDropdown();downloadFile()">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+            导出 Markdown
+          </div>
+          <div class="export-dropdown-item" onclick="closeExportDropdown();exportHTML()">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            导出 HTML
+          </div>
+          <div class="export-dropdown-item" onclick="closeExportDropdown();exportPDF()">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            导出 PDF
+          </div>
+        </div>
+      </span>
     </div>
     <div class="toolbar-right">
       <div class="pane-tools">
@@ -85,6 +98,11 @@
       <button onclick="toggleShortcutHelp()" title="快捷键帮助"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></button>
       <button id="themeToggle" onclick="toggleTheme()" title="切换主题"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
     </div>
+  </div>
+
+  <div class="tabs-bar" id="tabsBar">
+    <div class="tabs-list" id="tabsList"></div>
+    <button class="tab-add-btn" onclick="addNewTab()" title="新建标签页"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
 
   <div class="format-bar" id="formatBar">
@@ -263,6 +281,17 @@
         <tr><td>行内代码</td><td><kbd>Ctrl+Shift+C</kbd></td></tr>
         <tr><td>切换预览</td><td><kbd>Ctrl+Shift+P</kbd></td></tr>
       </table>
+    </div>
+  </div>
+
+  <div class="rename-modal" id="renameModal" onclick="if(event.target===this)closeRenameModal()">
+    <div class="rename-modal-content">
+      <div class="rename-modal-header">重命名文件</div>
+      <input type="text" id="renameInput" class="rename-input" placeholder="输入新文件名" onkeydown="if(event.key==='Enter')confirmRename()">
+      <div class="rename-modal-actions">
+        <button class="rename-cancel-btn" onclick="closeRenameModal()">取消</button>
+        <button class="rename-confirm-btn" onclick="confirmRename()">确认</button>
+      </div>
     </div>
   </div>
 
