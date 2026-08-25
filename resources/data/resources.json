@@ -33,9 +33,34 @@
                 "url": "https://www.qwmkv.com/"
             },
             {
+                "name": "资源搜索 - 云解析",
+                "description": "https://yparse.ik9.cc/",
+                "url": "https://yparse.ik9.cc/"
+            },
+            {
                 "name": "",
                 "description": "",
                 "url": ""
+            }
+        ]
+    },
+    {
+        "category":"影视资源Ⅱ-路径后面添加上原播放路径（直接复制原先视频路径到以下路径后面）",
+        "items":[
+            {
+                "name": "虾米播放器-全网最稳定的视频播放器",
+                "description": "路径/?url= 后面添加源路径",
+                "url": "https://jx.xmflv.com/?url="
+            },
+            {
+                "name": "云解析",
+                "description": "路径/?url= 后面添加源路径",
+                "url": "https://yparse.ik9.cc/index.php?url="
+            },
+            {
+                "name": "剖云解析-VIP视频解析站爱奇艺腾讯优酷vip视频在线解析网站",
+                "description": "路径/?url= 后面添加源路径",
+                "url": "https://www.pouyun.com/?url="
             }
         ]
     },
@@ -51,6 +76,16 @@
                 "name": "包子漫画",
                 "description": "",
                 "url": "https://cn.baozimhcn.com/"
+            },
+            {
+                "name": "G社漫画",
+                "description": "",
+                "url": "https://m.g-mh.org/"
+            },
+            {
+                "name": "",
+                "description": "",
+                "url": ""
             }
         ]
     }
