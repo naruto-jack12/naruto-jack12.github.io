@@ -3,6 +3,11 @@
         "category": "影视资源",
         "items": [
             {
+                "name": "搜剧AI",
+                "description": "",
+                "url": "https://souju.ai/"
+            },
+            {
                 "name": "星光影视大全官网-免费在线观看高清电影电视剧-星光影视",
                 "description": "",
                 "url": "https://www.cdx.wmoonb.com/"
@@ -31,11 +36,6 @@
                 "name": "七味 - 七味网",
                 "description": "",
                 "url": "https://www.qwmkv.com/"
-            },
-            {
-                "name": "资源搜索 - 云解析",
-                "description": "https://yparse.ik9.cc/",
-                "url": "https://yparse.ik9.cc/"
             },
             {
                 "name": "",
