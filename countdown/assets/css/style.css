@@ -1,14 +1,87 @@
-:root {
+/* ==================== 主题变量 ==================== */
+:root,
+[data-theme="dark"] {
     --bg: #0a0a1a;
     --card-bg: #12122a;
     --border: #1e1e3f;
     --text: #e0e0f0;
     --accent: #6c5ce7;
     --accent-glow: #a29bfe;
+    --accent-hover: #7d6ff0;
     --danger: #e74c3c;
     --gold: #f9ca24;
     --digit-bg: #1a1a35;
     --digit-border: #2a2a55;
+    --progress-track: #1a1a35;
+    --chip-bg: rgba(255, 255, 255, 0.03);
+
+    --muted: #8888aa;
+    --muted-2: #7777aa;
+    --muted-3: #9999bb;
+    --preset-text: #aaaacc;
+    --input-text: #c0c0dd;
+    --placeholder: #555577;
+    --datetime-text: #dddddd;
+    --separator: #444466;
+    --digit-color: #ffffff;
+    --d-day: #f9ca24;
+    --d-hour: #a29bfe;
+    --d-min: #74b9ff;
+    --d-sec: #ff7675;
+    --star: #ffffff;
+
+    --title-grad: linear-gradient(135deg, #e0e0f0 0%, #a29bfe 50%, #f9ca24 100%);
+    --card-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+    --card-shadow-hover: 0 30px 70px rgba(0, 0, 0, 0.55);
+    --card-inset: 0 0 0 1px rgba(255, 255, 255, 0.03);
+    --card-inset-hover: 0 0 0 1px rgba(255, 255, 255, 0.05);
+    --card-halo: 0 0 80px rgba(108, 92, 231, 0.08);
+    --card-halo-hover: 0 0 100px rgba(108, 92, 231, 0.12);
+    --tile-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    --btn-shadow-hover: rgba(108, 92, 231, 0.4);
+    --picker-filter: invert(0.85) brightness(1.5);
+}
+
+[data-theme="light"] {
+    --bg: #eef0fa;
+    --card-bg: #ffffff;
+    --border: #dcdfeb;
+    --text: #22263b;
+    --accent: #6c5ce7;
+    --accent-glow: #5a4bd0;
+    --accent-hover: #7d6ff0;
+    --danger: #d63a3a;
+    --gold: #c8860d;
+    --digit-bg: #f3f4fc;
+    --digit-border: #dcdfeb;
+    --progress-track: #e6e8f2;
+    --chip-bg: rgba(0, 0, 0, 0.04);
+
+    --muted: #6b7089;
+    --muted-2: #767b96;
+    --muted-3: #5f6480;
+    --preset-text: #55597a;
+    --input-text: #333852;
+    --placeholder: #9aa0c0;
+    --datetime-text: #333852;
+    --separator: #c2c6de;
+    --digit-color: #2a2e46;
+    --d-day: #c8860d;
+    --d-hour: #5a4bd0;
+    --d-min: #2b7fd0;
+    --d-sec: #d63a3a;
+    --star: #a99cf0;
+
+    --title-grad: linear-gradient(135deg, #5a4bd0 0%, #8b7ff0 50%, #c8860d 100%);
+    --card-shadow: 0 18px 45px rgba(80, 80, 140, 0.18);
+    --card-shadow-hover: 0 22px 55px rgba(80, 80, 140, 0.22);
+    --card-inset: 0 0 0 1px rgba(0, 0, 0, 0.03);
+    --card-inset-hover: 0 0 0 1px rgba(0, 0, 0, 0.05);
+    --card-halo: 0 0 60px rgba(108, 92, 231, 0.06);
+    --card-halo-hover: 0 0 80px rgba(108, 92, 231, 0.10);
+    --tile-shadow: 0 6px 18px rgba(120, 120, 170, 0.15);
+    --btn-shadow-hover: rgba(108, 92, 231, 0.25);
+    --picker-filter: none;
 }
 
 * {
@@ -30,8 +103,27 @@ body {
     justify-content: center;
     padding: 20px;
     color: var(--text);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* ==================== 图标基础 ==================== */
+.ic {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon-svg {
+    width: 1em;
+    height: 1em;
+    display: block;
+    flex-shrink: 0;
+}
+/* <button> 的 UA 默认 color 为黑色且优先于从 body 继承，强制继承以保证 currentColor 图标跟随主题 */
+button {
+    color: inherit;
+}
+
+/* ==================== 背景星星 ==================== */
 .stars {
     position: fixed;
     top: 0;
@@ -43,7 +135,7 @@ body {
 }
 .star {
     position: absolute;
-    background: white;
+    background: var(--star);
     border-radius: 50%;
     animation: twinkle var(--dur) ease-in-out infinite;
     animation-delay: var(--delay);
@@ -66,38 +158,75 @@ body {
     border: 1px solid var(--border);
     border-radius: 28px;
     padding: 40px 35px 35px;
-    box-shadow:
-        0 25px 60px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(255, 255, 255, 0.03) inset,
-        0 0 80px rgba(108, 92, 231, 0.08);
+    box-shadow: var(--card-shadow), var(--card-inset), var(--card-halo);
     backdrop-filter: blur(10px);
     text-align: center;
     transition: all 0.3s ease;
 }
 .main-card:hover {
-    box-shadow:
-        0 30px 70px rgba(0, 0, 0, 0.55),
-        0 0 0 1px rgba(255, 255, 255, 0.05) inset,
-        0 0 100px rgba(108, 92, 231, 0.12);
+    box-shadow: var(--card-shadow-hover), var(--card-inset-hover), var(--card-halo-hover);
 }
 
+/* ==================== 主题切换按钮 ==================== */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 20;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--digit-bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    box-shadow: var(--tile-shadow);
+    transition: all 0.25s;
+}
+.theme-toggle:hover {
+    border-color: var(--accent-glow);
+    transform: scale(1.08);
+}
+.theme-toggle svg.icon-svg {
+    width: 20px;
+    height: 20px;
+    color: var(--accent-glow);
+}
+
+/* ==================== 标题 ==================== */
+.title-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+.title-ic svg.icon-svg {
+    width: 1.9rem;
+    height: 1.9rem;
+    color: var(--accent-glow);
+}
 .title {
     font-size: 2rem;
     font-weight: 700;
     letter-spacing: 0.03em;
-    margin-bottom: 6px;
-    background: linear-gradient(135deg, #e0e0f0 0%, #a29bfe 50%, #f9ca24 100%);
+    background: var(--title-grad);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 .subtitle {
     font-size: 0.9rem;
-    color: #8888aa;
+    color: var(--muted);
     margin-bottom: 28px;
     letter-spacing: 0.04em;
 }
 
+/* ==================== 名称输入 ==================== */
 .target-name-section {
     margin-bottom: 10px;
 }
@@ -105,24 +234,25 @@ body {
     background: transparent;
     border: none;
     border-bottom: 2px dashed var(--border);
-    color: #c0c0dd;
+    color: var(--input-text);
     font-size: 1.1rem;
     text-align: center;
     padding: 8px 16px;
     width: 280px;
     max-width: 90%;
     outline: none;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, color 0.3s;
     letter-spacing: 0.03em;
 }
 .target-name-input:focus {
     border-bottom-color: var(--accent);
-    color: #fff;
+    color: var(--text);
 }
 .target-name-input::placeholder {
-    color: #555577;
+    color: var(--placeholder);
 }
 
+/* ==================== 倒计时数字 ==================== */
 .countdown-display {
     display: flex;
     align-items: center;
@@ -145,7 +275,7 @@ body {
     padding: 16px 10px;
     min-width: 75px;
     text-align: center;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--tile-shadow);
     transition: all 0.35s ease;
     overflow: hidden;
 }
@@ -176,48 +306,37 @@ body {
     100% {
         transform: scale(1);
         border-color: var(--digit-border);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        box-shadow: var(--tile-shadow);
     }
 }
 .digit {
     font-size: 3.2rem;
     font-weight: 700;
     letter-spacing: 0.04em;
-    color: #fff;
+    color: var(--digit-color);
     font-variant-numeric: tabular-nums;
     font-family: 'SF Mono', 'JetBrains Mono', 'Consolas', 'Monaco', 'PingFang SC', monospace;
     position: relative;
     z-index: 1;
     line-height: 1;
+    text-shadow: 0 0 30px color-mix(in srgb, currentColor 40%, transparent);
 }
-.digit.days {
-    color: #f9ca24;
-    text-shadow: 0 0 30px rgba(249, 202, 36, 0.4);
-}
-.digit.hours {
-    color: #a29bfe;
-    text-shadow: 0 0 30px rgba(162, 155, 254, 0.4);
-}
-.digit.minutes {
-    color: #74b9ff;
-    text-shadow: 0 0 30px rgba(116, 185, 255, 0.4);
-}
-.digit.seconds {
-    color: #ff7675;
-    text-shadow: 0 0 30px rgba(255, 118, 117, 0.4);
-}
+.digit.days { color: var(--d-day); }
+.digit.hours { color: var(--d-hour); }
+.digit.minutes { color: var(--d-min); }
+.digit.seconds { color: var(--d-sec); }
 .label {
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #8888aa;
+    color: var(--muted);
     margin-top: 8px;
     font-weight: 500;
 }
 .separator {
     font-size: 2.5rem;
     font-weight: 300;
-    color: #444466;
+    color: var(--separator);
     margin: 0 -2px;
     align-self: flex-start;
     padding-top: 14px;
@@ -228,6 +347,7 @@ body {
     50% { opacity: 1; }
 }
 
+/* ==================== 进度条 ==================== */
 .progress-section {
     margin: 0 0 20px;
 }
@@ -235,21 +355,21 @@ body {
     display: flex;
     justify-content: space-between;
     font-size: 0.75rem;
-    color: #7777aa;
+    color: var(--muted-2);
     margin-bottom: 6px;
     letter-spacing: 0.03em;
 }
 .progress-bar-outer {
-    background: #1a1a35;
+    background: var(--progress-track);
     border-radius: 20px;
     height: 8px;
     overflow: hidden;
-    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 .progress-bar-inner {
     height: 100%;
     border-radius: 20px;
-    background: linear-gradient(90deg, #6c5ce7, #a29bfe, #f9ca24);
+    background: linear-gradient(90deg, var(--accent), var(--accent-glow), var(--gold));
     background-size: 200% 100%;
     animation: shimmer 3s ease-in-out infinite;
     transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -259,6 +379,7 @@ body {
     50% { background-position: 100% 50%; }
 }
 
+/* ==================== 设置行 / 表单 ==================== */
 .settings-row {
     display: flex;
     flex-wrap: wrap;
@@ -268,10 +389,18 @@ body {
     margin-bottom: 12px;
 }
 .settings-row label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
     font-size: 0.85rem;
-    color: #9999bb;
+    color: var(--muted-3);
     letter-spacing: 0.03em;
     white-space: nowrap;
+}
+.settings-row label svg.icon-svg {
+    width: 15px;
+    height: 15px;
+    color: var(--accent-glow);
 }
 .datetime-wrap {
     position: relative;
@@ -282,12 +411,12 @@ body {
     background: var(--digit-bg);
     border: 2px solid var(--digit-border);
     border-radius: 10px;
-    color: #ddd;
+    color: var(--datetime-text);
     padding: 10px 14px 10px 36px;
     font-size: 0.9rem;
     font-family: inherit;
     outline: none;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, color 0.3s;
     cursor: pointer;
     letter-spacing: 0.02em;
     min-width: 200px;
@@ -296,7 +425,7 @@ body {
     border-color: var(--accent);
 }
 .datetime-wrap input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-    filter: invert(0.85) brightness(1.5);
+    filter: var(--picker-filter);
     cursor: pointer;
     padding: 4px;
     opacity: 0.9;
@@ -311,12 +440,22 @@ body {
     left: 10px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
     pointer-events: none;
-    color: #a29bfe;
-    line-height: 1;
+    color: var(--accent-glow);
+    line-height: 0;
 }
+.datetime-icon svg.icon-svg {
+    width: 16px;
+    height: 16px;
+}
+
 .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
     background: var(--accent);
     color: #fff;
     border: none;
@@ -332,9 +471,13 @@ body {
     position: relative;
     overflow: hidden;
 }
+.btn svg.icon-svg {
+    width: 16px;
+    height: 16px;
+}
 .btn:hover {
-    background: #7d6ff0;
-    box-shadow: 0 8px 25px rgba(108, 92, 231, 0.4);
+    background: var(--accent-hover);
+    box-shadow: 0 8px 25px var(--btn-shadow-hover);
     transform: translateY(-2px);
 }
 .btn:active {
@@ -350,22 +493,32 @@ body {
     background: rgba(108, 92, 231, 0.1);
     box-shadow: 0 8px 25px rgba(108, 92, 231, 0.25);
 }
+
+/* ==================== 预设按钮 ==================== */
 .btn-preset {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-size: 0.78rem;
     padding: 7px 13px;
     border-radius: 20px;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--chip-bg);
     border: 1px solid var(--border);
-    color: #aaaacc;
+    color: var(--preset-text);
     cursor: pointer;
     transition: all 0.25s;
     font-family: inherit;
     letter-spacing: 0.03em;
     white-space: nowrap;
 }
+.btn-preset svg.icon-svg {
+    width: 14px;
+    height: 14px;
+    color: var(--accent-glow);
+}
 .btn-preset:hover {
     border-color: var(--accent-glow);
-    color: #fff;
+    color: var(--text);
     background: rgba(108, 92, 231, 0.1);
 }
 .btn-preset.active {
@@ -375,8 +528,26 @@ body {
     box-shadow: 0 0 12px rgba(108, 92, 231, 0.25);
 }
 
+/* ==================== 消息区 ==================== */
+.msg-ok, .msg-warn, .msg-muted {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    letter-spacing: 0.03em;
+}
+.msg-ok svg.icon-svg, .msg-warn svg.icon-svg, .msg-muted svg.icon-svg {
+    width: 15px;
+    height: 15px;
+}
+.msg-ok { color: var(--accent-glow); }
+.msg-warn { color: var(--danger); }
+.msg-muted { color: var(--muted); }
+
 .expired-badge {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     background: var(--danger);
     color: #fff;
     padding: 8px 22px;
@@ -386,17 +557,24 @@ body {
     animation: bounceBadge 0.6s ease-in-out infinite alternate;
     font-size: 1rem;
 }
+.expired-badge svg.icon-svg {
+    width: 18px;
+    height: 18px;
+}
 @keyframes bounceBadge {
     0% { transform: translateY(0); }
     100% { transform: translateY(-8px); }
 }
 
+/* ==================== 响应式 ==================== */
 @media (max-width: 600px) {
     .main-card {
         padding: 25px 16px 20px;
         border-radius: 20px;
     }
     .title { font-size: 1.4rem; }
+    .title-ic svg.icon-svg { width: 1.4rem; height: 1.4rem; }
+    .theme-toggle { top: 12px; right: 12px; width: 40px; height: 40px; }
     .digit { font-size: 2rem; }
     .digit-wrapper {
         padding: 10px 6px;

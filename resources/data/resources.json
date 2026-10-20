@@ -1,57 +1,40 @@
 [
     {
         "category": "影视资源",
+        "icon": "film",
         "items": [
             {
                 "name": "搜剧AI",
-                "description": "",
+                "description": "https://souju.ai/",
                 "url": "https://souju.ai/"
             },
             {
                 "name": "星光影视大全官网-免费在线观看高清电影电视剧-星光影视",
-                "description": "",
+                "description": "https://www.cdx.wmoonb.com/",
                 "url": "https://www.cdx.wmoonb.com/"
             },
             {
-                "name": "三米影视-神马电影网",
-                "description": "",
+                "name": "在线高清影院_原画质观影体验_杜比视界大片 | 三米影视",
+                "description": "https://www.jxshenzhoukj.com/",
                 "url": "https://www.jxshenzhoukj.com/"
             },
             {
-                "name": "新站影视-免费在线影视资源大全",
-                "description": "",
-                "url": "https://www.kanjuw.net/"
-            },
-            {
-                "name": "影视大全-影视大全免费在线观看电视剧高清版",
-                "description": "",
-                "url": "https://www.bdajg.com/"
-            },
-            {
-                "name": "三米影视",
-                "description": "",
-                "url": "https://www.rzzfkj.com/"
+                "name": "三米影视,最新好看的电视剧大全",
+                "description": "https://www.deyunshucai.com/",
+                "url": "https://www.deyunshucai.com/"
             },
             {
                 "name": "七味 - 七味网",
-                "description": "",
+                "description": "https://www.qwmkv.com/",
                 "url": "https://www.qwmkv.com/"
-            },
-            {
-                "name": "",
-                "description": "",
-                "url": ""
             }
         ]
     },
     {
-        "category":"影视资源Ⅱ-路径后面添加上原播放路径（直接复制原先视频路径到以下路径后面）",
+        "category": "影视资源Ⅱ",
+        "hint": "路径后面添加上原播放路径（直接复制原先视频路径到以下路径后面）",
+        "icon": "film",
         "items":[
-            {
-                "name": "虾米播放器-全网最稳定的视频播放器",
-                "description": "路径/?url= 后面添加源路径",
-                "url": "https://jx.xmflv.com/?url="
-            },
             {
                 "name": "云解析",
                 "description": "路径/?url= 后面添加源路径",
@@ -66,26 +49,22 @@
     },
     {
         "category": "漫画资源",
+        "icon": "book",
         "items": [
             {
                 "name": "漫画160",
-                "description": "",
+                "description": "https://www.mh160mh.com/",
                 "url": "https://www.mh160mh.com/"
             },
             {
                 "name": "包子漫画",
-                "description": "",
+                "description": "https://cn.baozimhcn.com/",
                 "url": "https://cn.baozimhcn.com/"
             },
             {
                 "name": "G社漫画",
-                "description": "",
+                "description": "https://m.g-mh.org/",
                 "url": "https://m.g-mh.org/"
-            },
-            {
-                "name": "",
-                "description": "",
-                "url": ""
             }
         ]
     }

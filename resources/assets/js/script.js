@@ -2,6 +2,28 @@
  * 资源列表渲染器
  * 可复用的组件，用于从 JSON 数据加载并渲染资源列表
  */
+// 统一风格图标：图标路径数据集中在 assets/js/icons.js 的 window.ICONS 中，
+// 这里按名称生成一个内联 <svg>（24×24 stroke 线性，currentColor 随主题联动）。
+// 新增分类图标只需在 icons.js 追加一个条目，无需改动本文件。
+var SVG_NS = 'http://www.w3.org/2000/svg';
+var ICON_ATTRS = {
+    viewBox: '0 0 24 24',
+    fill: 'none',
+    stroke: 'currentColor',
+    'stroke-width': '1.7',
+    'stroke-linecap': 'round',
+    'stroke-linejoin': 'round'
+};
+function makeIcon(name, className) {
+    var registry = window.ICONS || {};
+    var svg = document.createElementNS(SVG_NS, 'svg');
+    svg.setAttribute('class', className || 'icon');
+    Object.keys(ICON_ATTRS).forEach(function (k) { svg.setAttribute(k, ICON_ATTRS[k]); });
+    svg.setAttribute('aria-hidden', 'true');
+    svg.innerHTML = registry[name] || registry.link || '';
+    return svg;
+}
+
 class ResourceRenderer {
     /**
      * 构造函数
@@ -126,10 +148,26 @@ class ResourceRenderer {
         const section = document.createElement('section');
         section.className = this.config.classCategory;
 
-        // 创建分类标题
+        // 创建分类标题（统一风格 SVG 图标 + 标题）
         const h2 = document.createElement('h2');
-        h2.textContent = category.category;
+        h2.appendChild(makeIcon(category.icon || 'link', 'category-icon'));
+        const titleSpan = document.createElement('span');
+        titleSpan.className = 'category-title';
+        titleSpan.textContent = category.category;
+        h2.appendChild(titleSpan);
         section.appendChild(h2);
+
+        // 分类提示（可选）：带信息图标的醒目提示块，与标题分级，让用户更容易识别
+        if (category.hint && category.hint.trim()) {
+            const hint = document.createElement('p');
+            hint.className = 'category-hint';
+            hint.appendChild(makeIcon('info', 'hint-icon'));
+            const hintText = document.createElement('span');
+            hintText.className = 'hint-text';
+            hintText.textContent = category.hint;
+            hint.appendChild(hintText);
+            section.appendChild(hint);
+        }
 
         // 创建资源列表
         const ul = document.createElement('ul');
@@ -192,14 +230,26 @@ class ResourceRenderer {
         const a = document.createElement('a');
         a.href = item.url;
         a.target = this.config.linkTarget;
-        
-        // 判断 description 是否有数据
+        a.rel = 'noopener noreferrer';
+
+        // 文本区：名称 + （可选）描述
+        const body = document.createElement('span');
+        body.className = 'resource-body';
+        const name = document.createElement('span');
+        name.className = 'resource-name';
+        name.textContent = item.name;
+        body.appendChild(name);
         if (item.description && item.description.trim()) {
-            a.textContent = `${item.name} - ${item.description}`;
-        } else {
-            a.textContent = item.name;
+            const desc = document.createElement('span');
+            desc.className = 'resource-desc';
+            desc.textContent = item.description;
+            body.appendChild(desc);
         }
-        
+        a.appendChild(body);
+
+        // 统一风格跳转箭头图标
+        a.appendChild(makeIcon('arrow', 'resource-arrow'));
+
         li.appendChild(a);
         return li;
     }
@@ -209,19 +259,21 @@ class ResourceRenderer {
 class ThemeManager {
     constructor() {
         this.themeToggle = document.getElementById('themeToggle');
-        this.themeIcon = this.themeToggle?.querySelector('.theme-icon');
         this.currentTheme = localStorage.getItem('theme') || 'light';
         
         this.init();
     }
 
     init() {
-        // 应用保存的主题
+        // 应用保存的主题（图标显隐由 CSS 根据 data-theme 驱动）
         this.applyTheme(this.currentTheme);
         
-        // 绑定点击事件
+        // 绑定点击 / 键盘事件
         if (this.themeToggle) {
             this.themeToggle.addEventListener('click', () => this.toggleTheme());
+            this.themeToggle.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.toggleTheme(); }
+            });
         }
     }
 
@@ -234,11 +286,6 @@ class ThemeManager {
     applyTheme(theme) {
         this.currentTheme = theme;
         document.documentElement.setAttribute('data-theme', theme);
-        
-        // 更新图标
-        if (this.themeIcon) {
-            this.themeIcon.textContent = theme === 'light' ? '🌙' : '☀️';
-        }
     }
 
     saveTheme(theme) {
@@ -248,19 +295,19 @@ class ThemeManager {
 
 // ==================== 初始化 ====================
 
-// 页面加载完成后初始化渲染器
-document.addEventListener('DOMContentLoaded', () => {
-    // 初始化主题管理器
+// 本脚本位于 <body> 末尾，上方 DOM 已解析完毕。
+// 立即启动，不再等待 DOMContentLoaded —— 因为 deferred 的 three.js 模块(background.js)
+// 会拖后 DOMContentLoaded 的触发时机，导致资源列表被"排队"延迟渲染。
+// 直接执行可让 resources.json 的 fetch 与 three.js 背景并行加载，互不阻塞。
+function bootApp() {
+    // 主题管理器（切换 + 恢复偏好）
     new ThemeManager();
-    
-    // 创建渲染器实例（可以传入自定义配置）
+
+    // 资源列表渲染器
     const renderer = new ResourceRenderer({
-        // 在这里可以覆盖默认配置
-        // dataPath: 'custom/path/data.json',
-        // containerId: 'custom-container',
-        // errorMessage: '自定义错误信息'
+        // 可覆盖默认配置：dataPath / containerId / errorMessage
     });
-    
-    // 启动渲染器
     renderer.init();
-});
+}
+
+bootApp();

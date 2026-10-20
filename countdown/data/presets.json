@@ -1,7 +1,7 @@
 {
   "newyear": {
     "name": "元旦新年",
-    "icon": "🎆",
+    "icon": "sparkles",
     "type": "annual",
     "month": 0,
     "day": 1,
@@ -10,7 +10,7 @@
   },
   "spring": {
     "name": "春节",
-    "icon": "🧧",
+    "icon": "gift",
     "type": "spring",
     "baseYear": 1900,
     "offsets": [
@@ -39,7 +39,7 @@
   },
   "christmas": {
     "name": "圣诞节",
-    "icon": "🎄",
+    "icon": "tree",
     "type": "annual",
     "month": 11,
     "day": 25,
@@ -48,13 +48,13 @@
   },
   "custom1h": {
     "name": "1小时倒计时",
-    "icon": "⏰",
+    "icon": "alarm",
     "type": "offset",
     "seconds": 3600
   },
   "custom24h": {
     "name": "24小时倒计时",
-    "icon": "🕐",
+    "icon": "clock",
     "type": "offset",
     "seconds": 86400
   }

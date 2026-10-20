@@ -83,7 +83,7 @@
             progressLabel.textContent = '已完成';
             if (!isExpired) {
                 isExpired = true;
-                messageArea.innerHTML = '<span class="expired-badge">🎉 时间到！</span>';
+                messageArea.innerHTML = '<span class="expired-badge">' + iconHTML('sparkles') + '时间到！</span>';
                 flashAllWrappers();
             }
             return;
@@ -133,7 +133,7 @@
             secondsEl.textContent = '--';
             progressBar.style.width = '0%';
             progressPercent.textContent = '0%';
-            messageArea.innerHTML = '<span style="color:#8888aa;">请设定目标时间</span>';
+            messageArea.innerHTML = '<span class="msg-muted">请设定目标时间</span>';
             isExpired = false;
             prevSecondsValue = null;
             return;
@@ -147,7 +147,7 @@
 
         if (diffSeconds <= 0) {
             const name = targetNameInput.value.trim() || '目标时间';
-            messageArea.innerHTML = `<span class="expired-badge">🎉 ${escapeHtml(name)} 已到达！</span>`;
+            messageArea.innerHTML = `<span class="expired-badge">${iconHTML('sparkles')}${escapeHtml(name)} 已到达！</span>`;
         } else {
             messageArea.innerHTML = '';
         }
@@ -231,7 +231,7 @@
                     now.getFullYear() >= cfg.baseYear + cfg.offsets.length)) continue;
                 if (!isSpring) continue;
             }
-            html += `<button class="btn-preset" data-preset="${key}">${cfg.icon || ''} ${cfg.name || key}</button>`;
+            html += `<button class="btn-preset" data-preset="${key}">${cfg.icon ? iconHTML(cfg.icon) : ''}<span>${escapeHtml(cfg.name || key)}</span></button>`;
         }
         presetRow.innerHTML = html;
     }
@@ -283,7 +283,7 @@
         targetNameInput.value = cfg.name || '倒计时';
         localStorage.setItem(STORAGE_KEY_NAME, targetNameInput.value);
         messageArea.innerHTML =
-            '<span style="color:#a29bfe;">✅ 已设定：' + escapeHtml(cfg.name || '倒计时') + '</span>';
+            '<span class="msg-ok">' + iconHTML('check') + '已设定：' + escapeHtml(cfg.name || '倒计时') + '</span>';
         highlightPreset(presetKey);
     }
 
@@ -301,23 +301,23 @@
     btnSet.addEventListener('click', () => {
         const val = datetimePicker.value;
         if (!val) {
-            messageArea.innerHTML = '<span style="color:#ff7675;">⚠️ 请选择一个日期时间</span>';
+            messageArea.innerHTML = '<span class="msg-warn">' + iconHTML('alert') + '请选择一个日期时间</span>';
             return;
         }
         const date = new Date(val);
         if (isNaN(date.getTime())) {
-            messageArea.innerHTML = '<span style="color:#ff7675;">⚠️ 无效的日期时间</span>';
+            messageArea.innerHTML = '<span class="msg-warn">' + iconHTML('alert') + '无效的日期时间</span>';
             return;
         }
         if (date <= getNow()) {
-            messageArea.innerHTML = '<span style="color:#ff7675;">⚠️ 目标时间已过，请选择未来时间</span>';
+            messageArea.innerHTML = '<span class="msg-warn">' + iconHTML('alert') + '目标时间已过，请选择未来时间</span>';
             return;
         }
         const totalSec = Math.floor((date.getTime() - getNow().getTime()) / 1000);
         setTarget(date, totalSec > 0 ? totalSec : 0);
         targetNameInput.value = val.replace('T', ' ');
         localStorage.setItem(STORAGE_KEY_NAME, targetNameInput.value);
-        messageArea.innerHTML = '<span style="color:#a29bfe;">✅ 倒计时已设定！</span>';
+        messageArea.innerHTML = '<span class="msg-ok">' + iconHTML('check') + '倒计时已设定！</span>';
         highlightPreset(null);
     });
 
@@ -393,13 +393,28 @@
     loadFromStorage();
     loadPresets();
 
+    // ==================== 主题切换 ====================
+    const THEME_KEY = 'countdown_theme';
+    const themeToggle = document.getElementById('themeToggle');
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        themeToggle.innerHTML = iconHTML(theme === 'light' ? 'moon' : 'sun');
+        themeToggle.title = theme === 'light' ? '切换暗色' : '切换亮色';
+        localStorage.setItem(THEME_KEY, theme);
+    }
+    applyTheme(localStorage.getItem(THEME_KEY) === 'light' ? 'light' : 'dark');
+    themeToggle.addEventListener('click', () => {
+        const cur = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        applyTheme(cur);
+    });
+
     document.addEventListener('visibilitychange', () => {
         if (!document.hidden) {
             tick();
         }
     });
 
-    console.log('⏳ 精确倒计时已就绪！');
+    console.log('精确倒计时已就绪！');
     console.log('   - 精确到秒，实时更新');
     console.log('   - 支持自定义目标时间');
     console.log('   - 支持多个快捷预设');

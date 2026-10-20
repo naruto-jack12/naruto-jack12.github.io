@@ -1,43 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>免费资源导航 | Free Resources</title>
-    <meta name="description" content="精选免费观影追剧、漫画阅读等网络资源导航，持续更新优质网站推荐，个人整理的免费资源大全。">
-    <meta name="keywords" content="免费资源,资源导航,观影网站,追剧网站,漫画网站,免费观影,免费追剧,在线漫画,资源推荐">
+    <meta name="description" content="精选免费影视、漫画资源导航，分类清晰、明暗主题、开箱即用。">
+    <meta name="keywords" content="免费资源, 影视资源, 漫画资源, 资源导航, 追剧, 在线电影">
+    <meta name="author" content="NARUTO-JACK12">
     <meta name="robots" content="index, follow">
-    <meta name="author" content="naruto-jack12">
-    <link rel="canonical" href="https://naruto-jack12.github.io/resources/">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="免费资源导航 | Free Resources">
-    <meta property="og:description" content="精选免费观影追剧、漫画阅读等网络资源导航，持续更新优质网站推荐。">
-    <meta property="og:url" content="https://naruto-jack12.github.io/resources/">
-    <meta property="og:site_name" content="NARUTO-JACK12">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="免费资源导航 | Free Resources">
-    <meta name="twitter:description" content="精选免费观影追剧、漫画阅读等网络资源导航，持续更新优质网站推荐。">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+    <div id="bg" aria-hidden="true"></div>
     <div class="container">
-        <div class="theme-toggle" id="themeToggle" title="切换主题">
-            <span class="theme-icon">🌙</span>
+        <div class="theme-toggle" id="themeToggle" title="切换主题" role="button" tabindex="0" aria-label="切换主题">
+            <svg class="theme-icon theme-icon--moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            <svg class="theme-icon theme-icon--sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
         </div>
-        
-        <h1 class="page-title">
-            <span class="title-icon">🎁</span>
-            免费资源导航
-        </h1>
 
-        <div class="browser-notice">
-            <span class="notice-icon">⚠️</span>
+        <header class="page-header">
+            <h1 class="page-title">
+                <span class="title-badge"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg></span>
+                免费资源导航
+            </h1>
+            <p class="page-subtitle">精选免费影视 · 漫画资源，分类清晰，一键直达</p>
+        </header>
+
+        <div class="notice notice--warn">
+            <svg class="notice-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
             <div class="notice-content">
                 <span class="notice-text">微信和QQ内置浏览器可能会屏蔽下列网址</span>
                 <span class="notice-hint">请使用系统自带浏览器或其他第三方浏览器访问</span>
             </div>
         </div>
-        
+
         <div id="resource-categories" class="resource-categories">
             <!-- 资源将通过 JavaScript 动态生成 -->
             <div class="loading-spinner" id="loadingSpinner">
@@ -46,17 +43,27 @@
             </div>
         </div>
 
-        <div class="notice">
-            <span class="notice-icon">⚠️</span>
+        <div class="notice notice--info">
+            <svg class="notice-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
             <div class="notice-content">
                 <span class="notice-text">个人整理的观影追剧网站，不保证100%可用，请自行判断</span>
                 <span class="notice-hint">
-                    如有更好的推荐或发现失效链接，<a href="https://github.com/naruto-jack12/naruto-jack12.github.io/issues/2" target="_blank" class="feedback-link">欢迎反馈</a> 
+                    如有更好的推荐或发现失效链接，<a href="https://github.com/naruto-jack12/naruto-jack12.github.io/issues/2" target="_blank" rel="noopener noreferrer" class="feedback-link">欢迎反馈</a>
                 </span>
             </div>
         </div>
     </div>
 
+    <script src="assets/js/icons.js"></script>
     <script src="assets/js/script.js"></script>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js"
+        }
+    }
+    </script>
+    <script type="module" src="assets/js/background.js"></script>
 </body>
 </html>
