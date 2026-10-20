@@ -1,3 +1,4 @@
+@charset "UTF-8";
 :root {
   /* 主题色板（变量名保持向后兼容） */
   --theme-bg-color: #f6f7fb;
@@ -11,7 +12,6 @@
   --theme-item6-color: #20c997;
   --theme-item7-color: #5c7cfa;
   --theme-screenshotBtn-color: #4caf50;
-
   /* 页面 / 卡片 / 文字 */
   --page-bg: #eef1f8;
   --card-bg: #ffffff;
@@ -31,11 +31,12 @@
 * {
   padding: 0;
   margin: 0;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 body {
-  font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
   font-weight: 400;
   background: var(--page-bg);
   color: var(--text);
@@ -61,14 +62,22 @@ h1 {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 26px;
-  box-shadow: var(--shadow);
+  -webkit-box-shadow: var(--shadow);
+          box-shadow: var(--shadow);
 }
 
 .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   gap: 16px;
-  align-items: stretch;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
 }
 
 /* ==================== 顶部科目面板（上下结构：横排换行） ==================== */
@@ -77,11 +86,19 @@ h1 {
   background: var(--panel-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   gap: 10px;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 100%;
 }
 
@@ -90,29 +107,47 @@ h1 {
   width: auto;
   min-width: 72px;
   text-align: center;
-  padding: 9px 1.1em;
+  padding: 9px 10px;
   border-radius: 10px;
   color: #fff;
   font-weight: 600;
+  cursor: -webkit-grab;
   cursor: grab;
-  user-select: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
   -webkit-user-select: none;
-  touch-action: none;
-  box-shadow: var(--shadow-sm);
+  -ms-touch-action: none;
+      touch-action: none;
+  -webkit-box-shadow: var(--shadow-sm);
+          box-shadow: var(--shadow-sm);
+  -webkit-transition: -webkit-transform 0.15s ease, -webkit-box-shadow 0.15s ease, -webkit-filter 0.15s ease;
+  transition: -webkit-transform 0.15s ease, -webkit-box-shadow 0.15s ease, -webkit-filter 0.15s ease;
   transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease, -webkit-transform 0.15s ease, -webkit-box-shadow 0.15s ease, -webkit-filter 0.15s ease;
 }
+
+/* 顶部可编辑科目 chip（最小宽度用 em，随内容自适应） */
 .item.sub {
   position: relative;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   min-width: 6em;
-  padding: 8px 1.1em;
+  padding: 8px 10px;
 }
+
 .item.sub .sub-name {
   line-height: 1.2;
   white-space: nowrap;
 }
+
 .sub-del {
   position: absolute;
   top: -0.4em;
@@ -127,23 +162,42 @@ h1 {
   font-size: 14px;
   line-height: 1;
   cursor: pointer;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   opacity: 0;
-  transform: scale(0.8);
-  pointer-events: none;
+  -webkit-transform: scale(0.8);
+      -ms-transform: scale(0.8);
+          transform: scale(0.8);
+  pointer-events: none; /* 隐藏时不可点，避免误删 */
+  -webkit-transition: opacity 0.15s ease, background 0.15s ease, -webkit-transform 0.15s ease;
+  transition: opacity 0.15s ease, background 0.15s ease, -webkit-transform 0.15s ease;
   transition: opacity 0.15s ease, transform 0.15s ease, background 0.15s ease;
+  transition: opacity 0.15s ease, transform 0.15s ease, background 0.15s ease, -webkit-transform 0.15s ease;
 }
+
 .item.sub:hover .sub-del {
   opacity: 1;
-  transform: scale(1);
+  -webkit-transform: scale(1);
+      -ms-transform: scale(1);
+          transform: scale(1);
   pointer-events: auto;
 }
+
 .sub-del:hover {
   background: #ff4757;
-  transform: scale(1.15);
+  -webkit-transform: scale(1.15);
+      -ms-transform: scale(1.15);
+          transform: scale(1.15);
 }
+
+/* 添加科目按钮与内联表单 */
 .add-subject {
   padding: 8px 14px;
   border: 1px dashed var(--accent);
@@ -152,20 +206,28 @@ h1 {
   color: var(--accent);
   font-weight: 600;
   cursor: pointer;
+  -webkit-transition: background 0.15s ease;
   transition: background 0.15s ease;
 }
+
 .add-subject:hover {
   background: rgba(92, 124, 250, 0.1);
 }
+
 .add-form {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 8px;
   padding: 4px 6px;
   background: var(--card-bg);
   border: 1px solid var(--border-strong);
   border-radius: 10px;
 }
+
 .add-form .add-name {
   width: 110px;
   padding: 6px 8px;
@@ -174,6 +236,7 @@ h1 {
   font-size: 0.9rem;
   color: var(--text);
 }
+
 .add-form .add-color {
   width: 32px;
   height: 30px;
@@ -182,6 +245,7 @@ h1 {
   background: none;
   cursor: pointer;
 }
+
 .add-form .add-ok,
 .add-form .add-cancel {
   padding: 6px 12px;
@@ -190,27 +254,38 @@ h1 {
   font-weight: 600;
   cursor: pointer;
 }
+
 .add-form .add-ok {
   background: var(--accent);
   color: #fff;
 }
+
 .add-form .add-cancel {
   background: #eef1f8;
   color: var(--text-muted);
 }
+
+/* 拖拽中的原元素（move 类）淡化，视觉上“被拿起来” */
 .item.dragging {
   opacity: 0.35;
 }
 
 .item:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.04);
-  box-shadow: 0 6px 16px rgba(40, 50, 90, 0.18);
+  -webkit-transform: translateY(-2px);
+      -ms-transform: translateY(-2px);
+          transform: translateY(-2px);
+  -webkit-filter: brightness(1.04);
+          filter: brightness(1.04);
+  -webkit-box-shadow: 0 6px 16px rgba(40, 50, 90, 0.18);
+          box-shadow: 0 6px 16px rgba(40, 50, 90, 0.18);
 }
 
 .item:active {
+  cursor: -webkit-grabbing;
   cursor: grabbing;
-  transform: scale(0.97);
+  -webkit-transform: scale(0.97);
+      -ms-transform: scale(0.97);
+          transform: scale(0.97);
 }
 
 /* ==================== 课表面板 ==================== */
@@ -227,11 +302,13 @@ table {
   width: 100%;
   border-collapse: collapse;
 }
-table td, table th {
+table td,
+table th {
   border: 1px solid var(--border-strong);
   padding: 6px;
   vertical-align: middle;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   text-align: center;
 }
 table th {
@@ -267,14 +344,21 @@ table .none td {
 
 .drop-over {
   background-color: var(--drop-over-color);
-  box-shadow: inset 0 0 0 2px var(--accent);
+  -webkit-box-shadow: inset 0 0 0 2px var(--accent);
+          box-shadow: inset 0 0 0 2px var(--accent);
 }
 
 /* ==================== 操作按钮 ==================== */
 .screenshotBtn {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   gap: 12px;
   margin-top: 24px;
 }
@@ -286,16 +370,26 @@ table .none td {
   font-weight: 600;
   font-size: 0.95rem;
   cursor: pointer;
-  box-shadow: var(--shadow-sm);
+  -webkit-box-shadow: var(--shadow-sm);
+          box-shadow: var(--shadow-sm);
+  -webkit-transition: -webkit-transform 0.15s ease, -webkit-box-shadow 0.15s ease, -webkit-filter 0.15s ease;
+  transition: -webkit-transform 0.15s ease, -webkit-box-shadow 0.15s ease, -webkit-filter 0.15s ease;
   transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease, -webkit-transform 0.15s ease, -webkit-box-shadow 0.15s ease, -webkit-filter 0.15s ease;
 }
 .screenshotBtn button:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.05);
-  box-shadow: 0 8px 20px rgba(40, 50, 90, 0.18);
+  -webkit-transform: translateY(-2px);
+      -ms-transform: translateY(-2px);
+          transform: translateY(-2px);
+  -webkit-filter: brightness(1.05);
+          filter: brightness(1.05);
+  -webkit-box-shadow: 0 8px 20px rgba(40, 50, 90, 0.18);
+          box-shadow: 0 8px 20px rgba(40, 50, 90, 0.18);
 }
 .screenshotBtn button:active {
-  transform: scale(0.97);
+  -webkit-transform: scale(0.97);
+      -ms-transform: scale(0.97);
+          transform: scale(0.97);
 }
 .screenshotBtn #btn-shot {
   background-color: var(--theme-screenshotBtn-color);
@@ -310,11 +404,15 @@ table .none td {
 .drag-ghost {
   position: fixed;
   z-index: 1000;
-  pointer-events: none;
+  pointer-events: none; /* 不阻挡 elementFromPoint 命中下方落点 */
   opacity: 0.9;
+  cursor: -webkit-grabbing;
   cursor: grabbing;
-  box-shadow: 0 12px 28px rgba(40, 50, 90, 0.28);
-  transform: scale(1.03);
+  -webkit-box-shadow: 0 12px 28px rgba(40, 50, 90, 0.28);
+          box-shadow: 0 12px 28px rgba(40, 50, 90, 0.28);
+  -webkit-transform: scale(1.03);
+      -ms-transform: scale(1.03);
+          transform: scale(1.03);
 }
 
 /* ==================== 移动端提示（窄屏隐藏课表，提示用电脑） ==================== */
@@ -327,16 +425,27 @@ table .none td {
     display: none;
   }
   .mobile-message {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     text-align: center;
     min-height: 100vh;
     padding: 24px;
     color: var(--text);
   }
   .mobile-message .icon {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     color: var(--accent);
     margin-bottom: 20px;
