@@ -7,7 +7,7 @@
     --gold: #f0c040;
     --text: #e0e0e0;
     --text-secondary: #a0a0b8;
-    --border: #2a2a4a;
+    --border: rgba(255, 255, 255, 0.18);
     --input-bg: #1e1e3a;
     --item-bg: #1c2a4a;
     --item-hover: #243358;
@@ -26,7 +26,7 @@
     --gold: #f0c040;
     --text: #e0e0e0;
     --text-secondary: #a0a0b8;
-    --border: #1a2a4a;
+    --border: rgba(255, 255, 255, 0.18);
     --input-bg: #111e3a;
     --item-bg: #142542;
     --item-hover: #1a3050;
@@ -42,7 +42,7 @@
     --gold: #f0c040;
     --text: #e0e0e0;
     --text-secondary: #a0a0b8;
-    --border: #1a2a1e;
+    --border: rgba(255, 255, 255, 0.18);
     --input-bg: #112218;
     --item-bg: #142e1e;
     --item-hover: #1a3826;
@@ -58,7 +58,7 @@
     --gold: #f0c040;
     --text: #e0e0e0;
     --text-secondary: #a0a0b8;
-    --border: #221a34;
+    --border: rgba(255, 255, 255, 0.18);
     --input-bg: #18102e;
     --item-bg: #1e1440;
     --item-hover: #281c4e;
@@ -74,7 +74,7 @@
     --gold: #f0c040;
     --text: #e0e0e0;
     --text-secondary: #a0a0b8;
-    --border: #2a2214;
+    --border: rgba(255, 255, 255, 0.18);
     --input-bg: #1e180e;
     --item-bg: #2e2214;
     --item-hover: #3a2e1a;
@@ -106,7 +106,7 @@
     background: color-mix(in srgb, var(--accent) 8%, transparent);
 }
 
-[data-mode="light"] .header h1 { color: var(--text); }
+[data-mode="light"] .header h1 { color: var(--accent); }
 [data-mode="light"] .btn-select { box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12); }
 [data-mode="light"] .result-area { background: var(--bg); }
 [data-mode="light"] .option-tag {
@@ -135,6 +135,8 @@
 body {
     font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
     background: var(--bg);
+    /* 关键：默认文字色跟随主题，供未显式设置 color 的 SVG 图标(currentColor)继承，避免暗色主题下图标/文字为黑色而看不见 */
+    color: var(--text);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -144,6 +146,11 @@ body {
     -webkit-tap-highlight-color: transparent;
     position: relative;
     overflow-x: hidden;
+}
+
+/* 兜底：button 默认不继承 color（UA 给 buttontext 黑色），这里强制继承，保证未显式设色的图标按钮跟随主题 */
+button {
+    color: inherit;
 }
 
 /* 动态光晕 */
@@ -234,7 +241,7 @@ body::after {
 }
 
 .header h1 {
-    color: var(--text);
+    color: var(--accent);
     font-size: 1.7rem;
     font-weight: 700;
     letter-spacing: 0.5px;
@@ -272,6 +279,8 @@ body::after {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    /* <button> 的 UA 默认 color 为黑色，会覆盖从 body 的继承；显式跟随主题，避免暗色下 currentColor 图标看不见 */
+    color: var(--text);
     border: 1px solid rgba(255, 255, 255, 0.12);
     background: rgba(22, 33, 62, 0.8);
     backdrop-filter: blur(12px);
@@ -299,6 +308,8 @@ body::after {
     width: 34px;
     height: 34px;
     border-radius: 50%;
+    /* 同上：<button> 默认黑色不继承 body，调色盘图标走 currentColor，需显式跟随主题 */
+    color: var(--text);
     border: 1px solid var(--border);
     background: rgba(255, 255, 255, 0.04);
     cursor: pointer;
@@ -1217,6 +1228,47 @@ body::after {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
 }
+
+/* ==================== SVG 图标 ==================== */
+.ic {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon-svg {
+    width: 1em;
+    height: 1em;
+    display: block;
+    flex-shrink: 0;
+}
+
+/* 图标 + 文字统一对齐 */
+.btn,
+.btn-preset,
+.btn-preset-action,
+.btn-copy,
+.lbl {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.header .icon svg.icon-svg { width: 42px; height: 42px; }
+.mode-float-btn svg.icon-svg { width: 20px; height: 20px; }
+.theme-btn svg.icon-svg { width: 17px; height: 17px; }
+.btn-preset svg.icon-svg { width: 15px; height: 15px; }
+.btn-preset-action svg.icon-svg,
+.btn-copy svg.icon-svg { width: 14px; height: 14px; }
+.btn-select svg.icon-svg { width: 1.1em; height: 1.1em; }
+.btn-clear svg.icon-svg { width: 1em; height: 1em; }
+.options-label svg.icon-svg,
+.history-header svg.icon-svg { width: 15px; height: 15px; }
+.delete-tag svg.icon-svg,
+.preset-delete svg.icon-svg { width: 12px; height: 12px; }
+.modal-close svg.icon-svg { width: 15px; height: 15px; }
+.delete-tag,
+.preset-delete { line-height: 0; }
 
 /* ==================== 响应式 ==================== */
 @media (max-width: 520px) {

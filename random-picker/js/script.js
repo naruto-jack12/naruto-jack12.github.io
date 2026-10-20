@@ -45,7 +45,7 @@
             tag.style.animationDelay = `${index * 0.03}s`;
             tag.innerHTML = `
                 <span>${escapeHtml(opt)}</span>
-                <button class="delete-tag" data-index="${index}" title="删除">×</button>
+                <button class="delete-tag" data-index="${index}" title="删除">${iconHTML('close')}</button>
             `;
             optionsList.appendChild(tag);
         });
@@ -330,7 +330,7 @@
         presets.forEach((preset, index) => {
             const btn = document.createElement('button');
             btn.className = 'btn-preset';
-            btn.innerHTML = `${preset.icon || '📌'} ${escapeHtml(preset.name)} <span class="preset-delete" data-index="${index}">✕</span>`;
+            btn.innerHTML = `${iconHTML('pin')} ${escapeHtml(preset.name)} <span class="preset-delete" data-index="${index}">${iconHTML('close')}</span>`;
             btn.addEventListener('click', e => {
                 if (e.target.classList.contains('preset-delete')) return;
                 applyPreset(preset.options);
@@ -354,7 +354,7 @@
         const list = document.getElementById('customPresetList');
         const presets = getCustomPresets();
         if (presets.length === 0) {
-            list.innerHTML = '<div class="preset-empty">还没有自定义预设，保存一个吧 ✨</div>';
+            list.innerHTML = '<div class="preset-empty">还没有自定义预设，保存一个吧</div>';
             return;
         }
         list.innerHTML = '';
@@ -482,8 +482,8 @@
         const text = resultDisplay.textContent;
         if (!text || text === '等待选择...' || resultDisplay.classList.contains('result-placeholder')) return;
         navigator.clipboard.writeText(text).then(() => {
-            copyBtn.textContent = '✅ 已复制';
-            setTimeout(() => { copyBtn.textContent = '📋 复制'; }, 1500);
+            copyBtn.innerHTML = iconHTML('check') + '已复制';
+            setTimeout(() => { copyBtn.innerHTML = iconHTML('copy') + '复制'; }, 1500);
         }).catch(() => {
             const ta = document.createElement('textarea');
             ta.value = text;
@@ -508,7 +508,7 @@
         if (options.length === 0) { showToast('请先添加候选项'); return; }
         const presets = getCustomPresets();
         if (presets.some(p => p.name === name)) { showToast('该名称已存在'); return; }
-        presets.push({ name, options: [...options], icon: '📌' });
+        presets.push({ name, options: [...options] });
         saveCustomPresets(presets);
         renderCustomPresets();
         renderCustomPresetList();
@@ -554,11 +554,11 @@
         const modeBtn = document.getElementById('modeBtn');
         if (mode === 'light') {
             document.documentElement.setAttribute('data-mode', 'light');
-            modeBtn.textContent = '☀️';
+            modeBtn.innerHTML = iconHTML('sun');
             modeBtn.title = '切换暗色模式';
         } else {
             document.documentElement.removeAttribute('data-mode');
-            modeBtn.textContent = '🌙';
+            modeBtn.innerHTML = iconHTML('moon');
             modeBtn.title = '切换亮色模式';
         }
         localStorage.setItem(MODE_KEY, mode);
