@@ -1,67 +1,6 @@
 (function () {
-  // ==================== tsParticles 配置 ====================
-  var isDark = (localStorage.getItem('theme') || 'dark') === 'dark';
-
-  function getParticleColors() {
-    if (document.documentElement.getAttribute('data-theme') === 'light') {
-      return { particle: '180, 150, 80', line: '160, 130, 60' };
-    }
-    return { particle: '200, 160, 60', line: '180, 140, 50' };
-  }
-
-  function particleConfig() {
-    var c = getParticleColors();
-    var w = window.innerWidth;
-    var count = w < 600 ? 50 : w < 1000 ? 75 : 110;
-
-    return {
-      fullScreen: { enable: false },
-      fpsLimit: 60,
-      particles: {
-        number: { value: count, density: { enable: true } },
-        color: { value: 'rgb(' + c.particle + ')' },
-        shape: { type: 'circle' },
-        opacity: {
-          value: { min: 0.3, max: 0.7 },
-          animation: { enable: true, speed: 0.6, minimumValue: 0.2, sync: false }
-        },
-        size: {
-          value: { min: 1.5, max: 4 },
-          animation: { enable: true, speed: 2, minimumValue: 1, sync: false }
-        },
-        links: {
-          enable: true,
-          distance: 160,
-          color: 'rgb(' + c.line + ')',
-          opacity: 0.25,
-          width: 1.2
-        },
-        move: {
-          enable: true,
-          speed: { min: 0.4, max: 1.5 },
-          direction: 'none',
-          outModes: { default: 'bounce' }
-        }
-      },
-      interactivity: {
-        events: {
-          onHover: { enable: true, mode: 'grab' },
-          resize: true
-        },
-        modes: {
-          grab: { distance: 180, links: { opacity: 0.45 } }
-        }
-      },
-      detectRetina: true
-    };
-  }
-
-  function initParticles() {
-    if (typeof tsParticles === 'undefined') return;
-    tsParticles.load('tsparticles', particleConfig());
-  }
-
   // ==================== 主题 ====================
+  var isDark = (localStorage.getItem('theme') || 'dark') === 'dark';
   document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
 
   var btn = document.getElementById('themeToggle');
@@ -71,9 +10,39 @@
       var next = cur === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
-      // 重新初始化粒子颜色
-      tsParticles.load('tsparticles', particleConfig());
     });
+  }
+
+  // ==================== 标题打字机 ====================
+  var title = document.getElementById('heroTitle');
+  if (title) {
+    var full = (title.textContent || '').trim();
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (full && !reduceMotion) {
+      var textNode = document.createTextNode('');
+      var cursor = document.createElement('span');
+      cursor.className = 'type-cursor';
+      cursor.textContent = '\u258C'; // ▌
+      title.textContent = '';
+      title.appendChild(textNode);
+      title.appendChild(cursor);
+      var n = 0;
+      var timer = setInterval(function () {
+        n++;
+        textNode.textContent = full.slice(0, n);
+        if (n >= full.length) {
+          clearInterval(timer);
+          // 打字结束：光标短暂停留后迅速淡出移除
+          setTimeout(function () {
+            cursor.style.transition = 'opacity 0.1s';
+            cursor.style.opacity = '0';
+            setTimeout(function () {
+              if (cursor.parentNode) cursor.parentNode.removeChild(cursor);
+            }, 100);
+          }, 100);
+        }
+      }, 130);
+    }
   }
 
   // ==================== 加载链接卡片 ====================
@@ -97,7 +66,4 @@
         box.appendChild(a);
       });
     });
-
-  // ==================== 启动 ====================
-  initParticles();
 })();

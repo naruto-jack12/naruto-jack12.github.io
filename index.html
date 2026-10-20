@@ -24,13 +24,13 @@
         </symbol>
     </svg>
 
-    <div id="tsparticles"></div>
+    <div id="bg" aria-hidden="true"></div>
 
     <nav class="navbar">
         <span class="nav-brand">NARUTO-JACK12</span>
         <div class="theme-toggle" id="themeToggle" title="切换主题">
-            <svg class="theme-icon theme-icon--moon" width="18" height="18"><use href="#icon-moon"/></svg>
-            <svg class="theme-icon theme-icon--sun" width="18" height="18"><use href="#icon-sun"/></svg>
+            <svg class="theme-icon theme-icon--moon" width="20" height="20"><use href="#icon-moon"/></svg>
+            <svg class="theme-icon theme-icon--sun" width="20" height="20"><use href="#icon-sun"/></svg>
         </div>
     </nav>
 
@@ -48,13 +48,24 @@
                 <circle cx="72" cy="56" r="28" stroke="url(#logo-g)" stroke-width="6" fill="none" opacity="0.7"/>
                 <circle cx="60" cy="56" r="4" fill="#FFE082"/>
             </svg>
-            <h1 class="gradient-text">NARUTO-JACK12</h1>
+            <h1 class="gradient-text" id="heroTitle">NARUTO-JACK12</h1>
             <p class="subtitle">探索 · 创造 · 分享</p>
+            <p class="hero-tagline">纯前端实现的实用工具与小游戏合集，全部在浏览器内运行，无需后端服务，开箱即用。</p>
         </div>
         <div class="links-container"></div>
+        <footer class="site-footer">
+            NARUTO-JACK12<span class="footer-dot">·</span>纯前端，无后端<span class="footer-dot">·</span>浏览器内运行
+        </footer>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/slim@4/tsparticles.slim.bundle.min.js"></script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js"
+        }
+    }
+    </script>
+    <script type="module" src="assets/js/background.js"></script>
     <script src="assets/js/script.js"></script>
 </body>
 </html>
