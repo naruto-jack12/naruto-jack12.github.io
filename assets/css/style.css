@@ -148,6 +148,7 @@ img {
 html {
   scroll-behavior: smooth;
   background-color: var(--bg-color);
+  overflow-x: hidden;
 }
 
 html, body {
@@ -283,6 +284,7 @@ body {
   z-index: 2;
   min-height: 100vh;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -320,10 +322,11 @@ body {
 }
 
 .gradient-text {
-  font-size: clamp(2.1rem, 5vw, 3.1rem);
+  font-size: clamp(1.6rem, 8vw, 3.1rem);
   font-weight: 800;
   margin-bottom: 12px;
-  letter-spacing: 1.5px;
+  letter-spacing: 0.03em;
+  overflow-wrap: anywhere;
   background: var(--accent-grad);
   -webkit-background-clip: text;
   background-clip: text;
@@ -393,10 +396,11 @@ body {
 }
 .links-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr));
   gap: 20px;
   width: 100%;
   max-width: 1100px;
+  min-width: 0;
   margin: auto;
 }
 
@@ -413,6 +417,7 @@ body {
       -ms-flex-align: center;
           align-items: center;
   text-align: center;
+  min-width: 0;
   gap: 12px;
   padding: 28px 18px 24px;
   background: var(--card-bg);
@@ -521,6 +526,7 @@ body {
 
 .card-content {
   width: 100%;
+  min-width: 0;
 }
 .card-content h3 {
   font-size: 0.98rem;
@@ -556,6 +562,7 @@ body {
   text-align: center;
   font-size: 0.82rem;
   letter-spacing: 1px;
+  overflow-wrap: anywhere;
   color: var(--text-secondary);
 }
 .site-footer .footer-dot {
@@ -582,7 +589,7 @@ body {
     margin-bottom: 40px;
   }
   .links-container {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr));
     gap: 12px;
   }
   .link-card {
